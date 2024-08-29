@@ -15,14 +15,14 @@ export function SignUp() {
         <div className="flex justify-center items-center">
 
             <form className="w-full lg:w-1/4 p-3">
-                <div className="w-full p-3 mt-8 mb-16 lg:mb-8 bg-sky-500 rounded-xl">
-                    <img className="w-1/3 mx-auto" src="../src/assets/imgs/logo-blanco.png" alt="Logo" />
+                <div className="w-full p-3 mt-8 mb-16 lg:mb-8 rounded-xl">
+                    <img className="w-1/3 mx-auto" src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
                 </div>
 
                 <AuthInput name="name" placeholder="Company Name" type="text" />
                 <AuthInput name="email" placeholder="Email" type="email" />
                 <AuthInput name="phone" placeholder="Phone" type="text" />
-                <Selected options={category} id="category" />
+                <Selected options={category} placeholder="Category" id="category" />
                 <AuthInput name="password" placeholder="Password" type="password" />
 
                 <input
