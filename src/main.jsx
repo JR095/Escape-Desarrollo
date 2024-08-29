@@ -1,7 +1,14 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
+import ReactDOM from 'react-dom/client'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import { App } from './App.jsx'
+import { BrowserRouter } from 'react-router-dom'
 
-createRoot(document.getElementById('root')).render(
-  <h1 className="text-3xl font-bold underline">Escape Team</h1>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <>
+      <BrowserRouter>
+        <App/>
+      </BrowserRouter>
+  </>
 )
