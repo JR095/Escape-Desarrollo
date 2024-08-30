@@ -29,7 +29,7 @@ export function SignUpUsers() {
                 <Selected options={location} name="Location" id="Location" placeholder="Location"/>
 
                 <input
-                    className="text-white p-3 bg-sky-500 flex rounded-xl items-center justify-center w-full lg:my-8 my-10 font-bold text-lg"
+                    className="text-white p-3 bg-sky-500 flex rounded-xl items-center justify-center w-full lg:my-8 my-10 font-bold text-lg cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-blue-800 hover:text-white"
                     type="submit"
                     name="btn-signup"
                     value="Sign Up"
