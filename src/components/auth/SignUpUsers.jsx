@@ -16,9 +16,7 @@ export function SignUpUsers() {
         <div className="flex justify-center items-center">
 
             <form className="w-full lg:w-1/4 p-3">
-                <div className="w-full p-3 mt-8 mb-16 lg:mb-8 rounded-xl">
-                    <img className="w-1/3 mx-auto" src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
-                </div>
+                <img className="w-1/2 mx-auto mt-8 mb-16 lg:mb-8" src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
 
                 <AuthInput name="name" placeholder="Name" type="text" />
                 <AuthInput name="phone" placeholder="Phone Numer" type="tel" />
