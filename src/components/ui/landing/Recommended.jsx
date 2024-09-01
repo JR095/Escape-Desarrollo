@@ -7,7 +7,6 @@ import Place4 from '../../../assets/imgs/Place4.jpg';
 
 export function Recommended() {
     return (
-        
         <div className="lg:p-12 p-8">
             <h1 className="text-blue-950 lg:text-[2rem] text-2xl font-bold text-center">RECOMENDACIONES</h1>
             <div className="grid gap-8 grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] lg:pt-12 pt-8">
