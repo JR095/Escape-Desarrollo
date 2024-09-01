@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Selecciona el div específico y sobrescribe el borde redondeado */
+div[class*="flex"][class*="h-full"][class*="snap-mandatory"] {
+    border-radius: 0 !important; /* Elimina el border-radius */
+}
