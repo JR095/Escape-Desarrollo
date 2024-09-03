@@ -14,10 +14,8 @@ export function SignUpCompanies() {
     return (
         <div className="flex justify-center items-center">
 
-            <form className="w-full lg:w-1/4 p-3">
-                <img className="w-1/2 mx-auto mt-8 mb-16 lg:mb-8" src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
-
-
+            <form className="ww-full lg:w-2/4">
+                <img className="w-[15rem] mx-auto mt-8 mb-16 " src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
                 <AuthInput name="name" placeholder="Company Name" type="text" />
                 <AuthInput name="email" placeholder="Email" type="email" />
                 <AuthInput name="phone" placeholder="Phone" type="text" />
