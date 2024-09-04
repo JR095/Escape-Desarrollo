@@ -10,9 +10,8 @@ export function Sidebar(){
         <div className={`bg-white h-[100vh] pt-5 pb-5 pl-3 pr-4 cursor-pointer`} style={{ width: sidebarWidth, transition: "width 0.5s ease" }}>
             <div className="w-full h-[60px] flex items-center relative overflow-hidden">
                 <img id="logo" className="max-w-[150px]" src={logoCeleste} alt="logo" />
-                <div 
-                    className={`absolute right-0 top-0 bottom-0 bg-gradient-to-l from-white to-transparent pointer-events-none transition-opacity duration-500 ${sidebarWidth === "80px" ? 'opacity-0' : 'opacity-100'}`}
-                    style={{ width: "50px" }} 
+                <div className={`absolute right-0 top-0 bottom-0 bg-gradient-to-l from-white to-transparent pointer-events-none transition-opacity duration-500 ${sidebarWidth === "80px" ? 'opacity-0' : 'opacity-100'}`}
+                     style={{ width: "50px" }} 
                 />
             </div>
             <button className="mt-[10px] mb-[10px] w-full h-[45px] flex justify-center items-center rounded-lg bg-[#FFD8E4] hover:bg-[#f8c3d4] transition-colors duration-300 cursor-pointer">
@@ -20,7 +19,7 @@ export function Sidebar(){
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
                 <span className={`ml-2 flex transition-all duration-500 whitespace-nowrap ${sidebarWidth === "80px" ? 'hidden' : 'inline'}`}>Create new</span>
             </button>
-            <nav className="navegation">
+            <nav>
                 <ul>
                     <li className="flex mb-[10px] mt-[10px]">
                         <a href="#" className="w-full h-[45px] flex items-center rounded-lg hover:bg-[#E8DEF8] transition-colors duration-300 cursor-pointer">
