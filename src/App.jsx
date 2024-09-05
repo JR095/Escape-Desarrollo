@@ -7,6 +7,8 @@ import logo from "./assets/imgs/Place1.jpg";
 
 import { CardLocation } from "./components/cards/CardLocation";
 
+import { CarouselCard } from "./components/carousel/CarouselCard";
+
 export function App() {
     return (
         <Routes>
@@ -16,6 +18,7 @@ export function App() {
             <Route path="/signUpUser" element={<SignUpUsers/>} />
             <Route path="/signIn" element={<CtaSingIn />} />
             <Route path="/*" element={<Navigate to="/" />} />
+            <Route path="/CarouselCard" element={<CarouselCard />} />
         </Routes>
         
     )
