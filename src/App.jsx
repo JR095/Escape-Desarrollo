@@ -8,15 +8,8 @@ import { Navigation } from "./components/navigation/Navigation";
 
 export function App() {
     return (
-        <Routes>
-            <Route path="/" element={<Navigation />} /> 
-        </Routes>
+
         
     )
 }
 
-//<Route path="/" element={<Landing />} />  
-//<Route path="/signUpCompanies" element={<SignUpCompanies />} /> 
-//<Route path="/signUpUser" element={<SignUpUsers/>} />
-//<Route path="/signIn" element={<SignIn />} />
-//<Route path="/*" element={<Navigate to="/" />} />
