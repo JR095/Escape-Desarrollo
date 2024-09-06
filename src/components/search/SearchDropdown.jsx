@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "../../index.css";
-import { useSearchDropdown } from '../hook/useSearchDropdown';
+import { useSearchDropdown } from '../hooks/useSearchDropdown';
 
 
 export function SearchDropdown() {
