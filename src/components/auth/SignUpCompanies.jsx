@@ -3,7 +3,7 @@ import { AuthInput } from "../inputs/AuthInput";
 import { Selected } from "../selected/Selected";
 import { NavLink } from "react-router-dom";
 
-export function SignUp() {
+export function SignUpCompanies() {
     const category = [
         { id: "1", name: "Restaurant" },
         { id: "2", name: "Bar" },
@@ -14,11 +14,8 @@ export function SignUp() {
     return (
         <div className="flex justify-center items-center">
 
-            <form className="w-full lg:w-1/4 p-3">
-                <div className="w-full p-3 mt-8 mb-16 lg:mb-8 rounded-xl">
-                    <img className="w-1/3 mx-auto" src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
-                </div>
-
+            <form className="ww-full lg:w-2/4">
+                <img className="w-[15rem] mx-auto mt-8 mb-16 " src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
                 <AuthInput name="name" placeholder="Company Name" type="text" />
                 <AuthInput name="email" placeholder="Email" type="email" />
                 <AuthInput name="phone" placeholder="Phone" type="text" />
