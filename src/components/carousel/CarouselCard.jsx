@@ -5,43 +5,51 @@ import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
+import 'swiper/css/navigation';
+import { Pagination ,Navigation,} from 'swiper/modules';
 
 export function CarouselCard() {
   return (
     <>
       <Swiper
         slidesPerView={1}
-        spaceBetween={10}
+        spaceBetween={1}
+        loop={true}
         pagination={{
-          clickable: true,
+          clickable: true,  
         }}
         breakpoints={{
           640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
+            slidesPerView: 1,
+            spaceBetween: 1,
           },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 40,
+          1000: {
+            slidesPerView: 2,
+            spaceBetween: 2,
           },
           1024: {
-            slidesPerView: 5,
-            spaceBetween: 50,
+            slidesPerView: 3,
+            spaceBetween: 1,
+          },
+
+          1280: {
+            slidesPerView: 4,
+            spaceBetween: 1,
           },
         }}
-        modules={[Pagination]}
-        className="mySwiper mt-[4rem]"
+        
+        modules={[Pagination, Navigation]}
+        className="mySwiper"
       >
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Mariaaaaa" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="p-[2rem] pb-[3rem]"><CardLocation image={logo} name="Soda Lucia" city="Esparza Centro" starts="4.2"/></SwiperSlide>
         
       </Swiper>
     </>
