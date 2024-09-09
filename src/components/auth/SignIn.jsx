@@ -1,9 +1,12 @@
 import "../../index.css";
 import { AuthInput } from "../inputs/AuthInput";
 import { NavLink } from "react-router-dom";
+import { AuthCarousel } from "./AuthCaruosel";
+
 
 export function SignIn() {
     return (
+        <div className="grid justify-center items-center h-[100vh] md:grid-cols-2 gap-4">
         <div className="flex justify-center items-center">
             <form className="w-full lg:w-2/4 ">
                 <img className="w-[15rem] mx-auto mt-8 mb-16 " src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
@@ -27,6 +30,10 @@ export function SignIn() {
             </form> 
 
             
+        </div>
+
+        <AuthCarousel />
+
         </div>
     );
 }

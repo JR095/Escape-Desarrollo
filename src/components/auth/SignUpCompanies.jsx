@@ -2,6 +2,8 @@ import "../../index.css";
 import { AuthInput } from "../inputs/AuthInput";
 import { Selected } from "../selected/Selected";
 import { NavLink } from "react-router-dom";
+import { AuthCarousel } from "./AuthCaruosel";
+
 
 export function SignUpCompanies() {
     const category = [
@@ -12,6 +14,8 @@ export function SignUpCompanies() {
       ];
 
     return (
+        <div className="grid justify-center items-center h-[100vh] md:grid-cols-2 gap-4">
+
         <div className="flex justify-center items-center">
 
             <form className="ww-full lg:w-2/4">
@@ -35,6 +39,10 @@ export function SignUpCompanies() {
             </form> 
 
             
+        </div>
+
+        <AuthCarousel />
+
         </div>
     );
 }

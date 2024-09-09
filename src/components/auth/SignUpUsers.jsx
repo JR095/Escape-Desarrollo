@@ -2,6 +2,7 @@ import "../../index.css";
 import { AuthInput } from "../inputs/AuthInput";
 import { NavLink } from "react-router-dom";
 import { Selected } from "../selected/Selected";
+import { AuthCarousel } from "./AuthCaruosel";
 
 export function SignUpUsers() {
 
@@ -13,6 +14,8 @@ export function SignUpUsers() {
       ];
    
     return (
+        <div className="grid justify-center items-center h-[100vh] md:grid-cols-2 gap-4">
+
         <div className="flex justify-center items-center">
 
             <form className="w-full lg:w-2/4">
@@ -34,11 +37,15 @@ export function SignUpUsers() {
                 />
 
                 <p className="text-gray-400 text-center">Already create an account?
-                    <NavLink className="text-sky-500 ml-2 font-medium" to="/signIn">Sign In</NavLink>
+                    <NavLink className="text-sky-500 ml-2 mb-3 font-medium" to="/signIn">Sign In</NavLink>
                 </p>
             </form> 
 
             
+        </div>
+
+        <AuthCarousel />
+
         </div>
     );
 }
