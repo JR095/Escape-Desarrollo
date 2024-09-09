@@ -15,7 +15,7 @@ export function Categories() {
             <div className="grid gap-10 w-full grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]">
                 
                 <section className="justify-center content-center max-w-[380px] text-center mx-auto">
-                    <LandingText title="¿A DÓNDE QUIERES ESCAPAR?" description="Lorem ipsum dolor sit amet consectetur. Et duis at placerat aliquam. Ut massa quam pretium nunc gravida lectus. Consequat morbi a nulla"/>
+                    <LandingText title="¿A DÓNDE QUIERES ESCAPAR?" description="Explora destinos únicos y vive experiencias inolvidables. Encuentra el lugar perfecto para tu próxima aventura. ¡Elige tu próximo destino y comienza a soñar!"/>
                     <div className="inline-block p-[0.40rem_1.5rem] bg-sky-500 rounded-full text-center mt-4">
                         <p className="text-white text-base font-bold">Ver más</p>
                     </div>

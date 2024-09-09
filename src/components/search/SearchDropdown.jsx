@@ -55,7 +55,7 @@ export function SearchDropdown() {
             onChange={handleInputChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
-            className="w-full border-none outline-none"
+            className="w-full border-none outline-none focus:ring-0"
             placeholder="Buscar"
           />
 
