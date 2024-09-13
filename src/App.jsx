@@ -3,7 +3,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { SignUpUsers } from "./components/auth/SignUpUsers";
 import { Landing } from "./components/routes/Landing";
 import { SignIn } from "./components/auth/SignIn";
-import { Navigation } from "./components/navigation/Navigation";
 import logo from "./assets/imgs/Place1.jpg";
 import { CardLocation } from "./components/cards/CardLocation";
 import { Home } from "./components/routes/Home";
