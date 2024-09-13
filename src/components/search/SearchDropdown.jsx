@@ -17,12 +17,12 @@ export function SearchDropdown() {
   };
 
   return (
-    <div ref={searchRef} className={`relative w-full max-w-xs mx-auto mt-10 p-4 rounded-md ${isInputFocused ? 'lg:bg-white border-none lg:shadow-md' : ''}`}>
+    <div ref={searchRef} className={`relative w-full max-w-xs p-2 rounded-md lg:absolute lg:right-12 ${isInputFocused ? 'lg:bg-white border-none lg:shadow-md' : ''}`}>
 
       {!isMobileSearchVisible && (
         <button
           type="button"
-          className="lg:hidden block fixed top-4 right-4 z-20" 
+          className="lg:hidden block fixed top-8 right-5 z-20" 
           onClick={toggleMobileSearch}
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -35,7 +35,7 @@ export function SearchDropdown() {
         className={`fixed top-0 right-0 z-10 h-full w-full bg-white lg:static lg:translate-x-0 transition-transform duration-300 ${isMobileSearchVisible ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
-        <form className="flex items-center px-4 py-2 rounded-md shadow-md">
+        <form className="flex items-center px-4 py-1 rounded-md shadow-md">
     
           {(isMobileSearchVisible || isInputFocused) && (
             <button
@@ -56,7 +56,6 @@ export function SearchDropdown() {
             onFocus={handleFocus}
             onBlur={handleBlur}
             className="w-full border-none outline-none focus:ring-0"
-            placeholder="Buscar"
           />
 
           <button type="submit" className="block">

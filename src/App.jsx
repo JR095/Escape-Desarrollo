@@ -5,10 +5,8 @@ import { Landing } from "./components/routes/Landing";
 import { SignIn } from "./components/auth/SignIn";
 import { Navigation } from "./components/navigation/Navigation";
 import logo from "./assets/imgs/Place1.jpg";
-
 import { CardLocation } from "./components/cards/CardLocation";
-
-import { CarouselCard } from "./components/carousel/CarouselCard";
+import { Home } from "./components/routes/Home";
 
 export function App() {
     return (
@@ -18,8 +16,8 @@ export function App() {
             <Route path="/signUpCompanies" element={<SignUpCompanies />} /> 
             <Route path="/signUpUser" element={<SignUpUsers/>} />
             <Route path="/signIn" element={<SignIn />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/*" element={<Navigate to="/" />} />
-            <Route path="/CarouselCard" element={<CarouselCard />} />
         </Routes>
         
     )
