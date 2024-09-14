@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 
 export const useFetchSidebar = () => {
     const [isExpanded, setIsExpanded] = useState(true);
-    const [sidebarWidth, setSidebarWidth] = useState("250px");
+    const [sidebarWidth, setSidebarWidth] = useState("80px");
 
     useEffect(() => {
         const logo = document.getElementById("logo");
 
         const handleClick = () => {
             if (isExpanded) {
-                setSidebarWidth("80px");
-            } else {
                 setSidebarWidth("250px");
+            } else {
+                setSidebarWidth("80px");
             }
             setIsExpanded(!isExpanded); 
         };

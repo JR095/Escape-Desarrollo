@@ -1,16 +1,27 @@
 import "../../index.css"
-import { Sidebar } from "../navigation/Sidebar";
+//import { Sidebar } from "../navigation/Sidebar";
+import { Navigation } from "../navigation/Navigation";
 import { SearchDropdown } from "../search/SearchDropdown";
 import map from "../../assets/imgs/locateMap.jpg";
 import { CarouselCard } from "../carousel/CarouselCard";
+import { useFetchMenubar } from  "../hooks/useFetchMenubar.js";
+
 export function Home() {
+
+    const { isMobile } = useFetchMenubar();
+    
     return (
+
         <div className="flex overflow-x-hidden">
-            <div className="flex-shrink-0">
-                <Sidebar />
+
+            <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
+                <Navigation />
             </div>
 
-            <main className="flex flex-col lg:mx-12 mx-5 overflow-x-hidden">
+            <main className="flex flex-col px-5 overflow-x-hidden transition-all duration-500"
+                style={{
+                    marginLeft: isMobile ? '0px' : '80px', 
+                }}>
                 <div className="flex pt-4 justify-between">
                     <h1 className="font-black text-3xl lg:text-4xl mt-2">ESCAPE</h1>
                     <SearchDropdown />
@@ -35,6 +46,7 @@ export function Home() {
                     <CarouselCard />
                 </div>
             </main>
+            
         </div>
     );
 }

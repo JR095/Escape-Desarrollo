@@ -7,7 +7,7 @@ export function Sidebar(){
     const { sidebarWidth } = useFetchSidebar();
 
     return(
-        <div className={`bg-white h-[100%] pt-5 pb-5 pl-3 pr-4 cursor-pointer`} style={{ width: sidebarWidth, transition: "width 0.5s ease" }}>
+        <div className={`bg-white h-[100vh] pt-5 pb-5 pl-3 pr-4 cursor-pointer fixed top-0 left-0`} style={{ width: sidebarWidth, transition: "width 0.5s ease" }}>
             <div className="w-full h-[60px] flex items-center relative overflow-hidden">
                 <img id="logo" className="max-w-[150px]" src={logoCeleste} alt="logo" />
                 <div className={`absolute right-0 top-0 bottom-0 bg-gradient-to-l from-white to-transparent pointer-events-none transition-opacity duration-500 ${sidebarWidth === "80px" ? 'opacity-0' : 'opacity-100'}`}
