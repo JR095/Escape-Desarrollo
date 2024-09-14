@@ -3,13 +3,12 @@ import "../../index.css";
 import start from "../../assets/imgs/start.svg";
 import location from "../../assets/imgs/location.svg";
 
-export function CardLocation({ image, name, city ,starts}) {
+export function CardLocation({ image, name, city ,starts,setIsOpen,id}) {
     return (
        
-        <div className="lg:w-[303px]  lg:max-w-sm sm:w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-[#404040] dark:border-gray-700 ">
-            <a className="" href="">
+        <div className="lg:w-[303px]  lg:max-w-sm sm:w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-[#404040] dark:border-gray-700 " onClick={ setIsOpen(id)}>
                 <img className="px-3 py-2 rounded-2xl w-full h-[15rem] " src={image} alt={name} />
-            </a>
+            
             <div className="p-3">
                 <div className="grid grid-cols-[auto_auto] items-center justify-between">
                     <h5 className="text-2xl font-semibold tracking-tight dark:text-white">{name}</h5>
@@ -32,7 +31,10 @@ CardLocation.propTypes = {
     image: propTypes.string,
     name: propTypes.string,
     city: propTypes.string,
-    starts: propTypes.string
+    starts: propTypes.string,
+    setIsOpen: propTypes.func,
+    id: propTypes.number
+
 };
     
   
