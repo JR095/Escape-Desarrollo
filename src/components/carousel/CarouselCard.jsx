@@ -1,14 +1,14 @@
 import "../../index.css";
 import { CardLocation } from "../cards/CardLocation";
 import logo from "../../assets/imgs/Place1.jpg";
-import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import propTypes from "prop-types";
 import { Pagination ,Navigation,} from 'swiper/modules';
 
-export function CarouselCard() {
+export function CarouselCard({setIsOpen}) {
   return (
     <>
       <Swiper
@@ -46,19 +46,25 @@ export function CarouselCard() {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Mariaaaaa" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/></SwiperSlide>
-        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Lucia" city="Esparza Centro" starts="4.2"/></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Mariaaaaa" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={1} /></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={2}/></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={3}/></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={4}/></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={5}/></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={6}/></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={7}/></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={8}/></SwiperSlide>
+        <SwiperSlide className="pb-[3rem]"><CardLocation image={logo} name="Soda Lucia" city="Esparza Centro" starts="4.2" setIsOpen={setIsOpen} id={9}/></SwiperSlide>
         
       </Swiper>
     </>
   );
 }
+
+CarouselCard.propTypes = {
+  
+  setIsOpen: propTypes.func
+
+};
 
 
