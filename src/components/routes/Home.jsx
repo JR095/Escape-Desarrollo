@@ -4,21 +4,21 @@ import { Navigation } from "../navigation/Navigation";
 import { SearchDropdown } from "../search/SearchDropdown";
 import map from "../../assets/imgs/locateMap.jpg";
 import { CarouselCard } from "../carousel/CarouselCard";
-import { useFetchMenubar } from  "../hooks/useFetchMenubar.js";
+import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
 
 import { CardInformation } from "../cards/CardInformation";
 ("use client");
 
-import {  Drawer } from "flowbite-react";
+import { Drawer } from "flowbite-react";
 import { useState } from "react";
 export function Home() {
 
-    const { isMobile } = useFetchMenubar();
-    
+  const { isMobile } = useFetchMenubar();
+
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
   const [id, setId] = useState(0);
-  const openCard  = (id) => () => {
+  const openCard = (id) => () => {
     setIsOpen(true);
     console.log(id);
     setId(id);
@@ -38,14 +38,14 @@ export function Home() {
         </Drawer.Items>
       </Drawer>
 
-            <main className="flex flex-col px-5 overflow-x-hidden transition-all duration-500"
-                style={{
-                    marginLeft: isMobile ? '0px' : '80px', 
-                }}>
-                <div className="flex pt-4 justify-between">
-                    <h1 className="font-black text-3xl lg:text-4xl mt-2">ESCAPE</h1>
-                    <SearchDropdown />
-                </div>
+      <main className="flex flex-col lg:px-12 px-5 overflow-x-hidden transition-all duration-500"
+        style={{
+          marginLeft: isMobile ? '0px' : '80px',
+        }}>
+        <div className="flex pt-4 justify-between">
+          <h1 className="font-black text-3xl lg:text-4xl mt-2">ESCAPE</h1>
+          <SearchDropdown />
+        </div>
 
         <div className="mt-6 bg-white p-3 rounded-lg shadow-md grid grid-cols-[30%_70%] gap-4 lg:w-1/3 w-full">
           <div>

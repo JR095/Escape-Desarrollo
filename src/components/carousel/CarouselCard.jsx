@@ -19,25 +19,21 @@ export function CarouselCard({setIsOpen}) {
           clickable: true,  
         }}
         breakpoints={{
-          640: {
-            slidesPerView: 1,
+          554: {
+            slidesPerView: 2,
             spaceBetween: 20,
           },
           915: {
             slidesPerView: 2,
             spaceBetween: 20,
           },
-          1024: {
-            slidesPerView: 2,
+        
+          1115: {
+            slidesPerView: 3,
             spaceBetween: 20,
           },
 
-          1280: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-
-          1600: {
+          1500: {
             slidesPerView: 4,
             spaceBetween: 30,
           },
