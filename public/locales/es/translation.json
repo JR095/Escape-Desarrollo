@@ -28,5 +28,18 @@
     "about": "ACERCA",
     "contact": "CONTACTO",
     "terms": "TÉRMINOS",
-    "footerEslogan": "Viaja, descubre, y vive al máximo. Transformamos tus sueños en aventuras inolvidables. ¡El mundo te espera!"
+    "footerEslogan": "Viaja, descubre, y vive al máximo. Transformamos tus sueños en aventuras inolvidables. ¡El mundo te espera!",
+    "iName": "Nombre",
+    "iPhone": "Teléfono",
+    "iEmail": "Correo electrónico",
+    "iPassword": "Contraseña",
+    "iConfirmPassword": "Confirmar contraseña",
+    "iLocation": "Ubicación",
+    "goSignIn": "Ya tienes una cuenta?",
+    "iSignIn": "Iniciar sesión",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "goSignUp": "¿No tienes cuenta?",
+    "createAccount": "Crear cuenta",
+    "iCompanyName": "Nombre de la Empresa",
+    "iCategory": "Categoría"
   }

@@ -1,6 +1,6 @@
 {
     "login": "Login",
-    "signup": "Sign up", 
+    "signup": "Sign Up", 
     "language": "Lang",
     "English": "English",
     "Spanish": "Spanish",
@@ -28,5 +28,18 @@
     "about": "ABOUT",
     "contact": "CONTACT",
     "terms": "TERMS",
-    "footerEslogan": "Travel, discover, and live to the fullest. We transform your dreams into unforgettable adventures. The world is waiting for you!"
+    "footerEslogan": "Travel, discover, and live to the fullest. We transform your dreams into unforgettable adventures. The world is waiting for you!",
+    "iName": "Name",
+    "iPhone": "Phone",
+    "iEmail": "Email",
+    "iPassword": "Password",
+    "iConfirmPassword": "Confirm password",
+    "iLocation": "Location",
+    "goSignIn": "Already create an account?",
+    "iSignIn": "Sign In",
+    "forgotPassword": "Forgot password?",
+    "goSignUp": "You don't have an account?",
+    "createAccount": "Create an account",
+    "iCompanyName": "Company Name",
+    "iCategory": "Category"
   }
