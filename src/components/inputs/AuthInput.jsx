@@ -1,6 +1,6 @@
 import "../../index.css";
 
-export function AuthInput({ name, placeholder, type, className }) {
+export function AuthInput({ name, placeholder, type, className, value, onChange }) {
     return (
       <div className={`flex gap-2 my-10 lg:my-8 rounded-xl ${className}`}>
         <input
@@ -8,6 +8,8 @@ export function AuthInput({ name, placeholder, type, className }) {
           name={name}
           placeholder={placeholder}
           type={type}
+          value={value}
+          onChange={onChange}
         />
       </div>
     );
