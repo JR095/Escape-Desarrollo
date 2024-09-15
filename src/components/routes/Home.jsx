@@ -1,7 +1,7 @@
 import "../../index.css"
 //import { Sidebar } from "../navigation/Sidebar";
 import { Navigation } from "../navigation/Navigation";
-import { SearchDropdown } from "../search/SearchDropdown";
+import { SearchDropdown } from "../dropdown/SearchDropdown";
 import map from "../../assets/imgs/locateMap.jpg";
 import { CarouselCard } from "../carousel/CarouselCard";
 import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
