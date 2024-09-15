@@ -24,7 +24,7 @@ export function LanguageSwitcher() {
                     transition
                     className="absolute right-[-2rem] bg-[#132443] bg-opacity-10 rounded-b-2xl mt-5 z-10 transition data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                 >
-                    <div className="py-2 px-5 rounded-md">
+                    <div className="py-2 px-8 rounded-md">
                         <MenuItem>
                             <button className="block text-white md:text-xl text-xs" onClick={() => changeLanguage('en')}>
                             {t('English')}
