@@ -1,5 +1,5 @@
 import "../../../index.css";
-import { CategoryCard } from "../../cards/CategoryCard";
+import { CardCategoryLanding } from "../../cards/CardCategoryLanding";
 import restaurant from '../../../assets/imgs/icon-restaurant.png';
 import park from '../../../assets/imgs/icon-park.png';
 import shops from '../../../assets/imgs/icon-shops.png';
@@ -25,12 +25,12 @@ export function Categories() {
                 </section>
 
                 <div className="grid gap-8 lg:gap-y-8 lg:gap-x-16 grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))]">
-                    <CategoryCard image={restaurant} title={t('restaurants')}/>
-                    <CategoryCard image={park} title={t('parks')}/>
-                    <CategoryCard image={shops} title={t('shops')}/>
-                    <CategoryCard image={cafe} title={t('cafes')}/>
-                    <CategoryCard image={beach} title={t('beaches')}/>
-                    <CategoryCard image={museum} title={t('museums')}/>
+                    <CardCategoryLanding image={restaurant} title={t('restaurants')}/>
+                    <CardCategoryLanding image={park} title={t('parks')}/>
+                    <CardCategoryLanding image={shops} title={t('shops')}/>
+                    <CardCategoryLanding image={cafe} title={t('cafes')}/>
+                    <CardCategoryLanding image={beach} title={t('beaches')}/>
+                    <CardCategoryLanding image={museum} title={t('museums')}/>
                 </div> 
             </div>
         </div>
