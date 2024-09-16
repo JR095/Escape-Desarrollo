@@ -1,10 +1,13 @@
 import "../../index.css";
-
-export function CategoryCard({ image, title }) {
+import PropTypes from 'prop-types';
+export function CategoryCard({ title = 'Sodas' }) {
     return (
-        <div className="border-2 border-white p-4 rounded-xl">
-                <img className="mx-auto w-[8rem] h-[6rem]" src={image} alt="icon" />
-                <h3 className="text-white text-center font-semibold mt-4 text-base">{title}</h3>
+        <div className="bg-white p-4 rounded-xl">
+            <h3 className="text-black hover:text-sky-500 text-center font-semibold text-base">{title}</h3>
         </div>
-    )
+    );
 }
+
+CategoryCard.propTypes = {
+    title: PropTypes.string
+};

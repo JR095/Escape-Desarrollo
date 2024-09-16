@@ -7,6 +7,12 @@ div[class*="flex"][class*="h-full"][class*="snap-mandatory"] {
     border-radius: 0 !important; /* Elimina el border-radius */
 }
 
+/*Elimina las flechas del carrusel*/
+.swiper-button-next,
+.swiper-button-prev {
+  display: none !important;
+}
+
 *{
 
     margin: 0; 
