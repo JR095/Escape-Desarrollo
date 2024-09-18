@@ -33,9 +33,9 @@ export function Home() {
         <Navigation />
       </div>
 
-      <Drawer open={isOpen} onClose={handleClose} position="right">
+      <Drawer open={isOpen} onClose={handleClose} position="right" className="w-1/3">
         <Drawer.Items>
-          <CardInformation id={id} />
+          <CardInformation id={id} onClose={handleClose} />
         </Drawer.Items>
       </Drawer>
 
