@@ -1,6 +1,6 @@
 import "../../index.css";
 import { AuthInput } from "../inputs/AuthInput";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Selected } from "../selected/Selected";
 import { AuthCarousel } from "./AuthCaruosel";
 import { useTranslation } from 'react-i18next';
@@ -20,6 +20,7 @@ export function SignUpUsers() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password_confirmation, setPassword_confirmation] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,11 +33,13 @@ export function SignUpUsers() {
                 name,
                 email,
                 password,
-                password_confirmation
+                password_confirmation,
+                location
             })
         });
-        const content = await response.json();
-        console.log(content);
+        //const content = await response.json();
+        //console.log(content);
+        navigate('/signIn');
     };
    
     return (
@@ -52,7 +55,7 @@ export function SignUpUsers() {
                 <AuthInput name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)}/>
                 <AuthInput name="passwordConfirm" placeholder={t('iConfirmPassword')} type="password" onChange={e => setPassword_confirmation(e.target.value)}/>
 
-                
+    
 
                 <input
                     className="text-white p-3 bg-sky-500 flex rounded-xl items-center justify-center w-full lg:my-8 my-10 font-bold text-lg cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-blue-800 hover:text-white"
