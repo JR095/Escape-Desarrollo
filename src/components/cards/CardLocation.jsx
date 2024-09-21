@@ -6,7 +6,7 @@ import location from "../../assets/imgs/location.svg";
 export function CardLocation({ image, name, city ,starts,setIsOpen,id}) {
     return (
        
-        <div className="lg:w-[303px]  lg:max-w-sm sm:w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-[#404040] dark:border-gray-700 " onClick={ setIsOpen(id)}>
+        <div className="md:w-[303px]  lg:max-w-sm sm:w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-[#404040] dark:border-gray-700 " onClick={ setIsOpen(id)}>
                 <img className="px-3 py-2 rounded-2xl w-full h-[15rem] " src={image} alt={name} />
             
             <div className="p-3">

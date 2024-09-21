@@ -8,6 +8,8 @@ import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
 
 import { CategoriesCarousel } from "../carousel/CategoriesCarousel.jsx"
 import { CardInformation } from "../cards/CardInformation";
+import { PostCard } from "../cards/PostCard.jsx";
+import papa from "../../assets/imgs/papas.jpg";
 ("use client");
 
 import { Drawer } from "flowbite-react";
@@ -33,13 +35,13 @@ export function Home() {
         <Navigation />
       </div>
 
-      <Drawer open={isOpen} onClose={handleClose} position="right" className="w-1/3">
+      <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3">
         <Drawer.Items>
           <CardInformation id={id} onClose={handleClose} />
         </Drawer.Items>
       </Drawer>
 
-      <main className="flex flex-col lg:px-12 px-5 overflow-x-hidden transition-all duration-500"
+      <main className="flex flex-col lg:px-12 px-5 overflow-x-hidden transition-all duration-500 mb-4"
         style={{
           marginLeft: isMobile ? '0px' : '80px',
         }}>
@@ -69,6 +71,8 @@ export function Home() {
           </h2>
           <CarouselCard setIsOpen={openCard} />
         </div>
+        <PostCard street="Centro" city={"Puntarenas"} name={"Soda Maria"} info={"Pedidos solo por whatsapp, llamadas no atendemos"} category={"Soda"} image={papa} likes="10" comments="10" />
+
       </main>
     </div>
   );
