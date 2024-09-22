@@ -13,7 +13,7 @@ export function CardInformation({ id , onClose}) {
   return (
     <div>
         <div className="relative">
-        <img className="rounded-lg w-full" src={a} alt="" />
+        <img className="rounded-lg object-cover h-[50vh]  md:w-full" src={a} alt="" />
         <img className="absolute top-4 right-4 p-2 rounded-lg bg-white" src={heart} alt="" />
         <img onClick={onClose} className="absolute top-2 left-2 p-2 rounded-full" src={back} alt="" />
         </div>
@@ -35,7 +35,7 @@ export function CardInformation({ id , onClose}) {
       <div className="flex items-center justify-between bg-white border border-gray-200 rounded-lg shadow  ">
       <div className="flex items-center gap-4 my-3 mx-8">
         <img src={money} alt="location" />
-        <p className="text-black font-semibold text-2xl dark:text-[#BCBCBC] grid">
+        <p className="text-black font-semibold text-xl md:text-2xl dark:text-[#BCBCBC] grid">
         ₡2500 
           <span className="text-[#9A9797] font-semibold text-base dark:text-[#BCBCBC]">
             /persona
@@ -44,8 +44,8 @@ export function CardInformation({ id , onClose}) {
       </div>
         <div className="flex items-center gap-4 my-3 mx-8">
           <img src={guide} alt="location" />
-          <p className="text-black font-semibold text-2xl dark:text-[#BCBCBC]">
-            7 min
+          <p className="text-black font-semibold text-xl md:text-2xl dark:text-[#BCBCBC]">
+            7  <span className="sm:text-base md:text-2xl">min</span>
           </p>
         </div>
       </div>

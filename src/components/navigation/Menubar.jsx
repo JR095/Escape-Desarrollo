@@ -3,7 +3,7 @@ import "../../index.css";
 export function Menubar(){
 
     return(
-        <div className="bg-white w-full h-[70px] fixed bottom-0">
+        <div className="bg-white dark:bg-[#2a2a2a] w-full h-[70px] fixed bottom-0">
             <nav>
                 <ul className="flex justify-between ml-4 mr-4">
                     <li className="mb-[10px] mt-[10px]">
