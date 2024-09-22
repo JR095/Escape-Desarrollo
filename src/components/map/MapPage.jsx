@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 export const MapPage = () => {
   
-  const center = [-84.66461756681288, 9.995518040685974]; 
+  const center = [-84.65196258847374, 9.994401308690808]; 
 
   useEffect(() => {
     

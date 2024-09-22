@@ -22,37 +22,71 @@ export function SignUpUsers() {
     const [password_confirmation, setPassword_confirmation] = useState('');
     const navigate = useNavigate();
 
-const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (document.getElementById('share-location').checked) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const latitude = position.coords.latitude
-            const longitude = position.coords.longitude
-
-            console.log(latitude, longitude);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
     
-            const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/register', {
-                method: 'POST',
-                credentials: 'include',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password,
-                    password_confirmation,
-                    latitude: latitude || null,
-                    longitude: longitude || null
-                })
-            });
+        if (document.getElementById('share-location').checked) {
+            try {
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                });
     
-            navigate('/signIn');
-            
-        }, (error) => {
-            console.error("Error al obtener la ubicación:", error);
-        });
-    } 
-};
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+    
+                console.log(latitude, longitude);
+    
+                const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/register', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password,
+                        password_confirmation,
+                        latitude: latitude,
+                        longitude: longitude,
+                    })
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+    
+                navigate('/signIn');
+                
+            } catch (error) {
+                console.error("Error al obtener la ubicación o al enviar los datos:", error);
+            }
+        } else {
+            try {
+                const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/register', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password,
+                        password_confirmation,
+                        latitude: null,
+                        longitude: null
+                    })
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+    
+                navigate('/signIn');
+                
+            } catch (error) {
+                console.error("Error al enviar los datos sin ubicación:", error);
+            }
+        }
+    };
+    
    
     return (
         <div className="grid justify-center items-center h-[100vh] md:grid-cols-2 gap-4">
