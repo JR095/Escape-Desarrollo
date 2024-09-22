@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
 import "../../index.css";
 import { useSearchDropdown } from '../hooks/useSearchDropdown';
-
+import { useNavigate } from "react-router-dom";
+import { useStoreSearch } from '../hooks/useStoreSearch';
+import { useFetchSearchHistory } from '../hooks/useFetchSearchHistory';
 
 export function SearchDropdown() {
+  const [search_term, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+  const { storeSearchTerm } = useStoreSearch();
+  const { recentSearches: backendRecentSearches, loading: historyLoading, handleDeleteSearch } = useFetchSearchHistory();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (search_term) {
+      storeSearchTerm(search_term);
+      navigate(`/search-results?name=${search_term}`);
+    }
+  };
+
   const [isMobileSearchVisible, setIsMobileSearchVisible] = useState(false);
-  const items = ['Restaurantes', 'Bares', 'Cafés', 'Hoteles', 'Cabañas', 'Parques'];
 
   const {
-    query, suggestions, recentSearches, showRecentSearches, isInputFocused, searchRef, 
-    handleInputChange, handleSuggestionClick, handleFocus, handleBlur, handleBackButtonClick,
-  } = useSearchDropdown(items);
+    query, suggestions, showRecentSearches, isInputFocused, searchRef, handleInputChange,
+    handleSuggestionClick, handleFocus, handleBlur, handleBackButtonClick
+  } = useSearchDropdown(backendRecentSearches, storeSearchTerm, navigate);
 
   const toggleMobileSearch = () => {
     setIsMobileSearchVisible(!isMobileSearchVisible);
@@ -22,7 +36,7 @@ export function SearchDropdown() {
       {!isMobileSearchVisible && (
         <button
           type="button"
-          className="lg:hidden block fixed top-8 right-5 z-20" 
+          className="lg:hidden block fixed top-8 right-5 z-20"
           onClick={toggleMobileSearch}
         >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -35,8 +49,8 @@ export function SearchDropdown() {
         className={`fixed top-0 right-0 z-10 h-full w-full bg-white lg:static lg:translate-x-0 transition-transform duration-300 ${isMobileSearchVisible ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
-        <form className="flex items-center px-4 py-1 rounded-md shadow-md">
-    
+        <form className="flex items-center px-4 py-1 rounded-md shadow-md" onSubmit={handleSearchSubmit}>
+
           {(isMobileSearchVisible || isInputFocused) && (
             <button
               type="button"
@@ -52,7 +66,10 @@ export function SearchDropdown() {
           <input
             type="text"
             value={query}
-            onChange={handleInputChange}
+            onChange={(event) => {
+              setSearchTerm(event.target.value);
+              handleInputChange(event);
+            }}
             onFocus={handleFocus}
             onBlur={handleBlur}
             className="w-full border-none outline-none focus:ring-0"
@@ -67,17 +84,19 @@ export function SearchDropdown() {
 
         {showRecentSearches && (
           <ul className="left-0 right-0 w-full mt-2">
-            {recentSearches.length > 0 ? (
+            {historyLoading ? (
+              <p className="text-center">Cargando...</p>
+            ) : backendRecentSearches.length > 0 ? (
               <>
                 <h2 className="px-4 py-2 font-bold text-lg">Recientes</h2>
-                {recentSearches.map((search, index) => (
+                {backendRecentSearches.map((search) => (
                   <li
-                    key={index}
+                    key={search.id}
                     className="px-4 py-2 cursor-pointer hover:bg-gray-200 rounded-md flex justify-between"
-                    onClick={() => handleSuggestionClick(search)}
+                    onClick={() => handleSuggestionClick(search.search_term)}
                   >
-                    {search}
-                    <button>
+                    <span>{search.search_term}</span>
+                    <button onClick={(e) => { e.stopPropagation(); handleDeleteSearch(search.id); }}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                       </svg>

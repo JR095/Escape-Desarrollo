@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 
-export const useSearchDropdown = (items) => {
+export const useSearchDropdown = (backendRecentSearches, storeSearchTerm, navigate) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [recentSearches, setRecentSearches] = useState([]);
   const [showRecentSearches, setShowRecentSearches] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -11,20 +10,22 @@ export const useSearchDropdown = (items) => {
   const searchRef = useRef(null);
 
   // Manejar cambios en el campo de entrada
-  const handleInputChange = (event) => {
+  const handleInputChange = async (event) => {
     const value = event.target.value;
     setQuery(value);
 
-    // Filtrar sugerencias basadas en el texto ingresado
     if (value === '') {
       setSuggestions([]);
       setShowRecentSearches(true);
     } else {
-      const filteredSuggestions = items.filter((item) =>
-        item.toLowerCase().includes(value.toLowerCase())
-      );
-      setSuggestions(filteredSuggestions);
-      setShowRecentSearches(false);
+      try {
+        const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/companies/suggestions?query=${value}`);
+        const data = await response.json();
+        setSuggestions(data);
+        setShowRecentSearches(false);
+      } catch (error) {
+        console.error('Error fetching company suggestions:', error);
+      }
     }
   };
 
@@ -32,18 +33,9 @@ export const useSearchDropdown = (items) => {
   const handleSuggestionClick = (suggestion) => {
     setQuery(suggestion);
     setSuggestions([]);
-    updateRecentSearches(suggestion);
     setShowRecentSearches(false);
-  };
-
-  // Actualizar búsquedas recientes
-  const updateRecentSearches = (searchTerm) => {
-    const updatedRecentSearches = [searchTerm, ...recentSearches.filter((item) => item !== searchTerm)];
-    if (updatedRecentSearches.length > 5) {
-      updatedRecentSearches.pop();
-    }
-    setRecentSearches(updatedRecentSearches);
-    setShowRecentSearches(false);
+    storeSearchTerm(suggestion);
+    navigate(`/search-results?name=${suggestion}`);
   };
 
   // Mostrar búsquedas recientes al enfocar el input
@@ -87,7 +79,7 @@ export const useSearchDropdown = (items) => {
   }, []);
 
   return {
-    query, suggestions, recentSearches, showRecentSearches, isInputFocused, searchRef,
+    query, suggestions, backendRecentSearches, showRecentSearches, isInputFocused, searchRef,
     handleInputChange, handleSuggestionClick, handleFocus, handleBlur, handleBackButtonClick,
   };
 };

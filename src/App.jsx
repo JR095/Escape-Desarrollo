@@ -6,6 +6,7 @@ import { SignIn } from "./components/auth/SignIn";
 import logo from "./assets/imgs/Place1.jpg";
 import { CardLocation } from "./components/cards/CardLocation";
 import { Home } from "./components/routes/Home";
+import { SearchResults } from "./components/routes/SearchResults";
 
 export function App() {
     return (
@@ -16,6 +17,7 @@ export function App() {
             <Route path="/signUpUser" element={<SignUpUsers/>} />
             <Route path="/signIn" element={<SignIn />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/search-results" element={<SearchResults />} />
             <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
         
