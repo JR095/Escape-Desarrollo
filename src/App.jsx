@@ -7,6 +7,8 @@ import logo from "./assets/imgs/Place1.jpg";
 import { CardLocation } from "./components/cards/CardLocation";
 import { Home } from "./components/routes/Home";
 import { AccountSettings } from "./components/profile/AccountSettings"
+import { MapPage } from './components/map/MapPage';
+
 export function App() {
     return (
         <Routes>
@@ -17,6 +19,7 @@ export function App() {
             <Route path="/signIn" element={<SignIn />} />
             <Route path="/home" element={<Home />} />
             <Route path="/AccountSettings" element={<AccountSettings />} />
+            <Route path="/map" element={<MapPage />} /> 
             <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
         
