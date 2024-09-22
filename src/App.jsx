@@ -8,6 +8,7 @@ import { CardLocation } from "./components/cards/CardLocation";
 import { Home } from "./components/routes/Home";
 import { AccountSettings } from "./components/profile/AccountSettings"
 import { MapPage } from './components/map/MapPage';
+import {PersonalInformation} from "./components/profile/PersonalInformation"
 
 export function App() {
     return (
@@ -19,6 +20,7 @@ export function App() {
             <Route path="/signIn" element={<SignIn />} />
             <Route path="/home" element={<Home />} />
             <Route path="/AccountSettings" element={<AccountSettings />} />
+            <Route path="/PersonalInformation" element={<PersonalInformation />} />
             <Route path="/map" element={<MapPage />} /> 
             <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
