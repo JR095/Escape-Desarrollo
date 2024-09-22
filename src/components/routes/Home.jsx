@@ -5,6 +5,7 @@ import { SearchDropdown } from "../dropdown/SearchDropdown";
 import map from "../../assets/imgs/locateMap.jpg";
 import { CarouselCard } from "../carousel/CarouselCard";
 import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
+import { MapThumbnail } from "../map/MapThumbnail.jsx";
 
 import { CategoriesCarousel } from "../carousel/CategoriesCarousel.jsx"
 import { CardInformation } from "../cards/CardInformation";
@@ -21,6 +22,7 @@ export function Home() {
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
   const [id, setId] = useState(0);
+
   const openCard = (id) => () => {
     setIsOpen(true);
     console.log(id);
@@ -50,16 +52,8 @@ export function Home() {
           <SearchDropdown />
         </div>
 
-        <div className="mt-6 bg-white p-3 rounded-lg shadow-md grid grid-cols-[30%_70%] gap-4 lg:w-1/3 w-full">
-          <div>
-            <img className="rounded-lg" src={map} alt="map" />
-          </div>
-          <section className="justify-center content-center">
-            <h3 className="text-lg text-sky-500 font-bold">Tu ubicación</h3>
-            <p className="text-gray-500 font-semibold">Esparza centro</p>
-          </section>
-        </div>
-
+        <MapThumbnail />
+        
         <div className="mt-10">
           <h2 className="font-bold lg:text-2xl text-xl mb-8">Categorías</h2>
           <CategoriesCarousel />
