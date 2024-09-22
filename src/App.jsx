@@ -6,6 +6,9 @@ import { SignIn } from "./components/auth/SignIn";
 import logo from "./assets/imgs/Place1.jpg";
 import { CardLocation } from "./components/cards/CardLocation";
 import { Home } from "./components/routes/Home";
+import { AccountSettings } from "./components/profile/AccountSettings"
+import { MapPage } from './components/map/MapPage';
+import {PersonalInformation} from "./components/profile/PersonalInformation"
 import { SearchResults } from "./components/routes/SearchResults";
 
 export function App() {
@@ -17,6 +20,9 @@ export function App() {
             <Route path="/signUpUser" element={<SignUpUsers/>} />
             <Route path="/signIn" element={<SignIn />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/AccountSettings" element={<AccountSettings />} />
+            <Route path="/PersonalInformation" element={<PersonalInformation />} />
+            <Route path="/map" element={<MapPage />} /> 
             <Route path="/search-results" element={<SearchResults />} />
             <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
