@@ -10,23 +10,27 @@ import { AccountSettings } from "./components/profile/AccountSettings"
 import { MapPage } from './components/map/MapPage';
 import {PersonalInformation} from "./components/profile/PersonalInformation"
 import { SearchResults } from "./components/routes/SearchResults";
+import { ForgotPassword } from './components/password/ForgotPassword.jsx';
+import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
 
 export function App() {
     return (
-        <Routes>
-            <Route path="/" element={<Landing />} /> 
-            <Route path="/Card" element={<CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/>} />  
-            <Route path="/signUpCompanies" element={<SignUpCompanies />} /> 
-            <Route path="/signUpUser" element={<SignUpUsers/>} />
-            <Route path="/signIn" element={<SignIn />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/AccountSettings" element={<AccountSettings />} />
-            <Route path="/PersonalInformation" element={<PersonalInformation />} />
-            <Route path="/map" element={<MapPage />} /> 
-            <Route path="/search-results" element={<SearchResults />} />
-            <Route path="/*" element={<Navigate to="/" />} />
-        </Routes>
-        
+        <ComponentProvider>
+            <Routes>
+                <Route path="/" element={<Landing />} /> 
+                <Route path="/Card" element={<CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/>} />  
+                <Route path="/signUpCompanies" element={<SignUpCompanies />} /> 
+                <Route path="/signUpUser" element={<SignUpUsers/>} />
+                <Route path="/signIn" element={<SignIn />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/accountSettings" element={<AccountSettings />} />
+                <Route path="/PersonalInformation" element={<PersonalInformation />} />
+                <Route path="/map" element={<MapPage />} /> 
+                <Route path="/search-results" element={<SearchResults />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/*" element={<Navigate to="/" />} />
+            </Routes>
+        </ComponentProvider>
     )
 }
 

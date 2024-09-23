@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { AuthCarousel } from "./AuthCaruosel";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { useUser } from "../../context/UserContext.jsx";
 
 export function SignIn() {
     const { t } = useTranslation();
@@ -11,6 +12,7 @@ export function SignIn() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const { user, setUser } = useUser();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,8 +29,12 @@ export function SignIn() {
         //const content = await response.json();
         //console.log(content);
 
+        const data = await response.json();
+
         if (response.ok) {
             navigate('/home');
+            setUser(data.user);
+            console.log(data.user);
         }
     };
 
@@ -41,7 +47,7 @@ export function SignIn() {
                 <AuthInput name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)}/>
                 <AuthInput name="password" placeholder={t('iPassword')} type="password" className="mb-4 lg:mb-4" onChange={e => setPassword(e.target.value)}/>
                 <div className="text-right">
-                    <NavLink className="text-sky-500 font-medium" to="/forgot">{t('forgotPassword')}</NavLink>
+                    <NavLink className="text-sky-500 font-medium" to="/forgot-password">{t('forgotPassword')}</NavLink>
                 </div>
 
                 <input

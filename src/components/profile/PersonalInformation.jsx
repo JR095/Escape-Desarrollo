@@ -5,6 +5,8 @@ import { SearchDropdown } from "../dropdown/SearchDropdown";
 import { CarouselCard } from "../carousel/CarouselCard";
 import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
 import { useEffect } from "react";
+import { useUser } from '../../context/UserContext.jsx';
+import { NavLink, useNavigate } from "react-router-dom";
 import { CardInformation } from "../cards/CardInformation";
 ("use client");
 
@@ -17,6 +19,7 @@ export function PersonalInformation() {
     const [isOpen, setIsOpen] = useState(false);
     const handleClose = () => setIsOpen(false);
     const [darkMode, setDarkMode] = useState(true);
+    const { user } = useUser();
 
     useEffect(() => {
         if (darkMode) {
@@ -64,7 +67,7 @@ export function PersonalInformation() {
                 <div className="grid grid-cols-1 items-center lg:grid-cols-2 dark:bg-[#2a2a2a]">
                     <div>
                         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile_Img" className="rounded-full h-[7rem] w-[7rem] mt-[2rem]" />
-                        <h3 className="font-bold lg:text-2xl text-xl mt-[2rem] dark:text-white">Soda Maria</h3>
+                        <h3 className="font-bold lg:text-2xl text-xl mt-[2rem] dark:text-white">{user.name}</h3>
                         <h4 className=" text-[#606060] font-semibold  pt-[1rem] lg:hidden">Soda</h4>
                         <div className="col-span-3 text-left lg:pt-[2rem] pt-[1rem] dark:text-white">
                             <p>Abrimos a las 6:00 p.m y cerramos a las 2:30a.m <br />Para pedidos : 83287126 - 62865808</p>
@@ -79,7 +82,7 @@ export function PersonalInformation() {
                         </div>
 
                         <div className="hidden lg:block">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]">Editar</button>
+                        <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white"><NavLink to="/accountSettings">Editar</NavLink></button>
                             <p className="pt-[2rem] dark:text-white">1</p>
                             <h4 className="dark:text-white">Seguidores</h4>
                         </div>
