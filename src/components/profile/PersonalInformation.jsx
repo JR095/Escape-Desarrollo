@@ -70,7 +70,7 @@ export function PersonalInformation() {
                         <h3 className="font-bold lg:text-2xl text-xl mt-[2rem] dark:text-white">{user.name}</h3>
                         <h4 className=" text-[#606060] font-semibold  pt-[1rem] lg:hidden">Soda</h4>
                         <div className="col-span-3 text-left lg:pt-[2rem] pt-[1rem] dark:text-white">
-                            <p>Abrimos a las 6:00 p.m y cerramos a las 2:30a.m <br />Para pedidos : 83287126 - 62865808</p>
+                            <p>{user.description}</p>
                         </div>
                     </div>
 

@@ -23,7 +23,7 @@ export function AccountSettings() {
         //categoria: user ? user.categoria : '',
         email: user ? user.email : '',
         //numeroTelefonico: user ? user.numeroTelefonico : '',
-        //presentacion: user ? user.presentacion : ''
+        description: user ? user.description : ''
     });
 
     const handleChange = (e) => {
@@ -94,7 +94,7 @@ export function AccountSettings() {
                                 {body}
                             </Modal>
                             <InputProfile placeholder="numeroTelefonico" type="text" id="numeroTelefonico" label="Numero telefonico" defaultValue="Numero telefonico"/>
-                            <InputProfile placeholder="presentacion" type="text" id="presentacion" label="Presentacion" defaultValue="Presentacion"/>
+                            <InputProfile placeholder={user.description} type="text" id="description" label="Descripcion" defaultValue={user.description} value={formData.description} onChange={handleChange}/>
                         </div>
                         <div className="w-full flex justify-center mt-6">
                             <Buttons />

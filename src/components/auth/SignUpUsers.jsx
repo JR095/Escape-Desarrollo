@@ -20,6 +20,7 @@ export function SignUpUsers() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password_confirmation, setPassword_confirmation] = useState('');
+    const [description, setDescription] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -47,6 +48,7 @@ export function SignUpUsers() {
                         password_confirmation,
                         latitude: latitude,
                         longitude: longitude,
+                        description,
                     })
                 });
     
@@ -98,6 +100,7 @@ export function SignUpUsers() {
 
                 <AuthInput name="name" placeholder={t('iName')} type="text" onChange={e => setName(e.target.value)}/>
                 <AuthInput name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)}/>
+                <AuthInput name="description" placeholder={t('iDescription')} type="text" onChange={e => setDescription(e.target.value)}/>
                 <AuthInput name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)}/>
                 <AuthInput name="passwordConfirm" placeholder={t('iConfirmPassword')} type="password" onChange={e => setPassword_confirmation(e.target.value)}/>
 
