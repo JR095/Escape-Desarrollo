@@ -3,7 +3,7 @@ import location from "../../assets/imgs/location.svg";
 
 export function CardResult({ image, name, city, followers, description }) {
     return (
-        <div className="lg:max-w-[800px] sm:max-w-[400px] w-full mx-auto grid lg:grid-cols-[1fr_2fr_1fr] gap-8 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-[#404040] dark:border-gray-700">
+        <div className="lg:max-w-[800px] sm:max-w-[400px] w-full mx-auto grid lg:grid-cols-[1fr_2fr_1fr] gap-8 p-6 bg-white rounded-lg shadow dark:bg-[#404040]">
             <div className="flex justify-center">
                 <img className="lg:rounded-full lg:w-40 lg:h-40 lg:object-cover rounded-lg w-full h-[15rem]" src={image} alt={name} />
             </div>

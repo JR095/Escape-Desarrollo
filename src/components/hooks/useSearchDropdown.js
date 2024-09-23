@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-export const useSearchDropdown = (backendRecentSearches, storeSearchTerm, navigate) => {
+export const useSearchDropdown = (backendRecentSearches, storeSearchTerm, navigate, isMobileSearchVisible, toggleMobileSearch) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [showRecentSearches, setShowRecentSearches] = useState(false);
@@ -19,7 +19,17 @@ export const useSearchDropdown = (backendRecentSearches, storeSearchTerm, naviga
       setShowRecentSearches(true);
     } else {
       try {
-        const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/companies/suggestions?query=${value}`);
+        const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/companies/suggestions?query=${value}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
         const data = await response.json();
         setSuggestions(data);
         setShowRecentSearches(false);
@@ -36,7 +46,11 @@ export const useSearchDropdown = (backendRecentSearches, storeSearchTerm, naviga
     setShowRecentSearches(false);
     storeSearchTerm(suggestion);
     navigate(`/search-results?name=${suggestion}`);
-  };
+    setQuery('');
+    if (isMobileSearchVisible) {
+      toggleMobileSearch();
+    }
+  }
 
   // Mostrar búsquedas recientes al enfocar el input
   const handleFocus = () => {

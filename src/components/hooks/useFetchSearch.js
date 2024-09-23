@@ -10,7 +10,6 @@ export const useFetchSearch = (search_term) => {
             try {
                 const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/companies/search?name=${search_term}`);
                 const result = await response.json();
-                console.log('API Response:', result);
                 setData(result);
             } catch (error) {
                 console.error('Error fetching data:', error);
