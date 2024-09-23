@@ -17,12 +17,7 @@ export function AccountSettings() {
     const { user, setUser } = useUser();
     const [formData, setFormData] = useState({
         name: user ? user.name : '',
-        //ubicacion: user ? user.ubicacion : '',
-        //canton: user ? user.canton : '',
-        //distrito: user ? user.distrito : '',
-        //categoria: user ? user.categoria : '',
         email: user ? user.email : '',
-        //numeroTelefonico: user ? user.numeroTelefonico : '',
         description: user ? user.description : ''
     });
 
@@ -62,7 +57,7 @@ export function AccountSettings() {
     );
 
     return (
-        <form className="" onSubmit={handleSubmit}>
+        <form className="relative pb-10" onSubmit={handleSubmit}> {/* Agregamos pb-10 */}
             <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
                 <Navigation />
             </div>
@@ -96,7 +91,7 @@ export function AccountSettings() {
                             <InputProfile placeholder="numeroTelefonico" type="text" id="numeroTelefonico" label="Numero telefonico" defaultValue="Numero telefonico"/>
                             <InputProfile placeholder={user.description} type="text" id="description" label="Descripcion" defaultValue={user.description} value={formData.description} onChange={handleChange}/>
                         </div>
-                        <div className="w-full flex justify-center mt-6">
+                        <div className="w-full flex justify-center mt-6 lg:mt-12 relative z-20">
                             <Buttons />
                         </div>
                     </div>
