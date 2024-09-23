@@ -12,8 +12,25 @@ import {PersonalInformation} from "./components/profile/PersonalInformation"
 import { SearchResults } from "./components/routes/SearchResults";
 import { ForgotPassword } from './components/password/ForgotPassword.jsx';
 import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
+import { useState, useEffect } from "react";
+
 
 export function App() {
+    const [darkMode, setDarkMode] = useState(true);
+
+    useEffect(() => {
+        if (darkMode) {
+          document.body.classList.add('dark');
+        } else {
+          document.body.classList.remove('dark');
+        }
+      }, [darkMode]);
+      
+        const toggleDarkMode = () => {
+          console.log(darkMode);
+          setDarkMode(!darkMode);
+        };
+
     return (
         <ComponentProvider>
             <Routes>
@@ -22,9 +39,9 @@ export function App() {
                 <Route path="/signUpCompanies" element={<SignUpCompanies />} /> 
                 <Route path="/signUpUser" element={<SignUpUsers/>} />
                 <Route path="/signIn" element={<SignIn />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/accountSettings" element={<AccountSettings />} />
-                <Route path="/PersonalInformation" element={<PersonalInformation />} />
+                <Route path="/home" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+                <Route path="/accountSettings" element={<AccountSettings toggleDarkMode={toggleDarkMode}/>} />
+                <Route path="/PersonalInformation" element={<PersonalInformation toggleDarkMode={toggleDarkMode} />} />
                 <Route path="/map" element={<MapPage />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />

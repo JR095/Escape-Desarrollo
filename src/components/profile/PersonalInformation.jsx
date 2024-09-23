@@ -12,27 +12,13 @@ import { CardInformation } from "../cards/CardInformation";
 
 import { Drawer } from "flowbite-react";
 import { useState } from "react";
-export function PersonalInformation() {
+export function PersonalInformation({ toggleDarkMode }) {
 
     const { isMobile } = useFetchMenubar();
 
     const [isOpen, setIsOpen] = useState(false);
     const handleClose = () => setIsOpen(false);
-    const [darkMode, setDarkMode] = useState(true);
     const { user } = useUser();
-
-    useEffect(() => {
-        if (darkMode) {
-          document.body.classList.add('dark');
-        } else {
-          document.body.classList.remove('dark');
-        }
-      }, [darkMode]);
-      
-        const toggleDarkMode = () => {
-          console.log(darkMode);
-          setDarkMode(!darkMode);
-        };
 
     const [id, setId] = useState(0);
     const openCard = (id) => () => {

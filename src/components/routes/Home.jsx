@@ -18,12 +18,11 @@ import { useState } from "react";
 import { use } from "i18next";
 
 
-export function Home() {
+export function Home({toggleDarkMode, darkMode}) {
 
   const { isMobile } = useFetchMenubar();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(true);
   const handleClose = () => setIsOpen(false);
   const [id, setId] = useState(0);
 
@@ -33,19 +32,9 @@ export function Home() {
     setId(id);
   };
 
-  useEffect(() => {
-  if (darkMode) {
-    document.body.classList.add('dark');
-  } else {
-    document.body.classList.remove('dark');
-  }
-}, [darkMode]);
+  
 
-  const toggleDarkMode = () => {
-    console.log(darkMode);
-    setDarkMode(!darkMode);
-  };
-
+  
   
 
   return (

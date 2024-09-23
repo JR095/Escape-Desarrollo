@@ -8,7 +8,7 @@ export function InputProfile({placeholder, type, id, label, defaultValue, readOn
         <input
         type={type}
         id={id}
-        className="border-2 border-sky-400 rounded-md w-full p-2"
+        className="border-2 border-sky-400 rounded-md w-full p-2 dark:bg-[#404040] dark:text-white"
         placeholder={placeholder}
         defaultValue={defaultValue}
         readOnly={readOnly}

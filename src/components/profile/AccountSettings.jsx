@@ -10,7 +10,7 @@ import Modal from '@mui/material/Modal';
 import { ChangePassword } from '../profile/ChangePassword.jsx';
 import { useProfile } from '../hooks/useProfile.js';
 
-export function AccountSettings() {
+export function AccountSettings({ toggleDarkMode }) {
 
     const { modal, openModal } = useProfile();
     const { isMobile } = useFetchMenubar();
@@ -57,16 +57,16 @@ export function AccountSettings() {
     );
 
     return (
-        <form className="relative pb-10" onSubmit={handleSubmit}> {/* Agregamos pb-10 */}
+        <form className="relative pb-10 dark:bg-[#2a2a2a]" onSubmit={handleSubmit}> {/* Agregamos pb-10 */}
             <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
-                <Navigation />
+                <Navigation darkMode={toggleDarkMode} />
             </div>
             <main className="flex flex-col lg:px-12 px-5 overflow-x-hidden transition-all duration-500"
                 style={{
                     marginLeft: isMobile ? '0px' : '80px',
                 }}>
                 <div className="flex pt-4 justify-between">
-                    <h1 className="font-black text-3xl lg:text-4xl mt-2">ESCAPE</h1>
+                    <h1 className="font-black text-3xl lg:text-4xl mt-2 dark:text-white">ESCAPE</h1>
                     <SearchDropdown />
                 </div>
                 
@@ -83,7 +83,7 @@ export function AccountSettings() {
                             <InputProfile placeholder={user.email} type="text" id="email" label="Correo electronico" defaultValue={user.email} value={formData.email} onChange={handleChange}/>
                             <div className='grid '>
                                 <InputProfile placeholder="********" type="password" id="password" label="Password" defaultValue="********" readOnly />
-                                <a className=' text-blue-700 items-end cursor-pointer' onClick={openModal}>Change</a>
+                                <a className=' text-blue-700 items-end cursor-pointer dark:text-sky-400' onClick={openModal}>Change</a>
                             </div>
                             <Modal open={modal} onClose={openModal}>
                                 {body}
