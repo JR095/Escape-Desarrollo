@@ -29,7 +29,7 @@ export function AccountSettings() {
     const handleChange = (e) => {
         setFormData({
             ...formData,
-            [e.target.id]: e.target.value  // Actualiza el valor del input correspondiente
+            [e.target.id]: e.target.value  
         });
     };
     
@@ -37,16 +37,15 @@ export function AccountSettings() {
         e.preventDefault();
         try {
             const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/update-user', {
-                method: 'POST', // o 'PUT' si prefieres actualizar
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify(formData),  // Enviar los datos editados
+                body: JSON.stringify(formData),  
             });
 
             const data = await response.json();
             if (response.ok) {
-                // Actualizar el contexto del usuario con los nuevos datos
-                setUser(data.user);  // data.user es lo que el backend debería devolver después de la actualización
+                setUser(data.user);
                 console.log("Datos actualizados con éxito", data.user);
             } else {
                 console.error("Error al actualizar los datos:", data.message);
@@ -76,16 +75,13 @@ export function AccountSettings() {
                     <SearchDropdown />
                 </div>
                 
-                {/* Diseño responsive para móvil y escritorio */}
                 <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen gap-8 lg:gap-28">
                     
-                    {/* Imagen de perfil y texto, se apilarán en móvil */}
                     <div className="flex flex-col justify-center items-center gap-4">
                         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile_Img" className="rounded-full h-[7rem] w-[7rem] mt-[2rem]" />
                         <p className="text-sky-400 font-medium">+ Cambiar imagen</p>
                     </div>
 
-                    {/* Inputs y botones, se apilan en móvil */}
                     <div className="flex flex-col gap-6 w-full lg:w-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <InputProfile placeholder={user.name} type="text" id="name" label="Name" defaultValue={user.name} value={formData.name} onChange={handleChange}/>
@@ -100,7 +96,6 @@ export function AccountSettings() {
                             <InputProfile placeholder="numeroTelefonico" type="text" id="numeroTelefonico" label="Numero telefonico" defaultValue="Numero telefonico"/>
                             <InputProfile placeholder="presentacion" type="text" id="presentacion" label="Presentacion" defaultValue="Presentacion"/>
                         </div>
-                        {/* Botones se apilan debajo de los inputs */}
                         <div className="w-full flex justify-center mt-6">
                             <Buttons />
                         </div>
