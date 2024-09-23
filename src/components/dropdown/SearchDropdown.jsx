@@ -9,16 +9,17 @@ export function SearchDropdown() {
   const [search_term, setSearchTerm] = useState('');
   const navigate = useNavigate();
   const { storeSearchTerm } = useStoreSearch();
-  const { recentSearches: backendRecentSearches, loading: historyLoading, handleDeleteSearch } = useFetchSearchHistory();
+  const { recentSearches: backendRecentSearches, loading: historyLoading, handleDeleteSearch, fetchSearchHistory } = useFetchSearchHistory();
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault();
     if (search_term) {
       storeSearchTerm(search_term);
+      await fetchSearchHistory();
       navigate(`/search-results?name=${search_term}`);
-      setSearchTerm('');  // Limpiar el input después de la búsqueda
+      setSearchTerm('');
       if (isMobileSearchVisible) {
-        toggleMobileSearch();  // Oculta la ventana en dispositivos móviles
+        toggleMobileSearch(); 
       }
     }
   };
@@ -97,9 +98,14 @@ export function SearchDropdown() {
                   <li
                     key={search.id}
                     className="px-4 py-2 cursor-pointer hover:bg-gray-200 hover:dark:bg-[#5a5a5a] rounded-md flex justify-between"
-                    onClick={() => handleSuggestionClick(search.search_term)}
                   >
-                    <span>{search.search_term}</span>
+                    <button
+                      type="button"
+                      className="w-full text-left"
+                      onClick={() => handleSuggestionClick(search.search_term)}
+                    >
+                      {search.search_term}
+                    </button>
                     <button onClick={(e) => { e.stopPropagation(); handleDeleteSearch(search.id); }}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
@@ -120,9 +126,15 @@ export function SearchDropdown() {
               <li
                 key={index}
                 className="px-4 py-2 cursor-pointer hover:bg-gray-100 rounded-md hover:dark:bg-[#5a5a5a]"
-                onClick={() => handleSuggestionClick(suggestion)}
               >
-                {suggestion}
+                <button
+                  type="button"
+                  className="w-full text-left"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                >
+                  {suggestion}
+                </button>
+
               </li>
             ))}
           </ul>

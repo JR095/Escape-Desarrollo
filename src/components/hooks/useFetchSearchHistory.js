@@ -39,5 +39,5 @@ export const useFetchSearchHistory = () => {
     fetchSearchHistory();
   }, []);
 
-  return { recentSearches, loading, handleDeleteSearch };
+  return { recentSearches, loading, handleDeleteSearch, fetchSearchHistory };
 };

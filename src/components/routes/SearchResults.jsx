@@ -36,7 +36,7 @@ export function SearchResults() {
                     <Navigation darkMode={toggleDarkMode} />
                 </div>
 
-                <main className="flex flex-col lg:px-12 px-5 transition-all duration-500"
+                <main className="flex flex-col lg:px-12 px-5 h-screen overflow-x-hidden"
                     style={{
                         marginLeft: isMobile ? '0px' : '80px',
                     }}>
