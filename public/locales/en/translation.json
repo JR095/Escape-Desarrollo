@@ -41,5 +41,8 @@
     "goSignUp": "You don't have an account?",
     "createAccount": "Create an account",
     "iCompanyName": "Company Name",
-    "iCategory": "Category"
+    "iCategory": "Category",
+    "ShareLocation": "Share Location",
+    "ShareLocationInfo": "We need your location to recommend places nearby that you might enjoy.",
+    "GotIt": "Got it!"
   }

@@ -103,7 +103,7 @@ export function SignUpUsers() {
 
                 <div className="flex items-center relative">
                     <input className="shadow-md p-3 rounded-lg border-none" type="checkbox" id="share-location" name="shareLocation" />
-                    <label htmlFor="share-location" className="ml-4 text-sky-500 font-medium">Share Location</label>
+                    <label htmlFor="share-location" className="ml-4 text-sky-500 font-medium">{t('ShareLocation')}</label>
                     <div className="ml-2 relative">
                         <svg onClick={handleTooltipToggle} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 stroke-gray-400 cursor-pointer">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
@@ -112,12 +112,12 @@ export function SignUpUsers() {
                         {/* Tooltip */}
                         {isTooltipVisible && (
                             <div className="absolute left-0 top-10 z-10 w-48 bg-white shadow-lg p-3 rounded-lg text-sm text-gray-700">
-                                <p>We need your location to recommend places nearby that you might enjoy.</p>
+                                <p>{t('ShareLocationInfo')}</p>
                                 <button 
                                     className="text-sky-500 mt-2"
                                     onClick={handleTooltipToggle}
                                 >
-                                    Got it!
+                                    {t('GotIt')}
                                 </button>
                             </div>
                         )}
