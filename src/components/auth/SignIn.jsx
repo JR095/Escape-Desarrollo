@@ -5,6 +5,9 @@ import { AuthCarousel } from "./AuthCaruosel";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useUser } from "../../context/UserContext.jsx";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
+
 
 export function SignIn() {
     const { t } = useTranslation();
@@ -13,9 +16,28 @@ export function SignIn() {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const { user, setUser } = useUser();
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const validateFields = () => {
+        if (!email || !password) {
+            setErrorMessage('Por favor, completa todos los campos solicitados.');
+            return false;
+        }
+        return true;
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if(!validateFields()) {
+            setShowError(true);
+            setShowSuccess(false);
+            return;
+        }
+
+        setShowError(false);
 
         const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/login', {
             method: 'POST',
@@ -32,9 +54,18 @@ export function SignIn() {
         const data = await response.json();
 
         if (response.ok) {
-            navigate('/home');
+            setShowError(false);
+            setShowSuccess(true);
             setUser(data.user);
             console.log(data.user);
+            setTimeout(() => {
+                navigate('/home');
+            }, 2500);
+        }
+        else 
+        {
+            setShowSuccess(false);
+            setShowError(true);
         }
     };
 
@@ -66,6 +97,20 @@ export function SignIn() {
         </div>
 
         <AuthCarousel />
+
+        {showSuccess && (
+            <Alert severity="success" className="absolute top-4 right-4">
+                <AlertTitle>Éxito</AlertTitle>
+                ¡Inicio de sesión correctamente! Serás redirigido en breve.
+            </Alert>
+        )}
+
+        {showError && (
+            <Alert severity="error" className="absolute top-4 right-4">
+                <AlertTitle>Error</AlertTitle>
+                ¡Error! Credenciales inválidas, por favor introduce las correctas.
+            </Alert>
+        )}
 
         </div>
     );
