@@ -5,6 +5,8 @@ import { Selected } from "../selected/Selected";
 import { AuthCarousel } from "./AuthCaruosel";
 import { useTranslation } from 'react-i18next';
 import { useState } from "react";
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 export function SignUpUsers() {
 
@@ -22,9 +24,32 @@ export function SignUpUsers() {
     const [password_confirmation, setPassword_confirmation] = useState('');
     const [description, setDescription] = useState('');
     const navigate = useNavigate();
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrormessage] = useState('');
+
+    const validateFields = () => {
+        if (!name || !email || !password || !password_confirmation) {
+            setErrormessage('Por favor, completa todos los campos solicitados.');
+            return false;
+        }
+        if (password !== password_confirmation) {
+            setErrormessage('Las contraseñas no coinciden.');
+            return false;
+        }
+        return true;
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateFields()) {
+            setShowError(true);
+            setShowSuccess(false);
+            return;
+        }
+
+        setShowError(false);
     
         if (document.getElementById('share-location').checked) {
             try {
@@ -55,11 +80,17 @@ export function SignUpUsers() {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-    
-                navigate('/signIn');
+                
+                setShowSuccess(true);
+                setShowError(false);
+                setTimeout(() => {
+                    navigate('/signIn');
+                }, 2500);
                 
             } catch (error) {
                 console.error("Error al obtener la ubicación o al enviar los datos:", error);
+                setShowError(true);
+                setShowSuccess(false);
             }
         } else {
             try {
@@ -80,11 +111,18 @@ export function SignUpUsers() {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-    
-                navigate('/signIn');
+                
+                setShowSuccess(true);
+                setShowError(false);
+                setTimeout(() => {
+                    navigate('/signIn');
+                }, 2500);
+                //navigate('/signIn');
                 
             } catch (error) {
                 console.error("Error al enviar los datos sin ubicación:", error);
+                setShowError(true);
+                setShowSuccess(false);
             }
         }
     };
@@ -143,6 +181,20 @@ export function SignUpUsers() {
         </div>
 
         <AuthCarousel />
+
+        {showSuccess && (
+            <Alert severity="success" className="absolute top-4 right-4">
+                <AlertTitle>Éxito</AlertTitle>
+                ¡Inicio de sesión correctamente! Serás redirigido en breve.
+            </Alert>
+        )}
+
+        {showError && (
+            <Alert severity="error" className="absolute top-4 right-4">
+                <AlertTitle>Error</AlertTitle>
+                ¡Error! Credenciales inválidas, por favor introduce las correctas.
+            </Alert>
+        )}
 
         </div>
     );
