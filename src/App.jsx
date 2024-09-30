@@ -12,6 +12,7 @@ import {PersonalInformation} from "./components/profile/PersonalInformation"
 import { SearchResults } from "./components/routes/SearchResults";
 import { ForgotPassword } from './components/password/ForgotPassword.jsx';
 import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
+import { CreatePost } from "./components/routes/CreatePost.jsx";
 import { useState, useEffect } from "react";
 
 
@@ -45,6 +46,7 @@ export function App() {
                 <Route path="/map" element={<MapPage />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/create-post" element={<CreatePost />} />
                 <Route path="/*" element={<Navigate to="/" />} />
             </Routes>
         </ComponentProvider>
