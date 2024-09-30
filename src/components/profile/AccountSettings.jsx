@@ -57,7 +57,7 @@ export function AccountSettings({ toggleDarkMode }) {
     );
 
     return (
-        <form className="relative pb-10 dark:bg-[#2a2a2a]" onSubmit={handleSubmit}> {/* Agregamos pb-10 */}
+        <form className="relative pb-10 dark:bg-[#2a2a2a]" onSubmit={handleSubmit}>
             <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
                 <Navigation darkMode={toggleDarkMode} />
             </div>
