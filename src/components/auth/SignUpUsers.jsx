@@ -22,11 +22,126 @@ export function SignUpUsers() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password_confirmation, setPassword_confirmation] = useState('');
-    const [description, setDescription] = useState('');
+    const [selectedCanton, setSelectedCanton] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState('');
+    const [selectedPreferences_1, setSelectedPreferences_1] = useState('');
+    const [selectedPreferences_2, setSelectedPreferences_2] = useState('');
+    const [selectedPreferences_3, setSelectedPreferences_3] = useState('');
     const navigate = useNavigate();
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrormessage] = useState('');
+
+    const canton_id = [
+        { id: "1", name: "Puntarenas" },
+        { id: "2", name: "Esparza" },
+        { id: "3", name: "Buenos Aires" },
+        { id: "4", name: "Montes de Oro" },
+        { id: "5", name: "Aguirre" },
+        { id: "6", name: "Golfito" },
+        { id: "7", name: "Coto Brus" },
+        { id: "8", name: "Parrita" },
+        { id: "9", name: "Corredores" },
+        { id: "10", name: "Garabito" },
+    ];
+
+    const district_id = [
+        { id: "1", name: "Puntarenas" },
+        { id: "2", name: "Pitahaya" },
+        { id: "3", name: "Chomes" },
+        { id: "4", name: "Lepanto" },
+        { id: "5", name: "Paquera" },
+        { id: "6", name: "Manzanillo" },
+        { id: "7", name: "Guacimal" },
+        { id: "8", name: "Barranca" },
+        { id: "9", name: "Monteverde" },
+        { id: "10", name: "Isla del Coco" },
+        { id: "11", name: "Cóbano" },
+        { id: "12", name: "Chacarita" },
+        { id: "13", name: "Chira" },
+        { id: "14", name: "Acapulco" },
+        { id: "15", name: "El Roble" },
+        { id: "16", name: "Esparza centro" },
+        { id: "17", name: "Espíritu Santo" },
+        { id: "18", name: "San Juan" },
+        { id: "19", name: "San Rafael" },
+        { id: "20", name: "San Jerónimo" },
+    ];
+
+    const preferences_1 = [
+        { id: "1", name: "Restaurantes" },
+        { id: "2", name: "Sodas" },
+        { id: "3", name: "Comida Callejera" },
+        { id: "4", name: "Cafeterias" },
+        { id: "5", name: "Heladerías" },
+        { id: "6", name: "Tiendas de Ropa" },
+        { id: "7", name: "Artesanías" },
+        { id: "8", name: "Mercados" },
+        { id: "9", name: "Ferias" },
+        { id: "10", name: "Caminatas" },
+        { id: "11", name: "Deportes de Aventura" },
+        { id: "12", name: "Parques y Jardines" },
+        { id: "13", name: "Excursiones Naturales" },
+        { id: "14", name: "Museos" },
+        { id: "15", name: "Teatros" },
+        { id: "16", name: "Exposiciones de Arte" },
+        { id: "17", name: "Cine" },
+        { id: "18", name: "Conciertos" },
+        { id: "19", name: "Festivales" },
+        { id: "20", name: "Piscinas" },
+        { id: "21", name: "Discotecas" },
+        { id: "22", name: "Spas" },
+    ];
+
+    const preferences_2 = [
+        { id: "1", name: "Restaurantes" },
+        { id: "2", name: "Sodas" },
+        { id: "3", name: "Comida Callejera" },
+        { id: "4", name: "Cafeterias" },
+        { id: "5", name: "Heladerías" },
+        { id: "6", name: "Tiendas de Ropa" },
+        { id: "7", name: "Artesanías" },
+        { id: "8", name: "Mercados" },
+        { id: "9", name: "Ferias" },
+        { id: "10", name: "Caminatas" },
+        { id: "11", name: "Deportes de Aventura" },
+        { id: "12", name: "Parques y Jardines" },
+        { id: "13", name: "Excursiones Naturales" },
+        { id: "14", name: "Museos" },
+        { id: "15", name: "Teatros" },
+        { id: "16", name: "Exposiciones de Arte" },
+        { id: "17", name: "Cine" },
+        { id: "18", name: "Conciertos" },
+        { id: "19", name: "Festivales" },
+        { id: "20", name: "Piscinas" },
+        { id: "21", name: "Discotecas" },
+        { id: "22", name: "Spas" },
+    ];
+
+    const preferences_3 = [
+        { id: "1", name: "Restaurantes" },
+        { id: "2", name: "Sodas" },
+        { id: "3", name: "Comida Callejera" },
+        { id: "4", name: "Cafeterias" },
+        { id: "5", name: "Heladerías" },
+        { id: "6", name: "Tiendas de Ropa" },
+        { id: "7", name: "Artesanías" },
+        { id: "8", name: "Mercados" },
+        { id: "9", name: "Ferias" },
+        { id: "10", name: "Caminatas" },
+        { id: "11", name: "Deportes de Aventura" },
+        { id: "12", name: "Parques y Jardines" },
+        { id: "13", name: "Excursiones Naturales" },
+        { id: "14", name: "Museos" },
+        { id: "15", name: "Teatros" },
+        { id: "16", name: "Exposiciones de Arte" },
+        { id: "17", name: "Cine" },
+        { id: "18", name: "Conciertos" },
+        { id: "19", name: "Festivales" },
+        { id: "20", name: "Piscinas" },
+        { id: "21", name: "Discotecas" },
+        { id: "22", name: "Spas" },
+    ];
 
     const validateFields = () => {
         if (!name || !email || !password || !password_confirmation) {
@@ -42,6 +157,16 @@ export function SignUpUsers() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        console.log("Nombre:", name);
+        console.log("Email:", email);
+        console.log("Contraseña:", password);
+        console.log("Confirmar Contraseña:", password_confirmation);
+        console.log("Canton:", selectedCanton);
+        console.log("Distrito:", selectedDistrict);
+        console.log("Preferencia 1:", selectedPreferences_1);
+        console.log("Preferencia 2:", selectedPreferences_2);
+        console.log("Preferencia 3:", selectedPreferences_3);
 
         if (!validateFields()) {
             setShowError(true);
@@ -73,7 +198,12 @@ export function SignUpUsers() {
                         password_confirmation,
                         latitude: latitude,
                         longitude: longitude,
-                        description,
+                        canton_id: selectedCanton,
+                        district_id: selectedDistrict,
+                        preferences_1: selectedPreferences_1,
+                        preferences_2: selectedPreferences_2,
+                        preferences_3: selectedPreferences_3,
+
                     })
                 });
     
@@ -104,7 +234,12 @@ export function SignUpUsers() {
                         password,
                         password_confirmation,
                         latitude: null,
-                        longitude: null
+                        longitude: null,
+                        canton_id: selectedCanton,
+                        district_id: selectedDistrict,
+                        preferences_1: selectedPreferences_1,
+                        preferences_2: selectedPreferences_2,
+                        preferences_3: selectedPreferences_3,
                     })
                 });
     
@@ -138,9 +273,39 @@ export function SignUpUsers() {
 
                 <AuthInput name="name" placeholder={t('iName')} type="text" onChange={e => setName(e.target.value)}/>
                 <AuthInput name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)}/>
-                <AuthInput name="description" placeholder={t('Descripción')} type="text" onChange={e => setDescription(e.target.value)}/>
                 <AuthInput name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)}/>
                 <AuthInput name="passwordConfirm" placeholder={t('iConfirmPassword')} type="password" onChange={e => setPassword_confirmation(e.target.value)}/>
+
+                <Selected 
+                    options={canton_id} 
+                    placeholder={t('iCanton')} 
+                    onChange={e => setSelectedCanton(e.target.value)} 
+                />
+
+                <Selected 
+                    options={district_id} 
+                    placeholder={t('iDistrict')} 
+                    onChange={e => setSelectedDistrict(e.target.value)} 
+                />
+
+                <Selected 
+                    options={preferences_1} 
+                    placeholder={t('iPreference_1')} 
+                    onChange={e => setSelectedPreferences_1(e.target.value)} 
+                />
+
+                <Selected 
+                    options={preferences_2} 
+                    placeholder={t('iPreference_2')} 
+                    onChange={e => setSelectedPreferences_2(e.target.value)} 
+                />
+
+                <Selected 
+                    options={preferences_3} 
+                    placeholder={t('iPreference_3')} 
+                    onChange={e => setSelectedPreferences_3(e.target.value)}
+                />
+
 
                 <div className="flex items-center relative">
                     <input className="shadow-md p-3 rounded-lg border-none" type="checkbox" id="share-location" name="shareLocation" />
