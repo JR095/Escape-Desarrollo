@@ -16,9 +16,9 @@ import { Drawer } from "flowbite-react";
 import { useState } from "react";
 
 import { use } from "i18next";
+import { Posts } from "./Posts.jsx";
 
-
-export function Home({toggleDarkMode, darkMode}) {
+export function Home({ toggleDarkMode, darkMode }) {
 
   const { isMobile } = useFetchMenubar();
 
@@ -32,11 +32,6 @@ export function Home({toggleDarkMode, darkMode}) {
     setId(id);
   };
 
-  
-
-  
-  
-
   return (
 
     <div className="flex dark:bg-[#2a2a2a]">
@@ -44,8 +39,6 @@ export function Home({toggleDarkMode, darkMode}) {
       <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
         <Navigation darkMode={toggleDarkMode} />
       </div>
-      
-
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
           <CardInformation id={id} onClose={handleClose} />
@@ -62,7 +55,6 @@ export function Home({toggleDarkMode, darkMode}) {
         </div>
 
         <MapThumbnail />
-        
         <div className="mt-10">
           <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">Categorías</h2>
           <CategoriesCarousel />
@@ -74,8 +66,10 @@ export function Home({toggleDarkMode, darkMode}) {
           </h2>
           <CarouselCard setIsOpen={openCard} />
         </div>
-        <PostCard street="Centro" city={"Puntarenas"} name={"Soda Maria"} info={"Pedidos solo por whatsapp, llamadas no atendemos"} category={"Soda"} image={papa} likes="10" comments="10" darkMode={darkMode} />
-        
+
+        <div className="mt-10">
+          <Posts darkMode={darkMode}/>
+        </div>
       </main>
     </div>
   );
