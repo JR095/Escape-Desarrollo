@@ -24,6 +24,7 @@ export function Posts({ darkMode }) {
         posts.map((post) => (
           <PostCard
             key={post.id}
+            id={post.id}
             street="Centro"
             city="Puntarenas"
             name="Soda Maria"

@@ -14,6 +14,7 @@ import { ForgotPassword } from './components/password/ForgotPassword.jsx';
 import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
 import { CreatePost } from "./components/routes/CreatePost.jsx";
 import { useState, useEffect } from "react";
+import { UpdatePost } from "./components/routes/UpdatePost.jsx";
 
 
 export function App() {
@@ -47,6 +48,7 @@ export function App() {
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/create-post" element={<CreatePost />} />
+                <Route path="/update-post/:postId" element={<UpdatePost />} />
                 <Route path="/*" element={<Navigate to="/" />} />
             </Routes>
         </ComponentProvider>

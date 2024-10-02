@@ -5,8 +5,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation, } from 'swiper/modules';
-
+import { PostDropdown } from "../dropdown/PostDropdown";
 export function PostCard({
+  id,
   images = [],
   name,
   street,
@@ -25,14 +26,18 @@ export function PostCard({
           src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
           className=" inline-block h-8 w-8 rounded-full"
         />
-        <div className="flex flex-col ml-3 text-sm">
-          <span className="text-black font-semibold text-lg dark:text-white">
-            {name}
-          </span>
-          <span className="text-[#9A9797] dark:text-[#BCBCBC]">
-            {category} - {city} {street}
-          </span>
-        </div>
+
+          <div className="flex flex-col ml-3 text-sm">
+            <span className="text-black font-semibold text-lg dark:text-white">
+              {name}
+            </span>
+            <span className="text-[#9A9797] dark:text-[#BCBCBC]">
+              {category} - {city} {street}
+            </span>
+          </div>
+          <div className="ml-auto">
+            <PostDropdown postId={id} />
+          </div>
       </div>
       <p className="px-4 dark:text-white">{info}</p>
 
