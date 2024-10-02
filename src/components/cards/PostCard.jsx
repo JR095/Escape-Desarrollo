@@ -1,8 +1,13 @@
 import propTypes from "prop-types";
 import "../../index.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { Pagination, Navigation, } from 'swiper/modules';
 
 export function PostCard({
-  image,
+  images = [],
   name,
   street,
   city,
@@ -13,7 +18,7 @@ export function PostCard({
   darkMode,
 }) {
   return (
-    <div className=" items-center justify-between  md:w-[333px]  lg:max-w-sm sm:w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-[#404040] dark:border-gray-700">
+    <div className=" items-center justify-between lg:max-w-sm sm:w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-[#404040] dark:border-gray-700">
       <div className="flex items-center px-4 pt-4">
         <img
           alt="Tania Andrew"
@@ -30,7 +35,25 @@ export function PostCard({
         </div>
       </div>
       <p className="px-4 dark:text-white">{info}</p>
-      <img className="mt-2" src={image} alt="" />
+
+      <div className="mt-2">
+        {images.length > 0 && (
+          <Swiper
+            spaceBetween={5}
+            slidesPerView={1}
+            navigation
+            pagination={{ clickable: true }}
+            modules={[Navigation, Pagination]}
+          >
+            {images.map((image, index) => (
+              <SwiperSlide key={index}>
+                <img src={image} alt={`Post Image ${index}`} className="w-full h-64 object-fill" />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
+      </div>
+
       <div className="flex items-center justify-between px-4 pt-4">
         <div className="flex items-center gap-4">
           <svg
@@ -80,7 +103,7 @@ export function PostCard({
 }
 
 PostCard.propTypes = {
-  image: propTypes.string,
+  images: propTypes.arrayOf(propTypes.string),
   name: propTypes.string,
   city: propTypes.string,
   starts: propTypes.string,
