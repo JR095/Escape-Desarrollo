@@ -4,11 +4,11 @@ import { Navigation } from "../navigation/Navigation";
 import { SearchDropdown } from "../dropdown/SearchDropdown";
 import { CarouselCard } from "../carousel/CarouselCard";
 import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
-import { useEffect } from "react";
 import { useUser } from '../../context/UserContext.jsx';
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { CardInformation } from "../cards/CardInformation";
 ("use client");
+import propTypes from "prop-types";
 
 import { Drawer } from "flowbite-react";
 import { useState } from "react";
@@ -113,3 +113,7 @@ export function PersonalInformation({ toggleDarkMode }) {
         </div>
     );
 }
+
+PersonalInformation.propTypes = {
+    toggleDarkMode: propTypes.func
+  };

@@ -13,6 +13,10 @@ div[class*="flex"][class*="h-full"][class*="snap-mandatory"] {
   display: none !important;
 }
 
+.dark\:divide-gray-700:is(.dark *) > :not([hidden]) ~ :not([hidden]) {
+  border-color: #4F4F4F !important;
+}
+
 *{
 
     margin: 0; 
