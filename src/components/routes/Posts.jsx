@@ -19,7 +19,7 @@ export function Posts({ darkMode }) {
   }, []);
 
   return (
-    <div className='grid grid-cols-[repeat(auto-fit,minmax(220px,_1fr))] gap-9'>
+    <div className='grid grid-cols-[repeat(auto-fit,minmax(270px,_1fr))] gap-12'>
       {posts.length > 0 ? (
         posts.map((post) => (
           <PostCard
@@ -29,8 +29,11 @@ export function Posts({ darkMode }) {
             city="Puntarenas"
             name="Soda Maria"
             info={post.description}
-            category="Soda"
-            images={Array.isArray(post.files) ? post.files.map(file => `http://localhost/escape-desarrollo-backend/public/storage/${file.file_path}`) : []} 
+            category="Soda"            
+            media={Array.isArray(post.files) ? post.files.map(file => ({
+              url: `http://localhost/escape-desarrollo-backend/public/storage/${file.file_path}`,
+              type: file.file_type === 'image' ? 'image' : 'video',
+            })) : []}
             likes="10"
             comments="10"
             darkMode={darkMode}

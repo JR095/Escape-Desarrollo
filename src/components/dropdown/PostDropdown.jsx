@@ -19,11 +19,14 @@ export function PostDropdown({ postId }) {
                 className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white dark:bg-[#404040] shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
             >
                 <div className="py-1">
-                <MenuItem onClick={() => navigate(`/update-post/${postId}`)}>
-            <span className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-200 hover:dark:bg-[#5a5a5a]">
-              Editar
-            </span>
-          </MenuItem>
+                    <MenuItem onClick={() => {
+                        console.log(postId);
+                        navigate(`/update-post/${postId}`);
+                    }}>
+                        <span className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-200 hover:dark:bg-[#5a5a5a]">
+                            Editar
+                        </span>
+                    </MenuItem>
                     <MenuItem>
                         <a
                             href="#"

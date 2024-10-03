@@ -8,7 +8,7 @@ import { Pagination, Navigation, } from 'swiper/modules';
 import { PostDropdown } from "../dropdown/PostDropdown";
 export function PostCard({
   id,
-  images = [],
+  media = [],
   name,
   street,
   city,
@@ -42,7 +42,7 @@ export function PostCard({
       <p className="px-4 dark:text-white">{info}</p>
 
       <div className="mt-2">
-        {images.length > 0 && (
+        {media.length > 0 && (
           <Swiper
             spaceBetween={5}
             slidesPerView={1}
@@ -50,9 +50,16 @@ export function PostCard({
             pagination={{ clickable: true }}
             modules={[Navigation, Pagination]}
           >
-            {images.map((image, index) => (
+            {media.map((item, index) => (
               <SwiperSlide key={index}>
-                <img src={image} alt={`Post Image ${index}`} className="w-full h-64 object-fill" />
+                {item.type === 'image' ? (
+                  <img src={item.url} alt={`Post Image ${index}`} className="w-full h-72 object-fill" />
+                ) : (
+                  <video className="w-full h-72 object-contain" controls>
+                    <source src={item.url} />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
               </SwiperSlide>
             ))}
           </Swiper>
@@ -108,7 +115,7 @@ export function PostCard({
 }
 
 PostCard.propTypes = {
-  images: propTypes.arrayOf(propTypes.string),
+  
   name: propTypes.string,
   city: propTypes.string,
   starts: propTypes.string,

@@ -48,7 +48,7 @@ export function App() {
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/create-post" element={<CreatePost />} />
-                <Route path="/update-post/:postId" element={<UpdatePost />} />
+                <Route path="/update-post/:id" element={<UpdatePost />} />
                 <Route path="/*" element={<Navigate to="/" />} />
             </Routes>
         </ComponentProvider>
