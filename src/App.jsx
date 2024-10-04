@@ -13,6 +13,7 @@ import { SearchResults } from "./components/routes/SearchResults";
 import { ForgotPassword } from './components/password/ForgotPassword.jsx';
 import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
 import { CreatePost } from "./components/routes/CreatePost.jsx";
+import { Categories } from "./components/routes/Categories.jsx";
 import { useState, useEffect } from "react";
 
 
@@ -39,6 +40,7 @@ export function App() {
                 <Route path="/Card" element={<CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/>} />  
                 <Route path="/signUpCompanies" element={<SignUpCompanies />} /> 
                 <Route path="/signUpUser" element={<SignUpUsers/>} />
+                <Route path="/Categories" element={<Categories toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/home" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
                 <Route path="/accountSettings" element={<AccountSettings toggleDarkMode={toggleDarkMode}/>} />
