@@ -16,7 +16,9 @@ export function Filter({
     console.log(district);
   };
   return (
-      <div className="flex flex-col w-[400px] h-[100vh] bg-white dark:bg-[#404040] dark:hover:bg-[#404040]">
+
+      <div className="flex flex-col h-[100vh] right-0 w-full  md:w-[25vw] bg-white dark:bg-[#404040] dark:hover:bg-[#404040] md:fixed ">
+            
         <h3 className="font-semibold text-center text-xl my-3 dark:text-white">
           Filtros
         </h3>
