@@ -1,9 +1,13 @@
 import "../../index.css";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { useNavigate } from 'react-router-dom';
+import { usePosts } from "../hooks/usePosts";
 
 export function PostDropdown({ postId }) {
     const navigate = useNavigate();
+
+    const { handleDeletePost, error } = usePosts();
+
     return (
         <Menu as="div" className="relative inline-block text-left">
             <div>
@@ -27,13 +31,10 @@ export function PostDropdown({ postId }) {
                             Editar
                         </span>
                     </MenuItem>
-                    <MenuItem>
-                        <a
-                            href="#"
-                            className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-200 hover:dark:bg-[#5a5a5a]"
-                        >
+                    <MenuItem onClick={() => handleDeletePost(postId)}>
+                        <span className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-200 hover:dark:bg-[#5a5a5a]">
                             Eliminar
-                        </a>
+                        </span>
                     </MenuItem>
 
                 </div>

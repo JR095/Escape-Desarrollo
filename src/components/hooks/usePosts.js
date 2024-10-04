@@ -179,6 +179,38 @@ export const usePosts = () => {
         }
     };
 
+    const handleDeletePost = async (id) => {
+        if (!id) {
+            setError('ID de la publicación no proporcionado. No se puede eliminar la publicación.');
+            return;
+        }
+
+        const confirmDelete = window.confirm('¿Estás seguro de que deseas eliminar esta publicación?');
+        if (!confirmDelete) return;
+
+        try {
+            const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/delete/post/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log('Publicación eliminada:', data);
+
+        } catch (error) {
+            console.error('Error al eliminar la publicación:', error);
+            setError('Error al eliminar la publicación. Intente nuevamente más tarde.');
+        }
+    };
+
+
     return {
         description,
         setDescription,
@@ -188,6 +220,7 @@ export const usePosts = () => {
         handleDragOver,
         handleCreatePost,
         handleUpdatePost,
+        handleDeletePost,
         error,
         setError,
         files,
