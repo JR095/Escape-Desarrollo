@@ -278,31 +278,31 @@ export function SignUpUsers() {
 
                 <Selected 
                     options={canton_id} 
-                    placeholder={t('iCanton')} 
+                    placeholder={t('Canton')} 
                     onChange={e => setSelectedCanton(e.target.value)} 
                 />
 
                 <Selected 
                     options={district_id} 
-                    placeholder={t('iDistrict')} 
+                    placeholder={t('District')} 
                     onChange={e => setSelectedDistrict(e.target.value)} 
                 />
 
                 <Selected 
                     options={preferences_1} 
-                    placeholder={t('iPreference_1')} 
+                    placeholder={t('Preference_1')} 
                     onChange={e => setSelectedPreferences_1(e.target.value)} 
                 />
 
                 <Selected 
                     options={preferences_2} 
-                    placeholder={t('iPreference_2')} 
+                    placeholder={t('Preference_2')} 
                     onChange={e => setSelectedPreferences_2(e.target.value)} 
                 />
 
                 <Selected 
                     options={preferences_3} 
-                    placeholder={t('iPreference_3')} 
+                    placeholder={t('Preference_3')} 
                     onChange={e => setSelectedPreferences_3(e.target.value)}
                 />
 
