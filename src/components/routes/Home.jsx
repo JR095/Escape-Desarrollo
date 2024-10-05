@@ -2,18 +2,15 @@ import "../../index.css"
 //import { Sidebar } from "../navigation/Sidebar";
 import { Navigation } from "../navigation/Navigation";
 import { SearchDropdown } from "../dropdown/SearchDropdown";
-import map from "../../assets/imgs/locateMap.jpg";
 import { CarouselCard } from "../carousel/CarouselCard";
 import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
 import { MapThumbnail } from "../map/MapThumbnail.jsx";
-import { useEffect } from "react";
 import { CategoriesCarousel } from "../carousel/CategoriesCarousel.jsx"
 import { CardInformation } from "../cards/CardInformation";
-import { PostCard } from "../cards/PostCard.jsx";
-import papa from "../../assets/imgs/papas.jpg";
 ("use client");
 import { Drawer } from "flowbite-react";
 import { useState } from "react";
+import propTypes from "prop-types";
 
 import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
@@ -74,3 +71,8 @@ export function Home({ toggleDarkMode, darkMode }) {
     </div>
   );
 }
+
+Home.propTypes = {
+  toggleDarkMode: propTypes.func,
+  darkMode: propTypes.bool
+};
