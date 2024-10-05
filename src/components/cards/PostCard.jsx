@@ -5,9 +5,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation, } from 'swiper/modules';
-
+import { PostDropdown } from "../dropdown/PostDropdown";
 export function PostCard({
-  images = [],
+  id,
+  media = [],
   name,
   street,
   city,
@@ -25,19 +26,23 @@ export function PostCard({
           src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
           className=" inline-block h-8 w-8 rounded-full"
         />
-        <div className="flex flex-col ml-3 text-sm">
-          <span className="text-black font-semibold text-lg dark:text-white">
-            {name}
-          </span>
-          <span className="text-[#9A9797] dark:text-[#BCBCBC]">
-            {category} - {city} {street}
-          </span>
-        </div>
+
+          <div className="flex flex-col ml-3 text-sm">
+            <span className="text-black font-semibold text-lg dark:text-white">
+              {name}
+            </span>
+            <span className="text-[#9A9797] dark:text-[#BCBCBC]">
+              {category} - {city} {street}
+            </span>
+          </div>
+          <div className="ml-auto">
+            <PostDropdown postId={id} />
+          </div>
       </div>
       <p className="px-4 dark:text-white">{info}</p>
 
       <div className="mt-2">
-        {images.length > 0 && (
+        {media.length > 0 && (
           <Swiper
             spaceBetween={5}
             slidesPerView={1}
@@ -45,9 +50,16 @@ export function PostCard({
             pagination={{ clickable: true }}
             modules={[Navigation, Pagination]}
           >
-            {images.map((image, index) => (
+            {media.map((item, index) => (
               <SwiperSlide key={index}>
-                <img src={image} alt={`Post Image ${index}`} className="w-full h-64 object-fill" />
+                {item.type === 'image' ? (
+                  <img src={item.url} alt={`Post Image ${index}`} className="w-full h-72 object-fill" />
+                ) : (
+                  <video className="w-full h-72 object-contain" controls>
+                    <source src={item.url} />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
               </SwiperSlide>
             ))}
           </Swiper>
@@ -103,7 +115,7 @@ export function PostCard({
 }
 
 PostCard.propTypes = {
-  images: propTypes.arrayOf(propTypes.string),
+  
   name: propTypes.string,
   city: propTypes.string,
   starts: propTypes.string,

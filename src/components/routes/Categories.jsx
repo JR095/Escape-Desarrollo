@@ -10,6 +10,8 @@ import { Drawer } from "flowbite-react";
 import { useState } from "react";
 import propTypes from "prop-types";
 import useFetchData from "../hooks/useFetchData.js";
+import { CategorieNav } from "../navigation/CategorieNav.jsx";
+
 
 export function Categories({ toggleDarkMode }) {
   const { isMobile } = useFetchMenubar();
@@ -21,15 +23,23 @@ export function Categories({ toggleDarkMode }) {
   const { data: cantons, loading: loadingCantons } = useFetchData(
     "http://localhost/escape-desarrollo-backend/public/api/canton"
   );
-  console.log(cantons);
   const [isOpen, setIsOpen] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
+
   const handleClose = () => setIsOpen(false);
+  const handleClosFilter = () => setIsFilter(false);
+
   const [id, setId] = useState(0);
 
   const openCard = (id) => () => {
     setIsOpen(true);
     console.log(id);
     setId(id);
+  };
+
+  const openFilter = (open)  => {
+    setIsFilter(open);
+   
   };
   const fetchCategory = async (url, isCategory) => {
     try {
@@ -61,8 +71,10 @@ export function Categories({ toggleDarkMode }) {
     );
   };
 
+
   return (
     <div className=" dark:bg-[#2a2a2a]">
+        
       <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
         <Navigation darkMode={toggleDarkMode} />
       </div>
@@ -76,27 +88,50 @@ export function Categories({ toggleDarkMode }) {
           <CardInformation id={id} onClose={handleClose} />
         </Drawer.Items>
       </Drawer>
-      <div className="grid justify-between grid-cols-[auto_auto]">
+      <div className="grid lg:justify-between ">
         <main
           className="flex flex-col lg:pl-12 px-5 overflow-x-hidden transition-all duration-500 mb-4"
           style={{
             marginLeft: isMobile ? "0px" : "80px",
           }}
         >
-          <div className="flex pt-4 justify-between">
-            <h1 className="font-black dark:text-white text-3xl lg:text-4xl mt-2">
+          
+            {isMobile ? (
+              <CategorieNav setIsFilter={openFilter} />
+            ) : (
+              <h1 className="font-black dark:text-white text-3xl lg:text-4xl mt-6">
               ESCAPE
             </h1>
-          </div>
-          <div className="mt-10">
-            <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">
+              )}
+            <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white mt-16 md:mt-10">
               Recomendaciones
             </h2>
+
             <ContainerCards setIsOpen={openCard} />
-          </div>
         </main>
         {!loadingCategories && !loadingCantons ? (
-          <Filter
+          isMobile ? (
+            <Drawer
+            open={isFilter}
+            onClose={handleClosFilter}
+            position="right"
+            className="w-[85vw] md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a] p-0"
+          >
+            <Drawer.Items>
+            <Filter
+              categories={categories}
+              setsubcategories={setsubcategories}
+              subcategories={category}
+              canton={cantons}
+              district={district}
+              setdistrict={setdistrict}
+            />            
+            </Drawer.Items>
+          </Drawer>
+            
+
+          ):(
+            <Filter
             categories={categories}
             setsubcategories={setsubcategories}
             subcategories={category}
@@ -104,6 +139,9 @@ export function Categories({ toggleDarkMode }) {
             district={district}
             setdistrict={setdistrict}
           />
+          )
+         
+         
         ) : (
           <p value="">loading</p>
         )}

@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react';
 import "../../index.css";
+import React, { useEffect } from 'react';
 import { usePosts } from '../hooks/usePosts';
 import { Navigation } from "../navigation/Navigation";
 import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
 import { useState } from "react";
 
-
-export function CreatePost() {
+export function UpdatePost() {
     const {
         description,
         setDescription,
@@ -14,7 +13,8 @@ export function CreatePost() {
         handleFileChange,
         handleDrop,
         handleDragOver,
-        handleCreatePost,
+        handleUpdatePost,
+        error,
     } = usePosts();
 
     const { isMobile } = useFetchMenubar();
@@ -32,6 +32,7 @@ export function CreatePost() {
         console.log(darkMode);
         setDarkMode(!darkMode);
     };
+
     return (
         <div className="flex dark:bg-[#2a2a2a]">
             <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
@@ -44,8 +45,12 @@ export function CreatePost() {
                 }}>
 
                 <div className="flex items-center justify-center min-h-screen w-full">
-                    <form onSubmit={handleCreatePost} className="max-w-[400px] w-full mx-auto gap-8 p-6 bg-white rounded-lg shadow dark:bg-[#404040]">
-                        <h1 className='text-center text-xl font-bold mb-8 dark:text-white'>Crear Publicación</h1>
+                    <div className="max-w-[400px] w-full mx-auto gap-8 p-6 bg-white rounded-lg shadow dark:bg-[#404040]">
+                        <h1 className='text-center text-xl font-bold mb-8 dark:text-white'>Actualizar Publicación</h1>
+
+                        {error && (
+                            <p className="text-red-500 text-center mb-4">{error}</p>
+                        )}
 
                         <div
                             className="w-full mb-4"
@@ -96,8 +101,8 @@ export function CreatePost() {
                             ></textarea>
                         </div>
 
-                        <button type="submit" className="text-white bg-sky-400 p-2 rounded-lg w-full mt-4 font-bold text-lg">Publicar</button>
-                    </form>
+                        <button type="submit" onClick={handleUpdatePost} className="text-white bg-sky-400 p-2 rounded-lg w-full mt-4 font-bold text-lg">Actualizar</button>
+                    </div>
                 </div>
             </main>
         </div>
