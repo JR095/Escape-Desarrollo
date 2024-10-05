@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export const usePosts = () => {
     const { id } = useParams();
@@ -8,8 +8,20 @@ export const usePosts = () => {
     const [previewFiles, setPreviewFiles] = useState([]);
     const [existingFiles, setExistingFiles] = useState([]);
     const [error, setError] = useState(null);
+    const [posts, setPosts] = useState([]);
+    const navigate = useNavigate();
 
-    
+    const fetchPosts = async () => {
+        try {
+            const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/posts');
+            const data = await response.json();
+            setPosts(data);
+        } catch (err) {
+            console.error('Error al obtener las publicaciones:', err);
+            setError('Error al obtener las publicaciones. Intente nuevamente más tarde.');
+        }
+    };
+
     const handleFileChange = (e) => {
         const selectedFiles = e.target.files;
         updateFiles(selectedFiles);
@@ -67,10 +79,14 @@ export const usePosts = () => {
 
             const data = await response.json();
             console.log('Publicación creada:', data);
+            alert('Publicación creada');
 
             setDescription('');
             setFiles([]);
             setPreviewFiles([]);
+
+            fetchPosts();
+            navigate(`/home`);
         } catch (error) {
             console.error('Error creando la publicación:', error);
         }
@@ -79,7 +95,6 @@ export const usePosts = () => {
     // Mostrar datos de la publicación
     useEffect(() => {
         if (!id) {
-            setError('ID de la publicación no proporcionado. No se puede actualizar la publicación.');
             return;
         }
     
@@ -157,8 +172,6 @@ export const usePosts = () => {
             });
 
             const responseText = await response.text();
-            console.log('Raw response:', response);
-            console.log('Response text:', responseText);
 
             let data;
             try {
@@ -173,6 +186,9 @@ export const usePosts = () => {
             }
 
             console.log('Publicación actualizada con éxito:', data);
+            alert('Publicación actualizada');
+            fetchPosts();
+            navigate(`/home`);
         } catch (error) {
             console.error('Error al actualizar la publicación:', error);
             setError('Error al actualizar la publicación. Intente nuevamente más tarde.');
@@ -204,14 +220,22 @@ export const usePosts = () => {
             const data = await response.json();
             console.log('Publicación eliminada:', data);
 
+            setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
+            
         } catch (error) {
             console.error('Error al eliminar la publicación:', error);
             setError('Error al eliminar la publicación. Intente nuevamente más tarde.');
         }
     };
 
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
 
     return {
+        posts,
+        setPosts,
         description,
         setDescription,
         previewFiles,

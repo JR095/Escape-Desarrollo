@@ -6,7 +6,7 @@ import { usePosts } from "../hooks/usePosts";
 export function PostDropdown({ postId }) {
     const navigate = useNavigate();
 
-    const { handleDeletePost, error } = usePosts();
+    const { handleDeletePost } = usePosts();
 
     return (
         <Menu as="div" className="relative inline-block text-left">
