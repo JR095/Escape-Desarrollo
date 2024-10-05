@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { SignUpUsers } from "./components/auth/SignUpUsers";
 import { Landing } from "./components/routes/Landing";
 import { SignIn } from "./components/auth/SignIn";
+import { SignInCompanies } from "./components/auth/SignInCompanies";
 import logo from "./assets/imgs/Place1.jpg";
 import { CardLocation } from "./components/cards/CardLocation";
 import { Home } from "./components/routes/Home";
@@ -43,6 +44,7 @@ export function App() {
                 <Route path="/signUpUser" element={<SignUpUsers/>} />
                 <Route path="/Categories" element={<Categories toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
                 <Route path="/signIn" element={<SignIn />} />
+                <Route path="/signInCompanies" element={<SignInCompanies />} />
                 <Route path="/home" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
                 <Route path="/accountSettings" element={<AccountSettings toggleDarkMode={toggleDarkMode}/>} />
                 <Route path="/PersonalInformation" element={<PersonalInformation toggleDarkMode={toggleDarkMode} />} />
