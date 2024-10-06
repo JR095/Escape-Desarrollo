@@ -11,20 +11,31 @@ import { useState } from "react";
 import propTypes from "prop-types";
 import useFetchData from "../hooks/useFetchData.js";
 import { CategorieNav } from "../navigation/CategorieNav.jsx";
+import { useLocation } from "react-router-dom";
 
 
 export function Categories({ toggleDarkMode }) {
+  const location = useLocation();
+
   const { isMobile } = useFetchMenubar();
   const { data: categories, loading: loadingCategories } = useFetchData(
     "http://localhost/escape-desarrollo-backend/public/api/categories"
   );
-  const [category, setCategory] = useState(null);
-  const [district, setDistrict] = useState(null);
+  const [district, setDistrict] = useState([]);
   const { data: cantons, loading: loadingCantons } = useFetchData(
     "http://localhost/escape-desarrollo-backend/public/api/canton"
   );
   const [isOpen, setIsOpen] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
+  const [idCategory, setIdCategory] = useState(location.state);
+  const { data: subCategories,  setData:setSubCategories } = useFetchData(
+    `http://localhost/escape-desarrollo-backend/public/api/subcategories/${idCategory}`
+  );
+
+  const [idCategorySub, setIdCategorySub] = useState(0);
+  const [idCanton, setIdCanton] = useState(0);
+  const [idDistrict, setIdDistrict] = useState(0);
+
 
   const handleClose = () => setIsOpen(false);
   const handleClosFilter = () => setIsFilter(false);
@@ -46,7 +57,7 @@ export function Categories({ toggleDarkMode }) {
       const response = await fetch(url);
       const result = await response.json();
       if (isCategory == true) {
-        setCategory(result);
+        setSubCategories(result);
       } else {
         setDistrict(result);
       }
@@ -56,15 +67,24 @@ export function Categories({ toggleDarkMode }) {
   };
 
   const setsubcategories = (id) => () => {
-    fetchCategory(
-      `http://localhost/escape-desarrollo-backend/public/api/subcategories/${id}`,
-      true
-    );
+    if (idCategory==id) {
+      setIdCategory(0);
+      fetchCategory(
+        `http://localhost/escape-desarrollo-backend/public/api/subcategories/0`,
+        true
+      );
+    }else{
+      setIdCategory(id);
+      fetchCategory(
+        `http://localhost/escape-desarrollo-backend/public/api/subcategories/${id}`,
+        true
+      );
+    }
+    
   };
 
   const setdistrict = (id) => {
-    console.log("setdistrict");
-    console.log(id);
+    setIdCanton(id);
     fetchCategory(
       `http://localhost/escape-desarrollo-backend/public/api/district/${id}`,
       false
@@ -104,7 +124,7 @@ export function Categories({ toggleDarkMode }) {
             </h1>
               )}
             <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white mt-16 md:mt-10">
-              Recomendaciones
+            Categorias
             </h2>
 
             <ContainerCards setIsOpen={openCard} />
@@ -121,10 +141,16 @@ export function Categories({ toggleDarkMode }) {
             <Filter
               categories={categories}
               setsubcategories={setsubcategories}
-              subcategories={category}
+              subcategories={subCategories}
               canton={cantons}
               district={district}
               setdistrict={setdistrict}
+              idCanton={idCanton}
+              idDistrict={idDistrict}
+              idCategory={idCategory}
+              idCategorySub={idCategorySub}
+              setIdCategorySub={setIdCategorySub}
+              setIdDistrict={setIdDistrict}
             />            
             </Drawer.Items>
           </Drawer>
@@ -134,10 +160,16 @@ export function Categories({ toggleDarkMode }) {
             <Filter
             categories={categories}
             setsubcategories={setsubcategories}
-            subcategories={category}
+            subcategories={subCategories}
             canton={cantons}
             district={district}
             setdistrict={setdistrict}
+            idCanton={idCanton}
+            idDistrict={idDistrict}
+            idCategory={idCategory}
+            idCategorySub={idCategorySub}
+            setIdCategorySub={setIdCategorySub}
+            setIdDistrict={setIdDistrict}
           />
           )
          
