@@ -34,7 +34,6 @@ CardLocation.propTypes = {
     starts: propTypes.string,
     setIsOpen: propTypes.func,
     id: propTypes.number
-
 };
     
   
