@@ -14,7 +14,7 @@ import propTypes from "prop-types";
 
 export function CardInformation({ id , onClose}) {
 
-const url = `http://localhost/escape-desarrollo-backend/public/api/companies/${id}`;
+const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}`;
 
 const { data: placeData, loading, error } = useFetchData(url);
 const { user } = useUser();
