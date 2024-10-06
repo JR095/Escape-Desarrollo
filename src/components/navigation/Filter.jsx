@@ -9,12 +9,34 @@ export function Filter({
   canton,
   setdistrict,
   district,
+  idCanton,
+  idDistrict,
+  idCategory,
+  idCategorySub,
+  setIdCategorySub,
+  setIdDistrict
 }) {
-  const handleSelectChange = (e) => {
+  const handleSelectChangeDistrict = (e) => {
     const selectedValue = e.target.value;
-    setdistrict(selectedValue); 
-    console.log(district);
+    setIdDistrict(selectedValue); 
+    console.log(idDistrict);
   };
+
+  const handleSelectChangeCanton = (e) => {
+    const selectedValue = e.target.value;
+    setdistrict(selectedValue);
+  };
+
+  const setsubCategoriesID = (id) => () => {
+    if (idCategorySub === id) {
+      setIdCategorySub(0);
+    }else{
+      setIdCategorySub(id);
+    }
+    console.log(idCategorySub);
+  
+  };
+
   return (
 
       <div className="flex flex-col h-[100vh] right-0 w-full  md:w-[25vw] bg-white dark:bg-[#404040] dark:hover:bg-[#404040] md:fixed ">
@@ -35,7 +57,8 @@ export function Filter({
                 {categories.map((item) => (
                   <button
                     key={item.id}
-                    className="text-[#706E6E] dark:text-[#BCBCBC] hover:text-sky-500 px-6 py-1 mr-2 rounded-lg shadow-sm dark:bg-[#404040] dark:hover:text-sky-500 mt-2 "
+                    id= {item.id}
+                  className={item.id==idCategory ? 'text-sky-500 border-2 border-sky-500 hover:text-sky-500 px-6 py-1 mr-2 rounded-lg shadow-sm dark:bg-[#404040] dark:hover:text-sky-500 mt-2' : 'text-[#706E6E] dark:text-[#BCBCBC] hover:text-sky-500 px-6 py-1 mr-2 rounded-lg shadow-sm dark:bg-[#404040] dark:hover:text-sky-500 mt-2'}
                     onClick={setsubcategories(item.id)}
                   >
                     {item.name}
@@ -44,7 +67,7 @@ export function Filter({
               </div>
             </Accordion.Content>
           </Accordion.Panel>
-          {subcategories == null ? (
+          {subcategories == null || subcategories.length == 0 ? (
             <></>
           ) : (
             <Accordion.Panel className="dark:border-[#4F4F4F] rounded-none">
@@ -56,8 +79,8 @@ export function Filter({
                   {subcategories.map((item) => (
                     <button
                       key={item.id}
-                      className="text-[#706E6E] dark:text-[#BCBCBC] hover:text-sky-500 px-6 py-1 mr-2 rounded-lg shadow-sm dark:bg-[#404040] dark:hover:text-sky-500 mt-2 "
-                      onClick={setsubcategories(item.id)}
+                      className={item.id==idCategorySub ? 'text-sky-500 border-2 border-sky-500 hover:text-sky-500 px-6 py-1 mr-2 rounded-lg shadow-sm dark:bg-[#404040] dark:hover:text-sky-500 mt-2' : 'text-[#706E6E] dark:text-[#BCBCBC] hover:text-sky-500 px-6 py-1 mr-2 rounded-lg shadow-sm dark:bg-[#404040] dark:hover:text-sky-500 mt-2'}
+                      onClick={setsubCategoriesID(item.id)}
                     >
                       {item.name}
                     </button>
@@ -82,15 +105,16 @@ export function Filter({
                 <select
                   id="canton"
                   className="bg-gray-50 border border-gray-300 text-[#706E6E] dark:text-[#BCBCBC] text-sm rounded-lg  focus:border-blue-500 block w-full p-2.5 dark:bg-[#404040] dark:border-[#4F4F4F] dark:hover:bg-[#4F4F4F] dark:placeholder-gray-400   dark:focus:bg-[#4F4F4F]"
-                  onChange={handleSelectChange}
+                  onChange={handleSelectChangeCanton}
                 >
+                  <option value="0">Selecione un Canton</option>
                   {canton.map((item) => (
                     <option key={item.id} value={item.id}>
                       {item.name}
                     </option>
                   ))}
                 </select>
-                {district == null ? (
+                {district.length === 0  ? (
                   <></>
                 ) : (
                     <>
@@ -101,10 +125,11 @@ export function Filter({
                     Distrito
                   </label>
                   <select
-                  id="district
-                  "
+                  id="district"
+                  onChange={handleSelectChangeDistrict}
                   className="bg-gray-50 border border-gray-300 text-[#706E6E] dark:text-[#BCBCBC] text-sm rounded-lg  focus:border-blue-500 block w-full p-2.5 dark:bg-[#404040] dark:border-[#4F4F4F] dark:hover:bg-[#4F4F4F] dark:placeholder-gray-400   dark:focus:bg-[#4F4F4F]"
                 >
+                  <option value="0">Selecione un Distrito</option>
                   {district.map((item) => (
                     <option key={item.id} value={item.id}>
                       {item.name}
@@ -129,4 +154,10 @@ Filter.propTypes = {
   canton: propTypes.array,
   setdistrict: propTypes.func,
   district: propTypes.array,
+  idCategorySub: propTypes.number,
+  idCanton: propTypes.number,
+  idDistrict: propTypes.number,
+  idCategory: propTypes.number,
+  setIdCategorySub: propTypes.func,
+  setIdDistrict: propTypes.func
 };
