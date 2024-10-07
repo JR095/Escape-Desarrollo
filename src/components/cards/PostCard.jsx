@@ -6,6 +6,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation, } from 'swiper/modules';
 import { PostDropdown } from "../dropdown/PostDropdown";
+import { useUser } from "../../context/UserContext.jsx";
+
 export function PostCard({
   id,
   media = [],
@@ -18,6 +20,8 @@ export function PostCard({
   comments,
   darkMode,
 }) {
+  const { user } = useUser();
+
   return (
     <div className=" items-center justify-between lg:max-w-sm sm:w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-[#404040] dark:border-gray-700">
       <div className="flex items-center px-4 pt-4">
@@ -35,9 +39,11 @@ export function PostCard({
               {category} - {city} {street}
             </span>
           </div>
-          <div className="ml-auto">
-            <PostDropdown postId={id} />
-          </div>
+          {user && user.user_type_id === 1 && (
+            <div className="ml-auto">
+              <PostDropdown postId={id} />
+            </div>
+          )}
       </div>
       <p className="px-4 dark:text-white">{info}</p>
 
