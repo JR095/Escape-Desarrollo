@@ -12,7 +12,6 @@ export function PostCard({
   id,
   media = [],
   name,
-  street,
   city,
   info,
   category,
@@ -36,7 +35,7 @@ export function PostCard({
               {name}
             </span>
             <span className="text-[#9A9797] dark:text-[#BCBCBC]">
-              {category} - {city} {street}
+              {category} - {city}
             </span>
           </div>
           {user && user.user_type_id === 1 && (
@@ -130,7 +129,6 @@ PostCard.propTypes = {
   category: propTypes.string,
   likes: propTypes.string,
   comments: propTypes.string,
-  street: propTypes.string,
   info: propTypes.string,
   darkMode: propTypes.bool,
 };

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useUser } from '../../context/UserContext';
 
 export const usePosts = () => {
     const { id } = useParams();
@@ -10,17 +11,41 @@ export const usePosts = () => {
     const [error, setError] = useState(null);
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
+    const { user } = useUser();
 
     const fetchPosts = async () => {
         try {
-            const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/posts');
+            const userType = user ? user.user_type_id : null;
+    
+            const url = userType === 2 
+                ? 'http://localhost/escape-desarrollo-backend/public/api/posts'
+                : userType === 1
+                    ? 'http://localhost/escape-desarrollo-backend/public/api/company-posts'
+                    : null;
+    
+            if (!url) {
+                setError('Tipo de usuario no reconocido.'); 
+                return;
+            }
+    
+            const response = await fetch(url, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
             const data = await response.json();
+            console.log("Datos de publicaciones recibidos:", data);
             setPosts(data);
         } catch (err) {
             console.error('Error al obtener las publicaciones:', err);
             setError('Error al obtener las publicaciones. Intente nuevamente más tarde.');
         }
     };
+    
+    
 
     const handleFileChange = (e) => {
         const selectedFiles = e.target.files;

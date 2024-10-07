@@ -17,11 +17,10 @@ export function Posts({ darkMode }) {
           <PostCard
             key={post.id}
             id={post.id}
-            street="Centro"
-            city="Puntarenas"
-            name="Soda Maria"
+            city={post.company.canton.name}
+            name={post.company.name}
             info={post.description}
-            category="Soda"            
+            category={post.company.category.name}          
             media={Array.isArray(post.files) ? post.files.map(file => ({
               url: `http://localhost/escape-desarrollo-backend/public/storage/${file.file_path}`,
               type: file.file_type === 'image' ? 'image' : 'video',

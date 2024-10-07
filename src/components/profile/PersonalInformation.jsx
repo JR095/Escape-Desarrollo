@@ -12,7 +12,8 @@ import propTypes from "prop-types";
 
 import { Drawer } from "flowbite-react";
 import { useState } from "react";
-export function PersonalInformation({ toggleDarkMode }) {
+import { Posts } from "../routes/Posts.jsx";
+export function PersonalInformation({ toggleDarkMode, darkMode }) {
 
     const { isMobile } = useFetchMenubar();
 
@@ -107,7 +108,14 @@ export function PersonalInformation({ toggleDarkMode }) {
                     <h2 className="font-bold lg:text-2xl text-xl mb-8 dark:text-white">
                         Post
                     </h2>
-                    <CarouselCard setIsOpen={openCard} />
+                    
+                    {user && user.user_type_id === 2 ? (
+                        <CarouselCard setIsOpen={openCard} />
+                    ) : user && user.user_type_id === 1 ? (
+                        <div className="mt-10">
+                        <Posts darkMode={darkMode}/>
+                        </div>
+                    ) : null}
                 </div>
             </main>
         </div>
