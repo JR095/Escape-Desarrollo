@@ -23,7 +23,7 @@ export function ContainerCards({ setIsOpen, data }) {
           </div>
         </section>
       ) : (
-        <div className="grid mb-[4rem] md:mb-4 justify-center md:grid-cols-2 lg:grid-cols-[auto_auto_auto] gap-4 overflow-x-hidden transition-all duration-500 ">
+        <div className="grid mb-[4rem] md:mb-4 justify-center md:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 overflow-x-hidden transition-all duration-500 ">
           {data.map((item) => (
             <CardLocation
               key={item.id}
