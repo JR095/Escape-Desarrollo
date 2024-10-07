@@ -71,7 +71,7 @@ useEffect(() => {
   return (
     <div>
         <div className="relative">
-        <img className="rounded-lg object-cover h-[50vh]  md:w-full" src={(`/src/assets/imgs/${place.image}`)} alt="" />
+        <img className="rounded-lg object-cover h-[50vh]  md:w-full" src={place.image} alt="" />
         <img className="absolute top-4 right-4 p-2 rounded-lg bg-white dark:bg-[#404040]" src={heart} alt="" />
         <img onClick={onClose} className="absolute top-2 left-2 p-2 rounded-full" src={back} alt="" />
         </div>

@@ -58,7 +58,7 @@ export function CarouselCard({setIsOpen}) {
          {companies.map(company => (
           <SwiperSlide key={company.id} className="pb-[3rem]">
             <CardLocation
-              image={(`/src/assets/imgs/${company.image}`)} 
+              image={company.image}
               name={company.name}
               city={company.canton_id}
               starts="4.2"
