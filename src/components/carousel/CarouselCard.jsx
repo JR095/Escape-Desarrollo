@@ -1,5 +1,4 @@
 import "../../index.css";
-import { useState, useEffect } from "react";
 import { CardLocation } from "../cards/CardLocation";
 //import logo from "../../assets/imgs/Place1.jpg";
 import { Swiper, SwiperSlide } from 'swiper/react';

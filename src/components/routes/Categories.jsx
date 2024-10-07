@@ -7,12 +7,11 @@ import { CardInformation } from "../cards/CardInformation";
 import { Filter } from "../navigation/Filter.jsx";
 ("use client");
 import { Drawer } from "flowbite-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import propTypes from "prop-types";
 import useFetchData from "../hooks/useFetchData.js";
 import { CategorieNav } from "../navigation/CategorieNav.jsx";
 import { useLocation } from "react-router-dom";
-
 
 export function Categories({ toggleDarkMode }) {
   const location = useLocation();
@@ -28,14 +27,19 @@ export function Categories({ toggleDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
   const [idCategory, setIdCategory] = useState(location.state);
-  const { data: subCategories,  setData:setSubCategories } = useFetchData(
+  const { data: subCategories, setData: setSubCategories } = useFetchData(
     `http://localhost/escape-desarrollo-backend/public/api/subcategories/${idCategory}`
   );
 
   const [idCategorySub, setIdCategorySub] = useState(0);
   const [idCanton, setIdCanton] = useState(0);
   const [idDistrict, setIdDistrict] = useState(0);
-
+  if(idCategory == null){
+    setIdCategory(0);
+  }
+  const { data, loading, setData } = useFetchData(
+    `http://localhost/escape-desarrollo-backend/public/api/items/${idCategory}/${idCategorySub}/${idCanton}/${idDistrict}`
+  );
 
   const handleClose = () => setIsOpen(false);
   const handleClosFilter = () => setIsFilter(false);
@@ -48,9 +52,8 @@ export function Categories({ toggleDarkMode }) {
     setId(id);
   };
 
-  const openFilter = (open)  => {
+  const openFilter = (open) => {
     setIsFilter(open);
-   
   };
   const fetchCategory = async (url, isCategory) => {
     try {
@@ -66,21 +69,36 @@ export function Categories({ toggleDarkMode }) {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost/escape-desarrollo-backend/public/api/items/${idCategory}/${idCategorySub}/${idCanton}/${idDistrict}`
+        );
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(); // Llamar la función asíncrona dentro del useEffect
+  }, [idCategory, idCanton, idDistrict, idCategorySub]);
+
   const setsubcategories = (id) => () => {
-    if (idCategory==id) {
+    if (idCategory == id) {
       setIdCategory(0);
       fetchCategory(
         `http://localhost/escape-desarrollo-backend/public/api/subcategories/0`,
         true
       );
-    }else{
+    } else {
       setIdCategory(id);
       fetchCategory(
         `http://localhost/escape-desarrollo-backend/public/api/subcategories/${id}`,
         true
       );
     }
-    
   };
 
   const setdistrict = (id) => {
@@ -91,10 +109,8 @@ export function Categories({ toggleDarkMode }) {
     );
   };
 
-
   return (
     <div className=" dark:bg-[#2a2a2a]">
-        
       <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
         <Navigation darkMode={toggleDarkMode} />
       </div>
@@ -115,29 +131,51 @@ export function Categories({ toggleDarkMode }) {
             marginLeft: isMobile ? "0px" : "80px",
           }}
         >
-          
-            {isMobile ? (
-              <CategorieNav setIsFilter={openFilter} />
-            ) : (
-              <h1 className="font-black dark:text-white text-3xl lg:text-4xl mt-6">
+          {isMobile ? (
+            <CategorieNav setIsFilter={openFilter} />
+          ) : (
+            <h1 className="font-black dark:text-white text-3xl lg:text-4xl mt-6">
               ESCAPE
             </h1>
-              )}
-            <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white mt-16 md:mt-10">
+          )}
+          <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white mt-16 md:mt-10">
             Categorias
-            </h2>
+          </h2>
 
-            <ContainerCards setIsOpen={openCard} />
+          {!loading ? (
+            <ContainerCards data={data} setIsOpen={openCard} />
+          ) : (
+            <div className="flex justify-center items-center h-screen">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900">Cargando...</div>
+            </div>
+          )}
         </main>
         {!loadingCategories && !loadingCantons ? (
           isMobile ? (
             <Drawer
-            open={isFilter}
-            onClose={handleClosFilter}
-            position="right"
-            className="w-[85vw] md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a] p-0"
-          >
-            <Drawer.Items>
+              open={isFilter}
+              onClose={handleClosFilter}
+              position="right"
+              className="w-[85vw] md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a] p-0"
+            >
+              <Drawer.Items>
+                <Filter
+                  categories={categories}
+                  setsubcategories={setsubcategories}
+                  subcategories={subCategories}
+                  canton={cantons}
+                  district={district}
+                  setdistrict={setdistrict}
+                  idCanton={idCanton}
+                  idDistrict={idDistrict}
+                  idCategory={idCategory}
+                  idCategorySub={idCategorySub}
+                  setIdCategorySub={setIdCategorySub}
+                  setIdDistrict={setIdDistrict}
+                />
+              </Drawer.Items>
+            </Drawer>
+          ) : (
             <Filter
               categories={categories}
               setsubcategories={setsubcategories}
@@ -151,29 +189,8 @@ export function Categories({ toggleDarkMode }) {
               idCategorySub={idCategorySub}
               setIdCategorySub={setIdCategorySub}
               setIdDistrict={setIdDistrict}
-            />            
-            </Drawer.Items>
-          </Drawer>
-            
-
-          ):(
-            <Filter
-            categories={categories}
-            setsubcategories={setsubcategories}
-            subcategories={subCategories}
-            canton={cantons}
-            district={district}
-            setdistrict={setdistrict}
-            idCanton={idCanton}
-            idDistrict={idDistrict}
-            idCategory={idCategory}
-            idCategorySub={idCategorySub}
-            setIdCategorySub={setIdCategorySub}
-            setIdDistrict={setIdDistrict}
-          />
+            />
           )
-         
-         
         ) : (
           <p value="">loading</p>
         )}

@@ -36,8 +36,8 @@ export function App() {
         };
 
     return (
-        <ComponentProvider>
-            <Routes>
+        <ComponentProvider >
+            <Routes className="dark:bg-[#2a2a2a]">
                 <Route path="/" element={<Landing />} /> 
                 <Route path="/Card" element={<CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/>} />  
                 <Route path="/signUpCompanies" element={<SignUpCompanies />} /> 
