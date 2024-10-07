@@ -1,5 +1,6 @@
 import "../../index.css";
 import { CardLocation } from "../cards/CardLocation";
+import { CardLocationHome } from "../cards/CardLocationHome";
 //import logo from "../../assets/imgs/Place1.jpg";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -57,8 +58,8 @@ export function CarouselCard({setIsOpen}) {
       >
          {companies.map(company => (
           <SwiperSlide key={company.id} className="pb-[3rem]">
-            <CardLocation
-              image={(`/src/assets/imgs/${company.image}`)} 
+            <CardLocationHome
+              image={company.image}
               name={company.name}
               city={company.canton_id}
               starts="4.2"
