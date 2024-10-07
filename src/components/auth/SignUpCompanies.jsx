@@ -4,7 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Selected } from "../selected/Selected";
 import { AuthCarousel } from "./AuthCaruosel";
 import { useTranslation } from 'react-i18next';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
@@ -32,6 +32,7 @@ export function SignUpCompanies() {
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrormessage] = useState('');
+    const [districts, setDistricts] = useState([]);
 
     const canton_id = [
         { id: "1", name: "Puntarenas" },
@@ -102,6 +103,20 @@ export function SignUpCompanies() {
         { id: "5", name: "Cultura" },
         { id: "6", name: "Bienestar y Relajación" },
     ];
+
+    useEffect(() => {
+        if (selectedCanton) {
+            
+            fetch(`http://localhost/escape-desarrollo-backend/public/api/cantons/${selectedCanton}/districts`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setDistricts(data); 
+                })
+                .catch((error) => {
+                    console.error("Error al obtener los distritos:", error);
+                });
+        }
+    }, [selectedCanton]);
 
     const validateFields = () => {
         if (!name || !email || !password || !password_confirmation) {
@@ -271,7 +286,7 @@ export function SignUpCompanies() {
 
                             <Selected
                                 label={t('District')}
-                                options={district_id}
+                                options={districts.map(district => ({ id: district.id, name: district.name }))} // Muestra los distritos dinámicos
                                 placeholder={t('District')}
                                 onChange={e => setSelectedDistrict(e.target.value)}
                             />

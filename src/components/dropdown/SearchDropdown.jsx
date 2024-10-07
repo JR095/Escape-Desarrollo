@@ -11,8 +11,7 @@ export function SearchDropdown() {
   const { storeSearchTerm } = useStoreSearch();
   const { recentSearches: backendRecentSearches, loading: historyLoading, handleDeleteSearch, fetchSearchHistory } = useFetchSearchHistory();
 
-  const handleSearchSubmit = async (e) => {
-    e.preventDefault();
+  const handleSearchSubmit = async () => {
     if (search_term) {
       storeSearchTerm(search_term);
       await fetchSearchHistory();
@@ -54,8 +53,8 @@ export function SearchDropdown() {
         className={`fixed top-0 right-0 z-10 h-full w-full bg-white dark:bg-[#404040] lg:static lg:translate-x-0 transition-transform duration-300 ${isMobileSearchVisible ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
-        <form className="flex items-center px-4 py-1 rounded-md shadow-md" onSubmit={handleSearchSubmit}>
 
+        <div className="flex items-center px-4 py-1 rounded-md shadow-md">
           {(isMobileSearchVisible || isInputFocused) && (
             <button
               type="button"
@@ -80,12 +79,12 @@ export function SearchDropdown() {
             className="w-full border-none outline-none focus:ring-0 dark:bg-[#404040] dark:text-white"
           />
 
-          <button type="submit" className="block">
+          <button onClick={handleSearchSubmit} className="block">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 dark:text-white">
               <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
           </button>
-        </form>
+        </div>
 
         {showRecentSearches && (
           <ul className="left-0 right-0 w-full mt-2 dark:text-white">
@@ -143,4 +142,3 @@ export function SearchDropdown() {
     </div>
   );
 }
-
