@@ -62,19 +62,19 @@ export function PersonalInformation({ toggleDarkMode }) {
 
                     <div className="grid lg:grid-cols-3 text-center lg:align-center">
                         <div className="hidden lg:block">
-                            <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white">Soda</h4>
+                            <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white"></h4>
                             <p className="pt-[2rem] dark:text-white">1</p>
                             <h4 className="dark:text-white">Publicaciones</h4>
                         </div>
 
                         <div className="hidden lg:block">
-                        <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]"><NavLink to="/accountSettings">Editar</NavLink></button>
+                        <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500"><NavLink to="/accountSettings">Editar</NavLink></button>
                             <p className="pt-[2rem] dark:text-white">1</p>
                             <h4 className="dark:text-white">Seguidores</h4>
                         </div>
 
                         <div className="hidden lg:block">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]">Compartir</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500">Compartir</button>
                             <p className="pt-[2rem] dark:text-white">1</p>
                             <h4 className="dark:text-white">Siguiendo</h4>
                         </div>
