@@ -3,12 +3,13 @@ import logoCeleste from '../../assets/imgs/logo-celeste.png';
 import { useFetchSidebar } from  "../hooks/useFetchSidebar.js";
 import propTypes from "prop-types";
 import { useUser } from "../../context/UserContext.jsx";
-
+import React, { useEffect } from 'react';
 
 export function Sidebar({darkMode}) {
 
     const { user } = useUser();
     const { sidebarWidth } = useFetchSidebar();
+    const profileUrl = user && user.user_type_id === 1 ? "/PersonalInformationCompany" : "/PersonalInformation";
 
     return(
         <div className={`bg-white dark:bg-[#2a2a2a] h-[100vh] pt-5 pb-5 pl-3 pr-4 cursor-pointer fixed top-0 left-0`} style={{ width: sidebarWidth, transition: "width 0.5s ease" }}>
@@ -43,7 +44,7 @@ export function Sidebar({darkMode}) {
                         </a>
                     </li>
                     <li className="flex mb-[10px] mt-[10px]">
-                        <a href="/PersonalInformation" className="relative group w-full h-[45px] flex items-center rounded-lg hover:bg-[#E8DEF8] dark:hover:bg-[#484848] transition-colors duration-300 cursor-pointer">
+                        <a href={profileUrl} className="relative group w-full h-[45px] flex items-center rounded-lg hover:bg-[#E8DEF8] dark:hover:bg-[#484848] transition-colors duration-300 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 min-w-[50px] dark:stroke-white">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                         </svg>

@@ -8,8 +8,10 @@ import logo from "./assets/imgs/Place1.jpg";
 import { CardLocation } from "./components/cards/CardLocation";
 import { Home } from "./components/routes/Home";
 import { AccountSettings } from "./components/profile/AccountSettings"
+import { AccountSettingsCompany } from "./components/profile/AccountSettingsCompany"
 import { MapPage } from './components/map/MapPage';
 import {PersonalInformation} from "./components/profile/PersonalInformation"
+import {PersonalInformationCompany} from "./components/profile/PersonalInformationCompany"
 import { SearchResults } from "./components/routes/SearchResults";
 import { ForgotPassword } from './components/password/ForgotPassword.jsx';
 import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
@@ -47,7 +49,9 @@ export function App() {
                 <Route path="/signInCompanies" element={<SignInCompanies />} />
                 <Route path="/home" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
                 <Route path="/accountSettings" element={<AccountSettings toggleDarkMode={toggleDarkMode}/>} />
+                <Route path="/accountSettingsCompany" element={<AccountSettingsCompany toggleDarkMode={toggleDarkMode}/>} />
                 <Route path="/PersonalInformation" element={<PersonalInformation toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+                <Route path="/PersonalInformationCompany" element={<PersonalInformationCompany toggleDarkMode={toggleDarkMode} />} />
                 <Route path="/map" element={<MapPage />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
