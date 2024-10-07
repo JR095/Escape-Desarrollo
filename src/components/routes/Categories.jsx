@@ -126,7 +126,7 @@ export function Categories({ toggleDarkMode }) {
       </Drawer>
       <div className="grid lg:justify-between ">
         <main
-          className="flex flex-col lg:pl-12 px-5 w-[70vw] overflow-x-hidden transition-all duration-500 mb-4"
+          className="flex flex-col lg:pl-12 px-5 md:w-[70vw] overflow-x-hidden transition-all duration-500 mb-4"
           style={{
             marginLeft: isMobile ? "0px" : "80px",
           }}
