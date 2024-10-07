@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useState } from "react";
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
+import { useEffect } from "react";
 
 export function SignUpUsers() {
 
@@ -31,6 +32,7 @@ export function SignUpUsers() {
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrormessage] = useState('');
+    const [districts, setDistricts] = useState([]);
 
     const canton_id = [
         { id: "1", name: "Puntarenas" },
@@ -142,6 +144,20 @@ export function SignUpUsers() {
         { id: "21", name: "Discotecas" },
         { id: "22", name: "Spas" },
     ];
+
+    useEffect(() => {
+        if (selectedCanton) {
+            // Llamada a la API para obtener los distritos según el cantón seleccionado
+            fetch(`http://localhost/escape-desarrollo-backend/public/api/cantons/${selectedCanton}/districts`)
+                .then((response) => response.json())
+                .then((data) => {
+                    setDistricts(data); // Actualiza la lista de distritos
+                })
+                .catch((error) => {
+                    console.error("Error al obtener los distritos:", error);
+                });
+        }
+    }, [selectedCanton]); // El efecto se ejecutará cada vez que selectedCanton cambie
 
     const validateFields = () => {
         if (!name || !email || !password || !password_confirmation) {
@@ -309,7 +325,7 @@ export function SignUpUsers() {
 
                             <Selected
                                 label={t('District')}
-                                options={district_id}
+                                options={districts.map(district => ({ id: district.id, name: district.name }))} // Muestra los distritos dinámicos
                                 placeholder={t('District')}
                                 onChange={e => setSelectedDistrict(e.target.value)}
                             />
