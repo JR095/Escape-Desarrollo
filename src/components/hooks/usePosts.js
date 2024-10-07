@@ -67,10 +67,8 @@ export const usePosts = () => {
         try {
             const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/create/post', {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                },
                 body: formData,
+                credentials: 'include',
             });
 
             if (!response.ok) {
@@ -169,6 +167,7 @@ export const usePosts = () => {
             const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/update/post/${id}`, {
                 method: 'POST',
                 body: formData,
+                credentials: 'include',
             });
 
             const responseText = await response.text();
@@ -181,8 +180,13 @@ export const usePosts = () => {
             }
 
             if (!response.ok) {
-                console.error('Error en la respuesta:', data);
-                throw new Error('Error al actualizar la publicación');
+                if (response.status === 403) {
+                    alert('No tiene permisos para actualizar esta publicación.');
+                    return;
+                } else {
+                    console.error('Error en la respuesta:', data);
+                    throw new Error('Error al actualizar la publicación');
+                }
             }
 
             console.log('Publicación actualizada con éxito:', data);
@@ -207,14 +211,17 @@ export const usePosts = () => {
         try {
             const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/delete/post/${id}`, {
                 method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    'Content-Type': 'application/json',
-                },
+                credentials: 'include',
             });
 
+            
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                if (response.status === 403) {
+                    alert('No tiene permisos para eliminar esta publicación.');
+                    return;
+                } else {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
             }
 
             const data = await response.json();

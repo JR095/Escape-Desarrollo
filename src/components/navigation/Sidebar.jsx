@@ -2,10 +2,12 @@ import "../../index.css";
 import logoCeleste from '../../assets/imgs/logo-celeste.png';
 import { useFetchSidebar } from  "../hooks/useFetchSidebar.js";
 import propTypes from "prop-types";
+import { useUser } from "../../context/UserContext.jsx";
 
 
 export function Sidebar({darkMode}) {
 
+    const { user } = useUser();
     const { sidebarWidth } = useFetchSidebar();
 
     return(
@@ -16,11 +18,14 @@ export function Sidebar({darkMode}) {
                      style={{ width: "50px" }} 
                 />
             </div>
-            <a href="/create-post" className="mt-[10px] mb-[10px] w-full h-[45px] flex justify-center items-center rounded-lg bg-[#FFD8E4] hover:bg-[#f8c3d4] dark:hover:bg-[##404040] transition-colors duration-300 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                <span className={`ml-2 flex transition-all duration-500 whitespace-nowrap ${sidebarWidth === "80px" ? 'hidden' : 'inline'}`}>Create new</span>
-            </a>
+            {user && user.user_type_id === 1 && (
+                <a href="/create-post" className="mt-[10px] mb-[10px] w-full h-[45px] flex justify-center items-center rounded-lg bg-[#FFD8E4] hover:bg-[#f8c3d4] dark:hover:bg-[##404040] transition-colors duration-300 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    <span className={`ml-2 flex transition-all duration-500 whitespace-nowrap ${sidebarWidth === "80px" ? 'hidden' : 'inline'}`}>Create new</span>
+                </a>
+            )}
+            
             <nav>
                 <ul>
                     <li className="flex mb-[10px] mt-[10px]">
