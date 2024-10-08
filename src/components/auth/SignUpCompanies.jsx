@@ -326,7 +326,7 @@ export function SignUpCompanies() {
                     />
 
                     <p className="text-gray-400 text-center">{t('goSignIn')}
-                        <NavLink className="text-sky-500 ml-2 font-medium" to="/signIn">{t('iSignIn')}</NavLink>
+                        <NavLink className="text-sky-500 ml-2 font-medium" to="/signInCompanies">{t('iSignIn')}</NavLink>
                     </p>
                 </form>
 

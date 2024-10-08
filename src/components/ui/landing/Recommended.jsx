@@ -10,7 +10,7 @@ export function Recommended() {
     const { t } = useTranslation();
     return (
         <div className="lg:p-12 p-8">
-            <h1 className="text-blue-950 lg:text-[2rem] text-2xl font-bold text-center">{t('recommendations')}</h1>
+            <h1 className="text-white lg:text-[2rem] text-2xl font-bold text-center">{t('recommendations')}</h1>
             <div className="grid gap-8 grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] lg:pt-12 pt-8">
                 <RecommendedCard image={Place1}name={t('placeName')} city="PUNTARENAS"/>
                 <RecommendedCard image={Place2}name={t('placeName')} city="PUNTARENAS"/>

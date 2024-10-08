@@ -88,7 +88,7 @@ export function SignInCompanies() {
                 />
 
                 <p className="text-gray-400 text-center">{t('goSignUp')}
-                    <NavLink className="text-sky-500 ml-2 font-medium" to="/signUpUser">{t('createAccount')}</NavLink>
+                    <NavLink className="text-sky-500 ml-2 font-medium" to="/signUpCompanies">{t('createAccount')}</NavLink>
                 </p>
             </form> 
 

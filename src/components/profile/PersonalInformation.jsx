@@ -55,7 +55,6 @@ export function PersonalInformation({ toggleDarkMode, darkMode }) {
                     <div>
                         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile_Img" className="rounded-full h-[7rem] w-[7rem] mt-[2rem]" />
                         <h3 className="font-bold lg:text-2xl text-xl mt-[2rem] dark:text-white">{user.name}</h3>
-                        <h4 className=" text-[#606060] font-semibold  pt-[1rem] lg:hidden">Soda</h4>
                         <div className="col-span-3 text-left lg:pt-[2rem] pt-[1rem] dark:text-white">
                             <p>{user.description}</p>
                         </div>
@@ -64,7 +63,7 @@ export function PersonalInformation({ toggleDarkMode, darkMode }) {
                     <div className="grid lg:grid-cols-3 text-center lg:align-center">
                         <div className="hidden lg:block">
                             <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white"></h4>
-                            <p className="pt-[2rem] dark:text-white">1</p>
+                            <p className="pt-[2rem] dark:text-white mt-[1.6rem]">1</p>
                             <h4 className="dark:text-white">Publicaciones</h4>
                         </div>
 
