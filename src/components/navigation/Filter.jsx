@@ -9,7 +9,6 @@ export function Filter({
   canton,
   setdistrict,
   district,
-  idCanton,
   idDistrict,
   idCategory,
   idCategorySub,

@@ -11,9 +11,11 @@ import { CardInformation } from "../cards/CardInformation";
 import { Drawer } from "flowbite-react";
 import { useState } from "react";
 import propTypes from "prop-types";
+import { useUser } from '../../context/UserContext.jsx';
 
 import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
+
 
 export function Home({ toggleDarkMode, darkMode }) {
 
@@ -22,11 +24,27 @@ export function Home({ toggleDarkMode, darkMode }) {
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => setIsOpen(false);
   const [id, setId] = useState(0);
+  const { user } = useUser();
+
 
   const openCard = (id) => () => {
     setIsOpen(true);
     console.log(id);
     setId(id);
+  };
+
+  const favorite = () => {
+    console.log("La id de la card es "+id +" y el id del user es "+user.id);
+    fetch("http://localhost/escape-desarrollo-backend/public/api/favorite", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        company_id: id,
+        user_id: user.id,
+      }),
+    });
   };
 
   return (
@@ -38,7 +56,7 @@ export function Home({ toggleDarkMode, darkMode }) {
       </div>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
-          <CardInformation id={id} onClose={handleClose} />
+          <CardInformation id={id} onClose={handleClose} favorite={favorite} />
         </Drawer.Items>
       </Drawer>
 
