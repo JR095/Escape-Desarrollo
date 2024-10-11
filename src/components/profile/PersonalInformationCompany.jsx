@@ -62,7 +62,7 @@ export function PersonalInformationCompany({ toggleDarkMode }) {
 
                     <div className="grid lg:grid-cols-3 text-center lg:align-center">
                         <div className="hidden lg:block">
-                            <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white">Soda</h4>
+                            <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white">{user.category_id}</h4>
                             <p className="pt-[2rem] dark:text-white">1</p>
                             <h4 className="dark:text-white">Publicaciones</h4>
                         </div>
