@@ -7,7 +7,7 @@ import { Buttons } from "./Buttons.jsx";
 import { useUser } from '../../context/UserContext.jsx';
 import { useState, useEffect } from "react";
 import Modal from '@mui/material/Modal';
-import { ChangePassword } from './ChangePassword.jsx';
+import { ChangePasswordCompany } from './ChangePasswordCompany.jsx';
 import { useProfile } from '../hooks/useProfile.js';
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -55,7 +55,7 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
 
     const body = (
         <div className="bg-white w-[90%] md:w-[40%] lg:w-[25%] rounded-3xl p-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <ChangePassword close={openModal} />
+            <ChangePasswordCompany close={openModal} />
         </div>
     );
 

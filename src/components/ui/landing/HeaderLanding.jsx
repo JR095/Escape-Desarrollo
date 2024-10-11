@@ -41,18 +41,18 @@ export function HeaderLanding() {
 
                             {isLoginMenuVisible && (
                                 <div
-                                    className="absolute top-full left-0 mt-2 w-48 bg-white text-black rounded-lg shadow-lg"
+                                    className="absolute top-full left-0 mt-2 w-48 bg-[#132443] bg-opacity-10 text-white rounded-lg shadow-lg"
                                 >
                                     <NavLink
                                         to="/signIn"
-                                        className="block px-4 py-2 hover:bg-gray-200"
+                                        className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsLoginMenuVisible(false)} 
                                     >
                                         {t('Iniciar sesión como usuario')}
                                     </NavLink>
                                     <NavLink
                                         to="/signInCompanies"
-                                        className="block px-4 py-2 hover:bg-gray-200"
+                                        className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsLoginMenuVisible(false)}
                                     >
                                         {t('Iniciar sesión como compañía')}
@@ -72,18 +72,18 @@ export function HeaderLanding() {
 
                             {isRegisterMenuVisible && (
                                 <div
-                                    className="absolute top-full left-0 mt-2 w-48 bg-white text-black rounded-lg shadow-lg"
+                                    className="absolute top-full left-0 mt-2 w-48 bg-[#132443] bg-opacity-10 text-white rounded-lg shadow-lg"
                                 >
                                     <NavLink
                                         to="/signUpUser"
-                                        className="block px-4 py-2 hover:bg-gray-200"
+                                        className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsRegisterMenuVisible(false)} 
                                     >
                                         {t('Registrarse como usuario')}
                                     </NavLink>
                                     <NavLink
                                         to="/signUpCompanies"
-                                        className="block px-4 py-2 hover:bg-gray-200"
+                                        className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsRegisterMenuVisible(false)} 
                                     >
                                         {t('Registrarse como compañía')}
