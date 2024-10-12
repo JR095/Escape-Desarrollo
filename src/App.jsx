@@ -19,6 +19,7 @@ import { CreatePost } from "./components/routes/CreatePost.jsx";
 import { Categories } from "./components/routes/Categories.jsx";
 import { useState, useEffect } from "react";
 import { UpdatePost } from "./components/routes/UpdatePost.jsx";
+import { RouteMap } from "./components/map/RouteMap";
 
 
 export function App() {
@@ -53,6 +54,7 @@ export function App() {
                 <Route path="/PersonalInformation" element={<PersonalInformation toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
                 <Route path="/PersonalInformationCompany" element={<PersonalInformationCompany toggleDarkMode={toggleDarkMode} />} />
                 <Route path="/map" element={<MapPage />} /> 
+                <Route path="/mapWithRoute" element={<RouteMap />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/create-post" element={<CreatePost />} />
