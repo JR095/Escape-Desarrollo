@@ -50,8 +50,8 @@ useEffect(() => {
 
   function convertirMinutosAHoras(minutos) {
     const horas = Math.floor(minutos / 60);
-    const minutosRestantes = minutos % 60;
-    return `${horas}h ${minutosRestantes}m`;
+    const mins = minutos % 60;
+    return horas >= 1 ? `${horas}h ${mins}min` : `${mins}min`;
   }
 
   if (loading) {
@@ -120,5 +120,4 @@ CardInformation.propTypes = {
   id: propTypes.number,
   onClose: propTypes.func,
   favorite: propTypes.func
-
 };

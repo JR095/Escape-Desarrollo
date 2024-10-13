@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "../../index.css";
 import { useUser } from '../../context/UserContext.jsx';
 import useFetchData from "../hooks/useFetchData";
+import { MapCard } from "../cards/MapCard.jsx";
 
 export const RouteMap = () => {
   
@@ -10,10 +11,12 @@ export const RouteMap = () => {
   const origin = [user.longitude, user.latitude]; 
   const [destination, setDestination] = useState([]);
   const [travelTime, setTravelTime] = useState(null);
+  const [EstimatedHour, setEstimatedHour] = useState(null);
   const [filteredPlaces, setFilteredPlaces] = useState([]); 
   const { data } = useFetchData(url);
   const [inputValue, setInputValue] = useState(''); 
-
+  const [travelMode, setTravelMode] = useState('pedestrian');
+  
   console.log(data);
 
   useEffect(() => {
@@ -32,12 +35,9 @@ export const RouteMap = () => {
 
         if(destination.length > 0){
             new tt.Marker().setLngLat(destination).addTo(map);
-
             calculateRouteWithTraffic(origin, destination);
         }
        
-        console.log(destination);
-        console.log(origin);
     });
 
     function drawRoute(routeCoordinates) {
@@ -63,18 +63,23 @@ export const RouteMap = () => {
 
     function calculateRouteWithTraffic(origin, destination) {
 
-        const routeUrl = `https://api.tomtom.com/routing/1/calculateRoute/${origin[1]},${origin[0]}:${destination[1]},${destination[0]}/json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi&traffic=false&travelMode=pedestrian`;
-    
+        //Link para traer información según el tipo de viaje seleccionado
+        const routeUrl = `https://api.tomtom.com/routing/1/calculateRoute/${origin[1]},${origin[0]}:${destination[1]},${destination[0]}/json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi&traffic=true&travelMode=${travelMode}`;
+
         fetch(routeUrl)
           .then(response => response.json())
           .then(data => {
     
             const routeCoordinates = data.routes[0].legs[0].points.map(point => [point.longitude, point.latitude]);
     
-            /*const travelTimeInSeconds = data.routes[0].summary.travelTimeInSeconds;
+            //Tiempo que dura el viaje
+            const travelTimeInSeconds = data.routes[0].summary.travelTimeInSeconds;
             const travelTimeInMinutes = Math.round(travelTimeInSeconds / 60);
             const travelTimeFormatted = convertirMinutosAHoras(travelTimeInMinutes);
-            setTravelTime(travelTimeFormatted);*/
+            setTravelTime(travelTimeFormatted);
+
+            const horaDeLlegada = estimatedHour(travelTimeInMinutes);
+            setEstimatedHour(horaDeLlegada);
     
             // Dibujar la ruta en el mapa
             drawRoute(routeCoordinates);
@@ -84,17 +89,31 @@ export const RouteMap = () => {
     
     }
     
+    //Funciones de conversión
     const convertirMinutosAHoras = (minutos) => {
         const horas = Math.floor(minutos / 60);
         const mins = minutos % 60;
-        return `${horas}h ${mins}min`;
+        return horas >= 1 ? `${horas}h ${mins}min` : `${mins}min`;
       };
-    
+
+    function estimatedHour(minutos) {
+
+        const ahora = new Date(); // Hora actual
+        const tiempoDeViajeEnMs = minutos * 60 * 1000; 
+        const horaDeLlegada = new Date(ahora.getTime() + tiempoDeViajeEnMs); // Sumar el tiempo de viaje a la hora actual
+
+        // Formatear la hora de llegada
+        const horasLlegada = horaDeLlegada.getHours().toString().padStart(2, '0');
+        const minutosLlegada = horaDeLlegada.getMinutes().toString().padStart(2, '0');
+        const segundosLlegada = horaDeLlegada.getSeconds().toString().padStart(2, '0');
+
+        return `${horasLlegada}:${minutosLlegada}:${segundosLlegada}`;
+    }
 
     return () => {
       map.remove();
     };
-  }, [origin, destination]); 
+  }, [origin, destination, travelMode]); 
 
  const handleDestinationInput = (e) => {
     const query = e.target.value.toLowerCase();
@@ -112,40 +131,22 @@ export const RouteMap = () => {
     setFilteredPlaces([]); 
   };
 
+  const handleTravelModeChange = (mode) => {
+    console.log(mode);
+    setTravelMode(mode);
+  };
+
   return (
     <div>
-      {/* Carta sobre el mapa */}
-      <div className='absolute top-4 left-4 bg-white p-4 rounded shadow-lg z-10'>
-        <h1>Buscar Ruta</h1>
-        <div>
-          <label htmlFor="destination">Destino: </label>
-          <input
-            type="text"
-            id="destination"
-            value={inputValue} 
-            placeholder="Escribe el nombre del lugar"
-            onChange={handleDestinationInput}
-            className="border p-2 rounded w-full"
-          />
-          {/* Mostrar las sugerencias filtradas */}
-          {filteredPlaces.length > 0 && (
-            <ul className="mt-2 border p-2 rounded bg-gray-100 max-h-48 overflow-auto">
-              {filteredPlaces.map((d) => (
-                <li
-                  key={d.id}
-                  onClick={() => handlePlaceSelect(d)} 
-                  className="cursor-pointer p-2 hover:bg-gray-200"
-                >
-                  {d.name}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        <p>Duración estimada: {travelTime}</p>
-      </div>
-
-      {/* Contenedor del mapa */}
+      <MapCard
+        inputValue={inputValue}
+        handleDestinationInput={handleDestinationInput}
+        filteredPlaces={filteredPlaces}
+        handlePlaceSelect={handlePlaceSelect}
+        travelTime={travelTime}
+        EstimatedHour={EstimatedHour}
+        handleTravelModeChange={handleTravelModeChange}
+      />
       <div id="map" className="relative w-full h-screen"></div>
     </div>
   );
