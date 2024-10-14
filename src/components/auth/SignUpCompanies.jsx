@@ -34,6 +34,18 @@ export function SignUpCompanies() {
     const [errorMessage, setErrormessage] = useState('');
     const [districts, setDistricts] = useState([]);
 
+    const [nameError, setNameError] = useState(false);
+    const [phone_numberError, setPhone_numberError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [descriptionError, setDescriptionError] = useState(false);
+    const [addressError, setAddressError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [passwordConfirmationError, setPasswordConfirmationError] = useState(false);
+    const [cantonError, setCantonError] = useState(false);
+    const [districtError, setDistrictError] = useState(false);
+    const [categoryError, setCategoryError] = useState(false);
+    const [sub_CategoriesError, setSub_categoriesError] = useState(false);
+
     const canton_id = [
         { id: "1", name: "Puntarenas" },
         { id: "2", name: "Esparza" },
@@ -119,15 +131,93 @@ export function SignUpCompanies() {
     }, [selectedCanton]);
 
     const validateFields = () => {
-        if (!name || !email || !password || !password_confirmation) {
-            setErrormessage('Por favor, completa todos los campos solicitados.');
-            return false;
+        let isValid = true;
+    
+        if (!name) {
+            setNameError(true);
+            isValid = false;
+        } else {
+            setNameError(false);
         }
+    
+        if (!email) {
+            setEmailError(true);
+            isValid = false;
+        } else {
+            setEmailError(false);
+        }
+
+        if (!phone_number) {
+            setPhone_numberError(true);
+            isValid = false;
+        } else {
+            setPhone_numberError(false);
+        }
+
+        if (!description) {
+            setDescriptionError(true);
+            isValid = false;
+        } else {
+            setDescriptionError(false);
+        }
+
+        if (!address) {
+            setAddressError(true);
+            isValid = false;
+        } else {
+            setAddressError(false);
+        }
+    
+        if (!password) {
+            setPasswordError(true);
+            isValid = false;
+        } else {
+            setPasswordError(false);
+        }
+    
         if (password !== password_confirmation) {
-            setErrormessage('Las contraseñas no coinciden.');
-            return false;
+            setPasswordConfirmationError(true);
+            isValid = false;
+        } else {
+            setPasswordConfirmationError(false);
         }
-        return true;
+    
+        if (!selectedCanton) {
+            setCantonError(true);
+            isValid = false;
+        } else {
+            setCantonError(false);
+        }
+    
+        if (!selectedDistrict) {
+            setDistrictError(true);
+            isValid = false;
+        } else {
+            setDistrictError(false);
+        }
+    
+        if (!email) {
+            setEmailError(true);
+            isValid = false;
+        } else {
+            setEmailError(false);
+        }
+
+        if (!selectedCategory) {
+            setCategoryError(true);
+            isValid = false;
+        } else {
+            setCategoryError(false);
+        }
+
+        if (!selectedSub_categories) {
+            setSub_categoriesError(true);
+            isValid = false;
+        } else {
+            setSub_categoriesError(false);
+        }
+    
+        return isValid;
     }
 
     const handleSubmit = async (e) => {
@@ -255,12 +345,12 @@ export function SignUpCompanies() {
                     <img className="w-[15rem] mx-auto mt-8 mb-16 " src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
                     <div className="grid lg:grid-cols-2 gap-4">
                         <div>
-                            <AuthInput label={t('iCompanyName')} name="name" placeholder={t('iCompanyName')} type="text" onChange={e => setName(e.target.value)} />
-                            <AuthInput label={t('iPhone')} name="phone_number" placeholder={t('iPhone')} type="text" onChange={e => setPhone_number(e.target.value)} />
-                            <AuthInput label={t('iEmail')} name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)} />
-                            <AuthInput label={t('Description')} name="description" placeholder={t('Description')} type="text" onChange={e => setDescription(e.target.value)} />
-                            <AuthInput label={t('iPassword')} name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)} />
-                            <AuthInput label={t('iConfirmPassword')} name="passwordConfirm" placeholder={t('iConfirmPassword')} type="password" onChange={e => setPassword_confirmation(e.target.value)} />
+                            <AuthInput label={t('iCompanyName')} name="name" placeholder={t('iCompanyName')} type="text" onChange={e => setName(e.target.value)} className="{nameError ? 'border-red-500' : ''}"/> {nameError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('iPhone')} name="phone_number" placeholder={t('iPhone')} type="text" onChange={e => setPhone_number(e.target.value)} className="{phone_numberError ? 'border-red-500' : ''}"/> {phone_numberError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('iEmail')} name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)} className="{emailError ? 'border-red-500' : ''}"/> {emailError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('Description')} name="description" placeholder={t('Description')} type="text" onChange={e => setDescription(e.target.value)} className="{descriptionError ? 'border-red-500' : ''}"/> {descriptionError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('iPassword')} name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)} className="{passwordError ? 'border-red-500' : ''}"/> {passwordError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('iConfirmPassword')} name="passwordConfirm" placeholder={t('iConfirmPassword')} type="password" onChange={e => setPassword_confirmation(e.target.value)} className="{passwordConfirmationError ? 'border-red-500' : ''}"/> {passwordConfirmationError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                         </div>
                         <div>
                             <Selected
@@ -268,30 +358,39 @@ export function SignUpCompanies() {
                                 options={category_id}
                                 placeholder={t('Category')}
                                 onChange={e => setSelectedCategory(e.target.value)}
+                                className={categoryError ? 'border-red-500' : ''}
                             />
+                            {categoryError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una categoria</p>}
 
                             <Selected
                                 label={t('Subcategories')}
                                 options={sub_categories_id}
                                 placeholder={t('Subcategories')}
                                 onChange={e => setSelectedSub_categories(e.target.value)}
+                                className={sub_CategoriesError ? 'border-red-500' : ''}
                             />
+                            {sub_CategoriesError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una subcategoria</p>}
 
                             <Selected
                                 label={t('Canton')}
                                 options={canton_id}
                                 placeholder={t('Canton')}
                                 onChange={e => setSelectedCanton(e.target.value)}
+                                className={cantonError ? 'border-red-500' : ''}
                             />
+                            {cantonError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona un canton</p>}
 
                             <Selected
                                 label={t('District')}
-                                options={districts.map(district => ({ id: district.id, name: district.name }))} // Muestra los distritos dinámicos
+                                options={districts.map(district => ({ id: district.id, name: district.name }))}
                                 placeholder={t('District')}
                                 onChange={e => setSelectedDistrict(e.target.value)}
+                                className={districtError ? 'border-red-500' : ''}
                             />
+                            {districtError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona un distrito</p>}
 
-                            <AuthInput label={t('Address')} name="address" placeholder={t('Address')} type="text" onChange={e => setAddress(e.target.value)} />
+
+                            <AuthInput label={t('Address')} name="address" placeholder={t('Address')} type="text" onChange={e => setAddress(e.target.value)} className="{addressError ? 'border-red-500' : ''}"/> {addressError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
 
                             <div className="flex items-center relative lg:mt-[3rem] mt-[1rem]">
                                 <input className="shadow-md p-3 rounded-lg border-none" type="checkbox" id="share-location" name="shareLocation" />
@@ -345,7 +444,7 @@ export function SignUpCompanies() {
             {showError && (
                 <Alert severity="error" className="absolute top-4 right-4">
                     <AlertTitle>Error</AlertTitle>
-                    ¡Error! Credenciales inválidas, por favor introduce las correctas.
+                    ¡Error! Datos incompletos, por favor digite los datos solicitados.
                 </Alert>
             )}
 
