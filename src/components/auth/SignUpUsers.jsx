@@ -34,6 +34,17 @@ export function SignUpUsers() {
     const [errorMessage, setErrormessage] = useState('');
     const [districts, setDistricts] = useState([]);
 
+    const [nameError, setNameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [passwordConfirmationError, setPasswordConfirmationError] = useState(false);
+    const [cantonError, setCantonError] = useState(false);
+    const [districtError, setDistrictError] = useState(false);
+    const [preference1Error, setPreference1Error] = useState(false);
+    const [preference2Error, setPreference2Error] = useState(false);
+    const [preference3Error, setPreference3Error] = useState(false);
+
+
     const canton_id = [
         { id: "1", name: "Puntarenas" },
         { id: "2", name: "Esparza" },
@@ -147,29 +158,87 @@ export function SignUpUsers() {
 
     useEffect(() => {
         if (selectedCanton) {
-            // Llamada a la API para obtener los distritos según el cantón seleccionado
+
             fetch(`http://localhost/escape-desarrollo-backend/public/api/cantons/${selectedCanton}/districts`)
                 .then((response) => response.json())
                 .then((data) => {
-                    setDistricts(data); // Actualiza la lista de distritos
+                    setDistricts(data); 
                 })
                 .catch((error) => {
                     console.error("Error al obtener los distritos:", error);
                 });
         }
-    }, [selectedCanton]); // El efecto se ejecutará cada vez que selectedCanton cambie
+    }, [selectedCanton]);
 
     const validateFields = () => {
-        if (!name || !email || !password || !password_confirmation) {
-            setErrormessage('Por favor, completa todos los campos solicitados.');
-            return false;
+        let isValid = true;
+    
+        if (!name) {
+            setNameError(true);
+            isValid = false;
+        } else {
+            setNameError(false);
         }
+    
+        if (!email) {
+            setEmailError(true);
+            isValid = false;
+        } else {
+            setEmailError(false);
+        }
+    
+        if (!password) {
+            setPasswordError(true);
+            isValid = false;
+        } else {
+            setPasswordError(false);
+        }
+    
         if (password !== password_confirmation) {
-            setErrormessage('Las contraseñas no coinciden.');
-            return false;
+            setPasswordConfirmationError(true);
+            isValid = false;
+        } else {
+            setPasswordConfirmationError(false);
         }
-        return true;
+    
+        if (!selectedCanton) {
+            setCantonError(true);
+            isValid = false;
+        } else {
+            setCantonError(false);
+        }
+    
+        if (!selectedDistrict) {
+            setDistrictError(true);
+            isValid = false;
+        } else {
+            setDistrictError(false);
+        }
+    
+        if (!selectedPreferences_1) {
+            setPreference1Error(true);
+            isValid = false;
+        } else {
+            setPreference1Error(false);
+        }
+
+        if (!selectedPreferences_2) {
+            setPreference2Error(true);
+            isValid = false;
+        } else {
+            setPreference2Error(false);
+        }
+
+        if (!selectedPreferences_3) {
+            setPreference3Error(true);
+            isValid = false;
+        } else {
+            setPreference3Error(false);
+        }
+    
+        return isValid;
     }
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -288,10 +357,10 @@ export function SignUpUsers() {
                     <img className="w-[15rem] mx-auto mt-8 mb-16" src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
                     <div className="grid lg:grid-cols-2 gap-4">
                         <div>
-                            <AuthInput label={t('iName')} name="name" placeholder={t('iName')} type="text" onChange={e => setName(e.target.value)} />
-                            <AuthInput label={t('iEmail')} name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)} />
-                            <AuthInput label={t('iPassword')} name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)} />
-                            <AuthInput label={t('iConfirmPassword')} name="passwordConfirm" placeholder={t('iConfirmPassword')} type="password" onChange={e => setPassword_confirmation(e.target.value)} />
+                            <AuthInput label={t('iName')} name="name" placeholder={t('iName')} type="text" onChange={e => setName(e.target.value)} className="{nameError ? 'border-red-500' : ''}"/> {nameError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('iEmail')} name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)} className="{emailError ? 'border-red-500' : ''}"/> {emailError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('iPassword')} name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)} className="{passwordError ? 'border-red-500' : ''}" /> {passwordError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('iConfirmPassword')} name="passwordConfirm" placeholder={t('iConfirmPassword')} type="password" onChange={e => setPassword_confirmation(e.target.value)} className="{passwordConformationError ? 'border-red-500' : ''}"/> {passwordConfirmationError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                             <div className="items-center relative mt-[3rem] lg:flex hidden">
                                 <input className="shadow-md p-3 rounded-lg border-none" type="checkbox" id="share-location" name="shareLocation" />
                                 <label htmlFor="share-location" className="ml-4 text-sky-500 font-medium">{t('ShareLocation')}</label>
@@ -321,35 +390,47 @@ export function SignUpUsers() {
                                 options={canton_id}
                                 placeholder={t('Canton')}
                                 onChange={e => setSelectedCanton(e.target.value)}
+                                className={cantonError ? 'border-red-500' : ''}
                             />
+                            {cantonError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona un cantón</p>}
 
                             <Selected
                                 label={t('District')}
-                                options={districts.map(district => ({ id: district.id, name: district.name }))} // Muestra los distritos dinámicos
+                                options={districts.map(district => ({ id: district.id, name: district.name }))}
                                 placeholder={t('District')}
                                 onChange={e => setSelectedDistrict(e.target.value)}
+                                className={districtError ? 'border-red-500' : ''}
                             />
+                            {districtError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona un distrito</p>}
 
                             <Selected
                                 label={t('Preference_1')}
                                 options={preferences_1}
                                 placeholder={t('Preference_1')}
                                 onChange={e => setSelectedPreferences_1(e.target.value)}
+                                className={preference1Error ? 'border-red-500' : ''}
                             />
+                            {preference1Error && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una preferencia</p>}
+
 
                             <Selected
                                 label={t('Preference_2')}
                                 options={preferences_2}
                                 placeholder={t('Preference_2')}
                                 onChange={e => setSelectedPreferences_2(e.target.value)}
+                                className={preference2Error ? 'border-red-500' : ''}
                             />
+                            {preference2Error && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una preferencia</p>}
 
                             <Selected
                                 label={t('Preference_3')}
                                 options={preferences_3}
                                 placeholder={t('Preference_3')}
                                 onChange={e => setSelectedPreferences_3(e.target.value)}
+                                className={preference3Error ? 'border-red-500' : ''}
                             />
+                            {preference3Error && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una preferencia</p>}
+
 
                             <div className="items-center relative mt-[1rem] flex lg:hidden">
                                 <input className="shadow-md p-3 rounded-lg border-none" type="checkbox" id="share-location" name="shareLocation" />
@@ -401,7 +482,7 @@ export function SignUpUsers() {
             {showError && (
                 <Alert severity="error" className="absolute top-4 right-4">
                     <AlertTitle>Error</AlertTitle>
-                    ¡Error! Credenciales inválidas, por favor introduce las correctas.
+                    ¡Error! Datos incompletos, por favor introduce los datos solicitados.
                 </Alert>
             )}
 
