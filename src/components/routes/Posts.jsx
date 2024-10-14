@@ -2,11 +2,16 @@ import React from 'react';
 import { PostCard } from '../cards/PostCard';
 import { usePosts } from '../hooks/usePosts';
 
-export function Posts({ darkMode }) {
+export function Posts({ darkMode, setOpenComments }) {
   const {
     posts,
     error,
+    handleDeletePost,
   } = usePosts();
+
+  const handleDelete = (id) => {
+    handleDeletePost(id);
+  };
 
 
   return (
@@ -26,8 +31,9 @@ export function Posts({ darkMode }) {
               type: file.file_type === 'image' ? 'image' : 'video',
             })) : []}
             likes="10"
-            comments="10"
             darkMode={darkMode}
+            setOpenComments={setOpenComments}
+            handleDeletePost={handleDelete}
           />
         ))
       ) : (
