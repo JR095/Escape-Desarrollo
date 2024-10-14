@@ -6,20 +6,24 @@ import location from "../../assets/imgs/location.svg";
 import money from "../../assets/imgs/money.svg";
 import guide from "../../assets/imgs/guide.svg";
 import heart from "../../assets/imgs/heart.svg";
+import fav from "../../assets/imgs/favorite.svg";
+
 import back from "../../assets/imgs/back.svg";
 import useFetchData from "../hooks/useFetchData";
 import { useUser } from '../../context/UserContext.jsx';
 
 import propTypes from "prop-types";
 
-export function CardInformation({ id , onClose, favorite}) {
+export function CardInformation({ id , onClose, favorite, hearts, setHearts }) {
+  const { user } = useUser();
 
-const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}`;
+
+const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id;
 
 const { data: placeData, loading, error } = useFetchData(url);
-const { user } = useUser();
 
 const [travelTime, setTravelTime] = useState(null);
+
 
 console.log(placeData);
 
@@ -29,6 +33,7 @@ useEffect(() => {
   const place = placeData[0];
   
   if (place.longitude && place.latitude && user.longitude && user.latitude) {
+    /*
     const origin = [user.longitude, user.latitude];
     const destination = [place.longitude, place.latitude];
 
@@ -42,11 +47,13 @@ useEffect(() => {
         const travelTimeFormatted = convertirMinutosAHoras(travelTimeInMinutes);
         setTravelTime(travelTimeFormatted);
       })
-      .catch(error => console.error('Error al calcular la ruta:', error));
+      .catch(error => console.error('Error al calcular la ruta:', error));*/
+    setTravelTime('Calculando...');
   } else {
     setTravelTime('Calculando...');
   }
 }, [placeData, user]);
+
 
   function convertirMinutosAHoras(minutos) {
     const horas = Math.floor(minutos / 60);
@@ -68,12 +75,18 @@ useEffect(() => {
 
   const place = placeData[0];
 
+ const close = () => {
+  setHearts(false);
+  onClose();
+ }
+ 
+
   return (
     <div>
         <div className="relative">
         <img className="rounded-lg object-cover h-[50vh]  md:w-full" src={place.image} alt="" />
-        <img onClick={favorite} className="absolute top-4 right-4 p-2 rounded-lg bg-white dark:bg-[#404040]" src={heart} alt="" />
-        <img onClick={onClose} className="absolute top-2 left-2 p-2 rounded-full" src={back} alt="" />
+        <img onClick={favorite} className="absolute top-4 right-4 p-2 rounded-lg bg-white dark:bg-[#404040]" src={hearts == false ?  heart : fav} alt="" />
+        <img onClick={close} className="absolute top-2 left-2 p-2 rounded-full" src={back} alt="" />
         </div>
       <div className="flex justify-between mt-4">
         <h3 className="text-black font-semibold text-3xl dark:text-white">{place.name}</h3>
@@ -119,6 +132,7 @@ useEffect(() => {
 CardInformation.propTypes = {
   id: propTypes.number,
   onClose: propTypes.func,
-  favorite: propTypes.func
+  favorite: propTypes.func,
+  
 
 };

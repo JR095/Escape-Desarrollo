@@ -1,5 +1,4 @@
 import "../../index.css";
-import { CardLocation } from "../cards/CardLocation";
 import { CardLocationHome } from "../cards/CardLocationHome";
 //import logo from "../../assets/imgs/Place1.jpg";
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,10 +8,13 @@ import 'swiper/css/navigation';
 import propTypes from "prop-types";
 import { Pagination ,Navigation,} from 'swiper/modules';
 import useFetchData from "../hooks/useFetchData";
+import { useUser } from '../../context/UserContext.jsx';
+
 
 export function CarouselCard({setIsOpen}) {
+  const { user } = useUser();
 
-  const url = `http://localhost/escape-desarrollo-backend/public/api/companies`;
+  const url = `http://localhost/escape-desarrollo-backend/public/api/companies/`+user.id;
   const { data: companies, loading, error } = useFetchData(url);
 
   if (loading) {
@@ -64,6 +66,7 @@ export function CarouselCard({setIsOpen}) {
               city={company.canton_id}
               starts="4.2"
               setIsOpen={setIsOpen}
+              favorite={company.favorite}
               id={company.id}
             />
           </SwiperSlide>

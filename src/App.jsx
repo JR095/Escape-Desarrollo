@@ -17,12 +17,13 @@ import { ForgotPassword } from './components/password/ForgotPassword.jsx';
 import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
 import { CreatePost } from "./components/routes/CreatePost.jsx";
 import { Categories } from "./components/routes/Categories.jsx";
+import { Favorites } from "./components/routes/Favorites.jsx";
 import { useState, useEffect } from "react";
 import { UpdatePost } from "./components/routes/UpdatePost.jsx";
 
 
 export function App() {
-    const [darkMode, setDarkMode] = useState(true);
+    const [darkMode, setDarkMode] = useState(false);
 
     useEffect(() => {
         if (darkMode) {
@@ -55,6 +56,8 @@ export function App() {
                 <Route path="/map" element={<MapPage />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/favorites" element={<Favorites />} />
+
                 <Route path="/create-post" element={<CreatePost />} />
                 <Route path="/update-post/:id" element={<UpdatePost />} />
                 <Route path="/*" element={<Navigate to="/" />} />

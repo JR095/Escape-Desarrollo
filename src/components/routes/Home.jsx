@@ -22,18 +22,31 @@ export function Home({ toggleDarkMode, darkMode }) {
   const { isMobile } = useFetchMenubar();
 
   const [isOpen, setIsOpen] = useState(false);
-  const handleClose = () => setIsOpen(false);
+  const handleClose = () => {setIsOpen(false);
+  }
+  const [hearts, setHearts] = useState(false);
+
+    
+
   const [id, setId] = useState(0);
+
   const { user } = useUser();
 
 
-  const openCard = (id) => () => {
+  const openCard = (id,favorite) => () => {
     setIsOpen(true);
     console.log(id);
+    if (favorite==0){
+      setHearts(false);
+    }else{
+      setHearts(true);
+    }
     setId(id);
+ 
+
   };
 
-  const favorite = () => {
+  const favorite  = () => {
     console.log("La id de la card es "+id +" y el id del user es "+user.id);
     fetch("http://localhost/escape-desarrollo-backend/public/api/favorite", {
       method: "POST",
@@ -45,6 +58,8 @@ export function Home({ toggleDarkMode, darkMode }) {
         user_id: user.id,
       }),
     });
+    setHearts(!hearts);
+  
   };
 
   return (
@@ -56,7 +71,7 @@ export function Home({ toggleDarkMode, darkMode }) {
       </div>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
-          <CardInformation id={id} onClose={handleClose} favorite={favorite} />
+          <CardInformation id={id} onClose={handleClose} favorite={favorite} hearts={hearts} setHearts={setHearts}  />
         </Drawer.Items>
       </Drawer>
 
