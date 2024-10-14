@@ -124,5 +124,6 @@ export function PersonalInformationCompany({ toggleDarkMode, darkMode }) {
 }
 
 PersonalInformationCompany.propTypes = {
-    toggleDarkMode: propTypes.func
+    toggleDarkMode: propTypes.func,
+    darkMode: propTypes.bool
 };
