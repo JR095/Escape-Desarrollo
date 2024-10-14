@@ -5,9 +5,9 @@ import useFetchData from "../hooks/useFetchData";
 import { MapCard } from "../cards/MapCard.jsx";
 
 export const RouteMap = () => {
-  
-  const url = `http://localhost/escape-desarrollo-backend/public/api/companies`;
+
   const { user } = useUser();
+  const url = `http://localhost/escape-desarrollo-backend/public/api/companies/`+user.id;
   const origin = [user.longitude, user.latitude]; 
   const [destination, setDestination] = useState([]);
   const [travelTime, setTravelTime] = useState(null);
