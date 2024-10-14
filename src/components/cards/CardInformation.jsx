@@ -12,7 +12,7 @@ import { useUser } from '../../context/UserContext.jsx';
 
 import propTypes from "prop-types";
 
-export function CardInformation({ id , onClose}) {
+export function CardInformation({ id , onClose, favorite}) {
 
 const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}`;
 
@@ -72,7 +72,7 @@ useEffect(() => {
     <div>
         <div className="relative">
         <img className="rounded-lg object-cover h-[50vh]  md:w-full" src={place.image} alt="" />
-        <img className="absolute top-4 right-4 p-2 rounded-lg bg-white dark:bg-[#404040]" src={heart} alt="" />
+        <img onClick={favorite} className="absolute top-4 right-4 p-2 rounded-lg bg-white dark:bg-[#404040]" src={heart} alt="" />
         <img onClick={onClose} className="absolute top-2 left-2 p-2 rounded-full" src={back} alt="" />
         </div>
       <div className="flex justify-between mt-4">
@@ -118,5 +118,7 @@ useEffect(() => {
 
 CardInformation.propTypes = {
   id: propTypes.number,
-  onClose: propTypes.func
+  onClose: propTypes.func,
+  favorite: propTypes.func
+
 };
