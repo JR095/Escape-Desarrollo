@@ -50,8 +50,8 @@ export function App() {
                 <Route path="/home" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
                 <Route path="/accountSettings" element={<AccountSettings toggleDarkMode={toggleDarkMode}/>} />
                 <Route path="/accountSettingsCompany" element={<AccountSettingsCompany toggleDarkMode={toggleDarkMode}/>} />
-                <Route path="/PersonalInformation" element={<PersonalInformation toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
-                <Route path="/PersonalInformationCompany" element={<PersonalInformationCompany toggleDarkMode={toggleDarkMode} />} />
+                <Route path="/PersonalInformation" element={<PersonalInformation toggleDarkMode={toggleDarkMode} />} />
+                <Route path="/PersonalInformationCompany" element={<PersonalInformationCompany toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
                 <Route path="/map" element={<MapPage />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />

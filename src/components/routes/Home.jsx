@@ -14,6 +14,7 @@ import propTypes from "prop-types";
 
 import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
+import { CardComments } from "../cards/CardComments.jsx";
 
 export function Home({ toggleDarkMode, darkMode }) {
 
@@ -29,6 +30,19 @@ export function Home({ toggleDarkMode, darkMode }) {
     setId(id);
   };
 
+  const [isOpenComments, setOpenComments] = useState(false);
+  const handleCloseComments = () => setOpenComments(false);
+  const [postId, setPostId] = useState(null);
+
+  const openCardComments = (postId) => () => {
+    if (postId) { 
+      setOpenComments(true);
+      setPostId(postId);
+    } else {
+      console.error('Invalid postId:', postId);
+    }
+  };
+
   return (
 
     <div className="flex dark:bg-[#2a2a2a]">
@@ -42,7 +56,17 @@ export function Home({ toggleDarkMode, darkMode }) {
         </Drawer.Items>
       </Drawer>
 
-      <main className="flex flex-col lg:px-12 px-5 overflow-x-hidden transition-all duration-500 mb-4"
+      <Drawer open={isOpenComments} onClose={handleCloseComments} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a] overflow-hidden">
+        <Drawer.Items>
+          {postId ? (
+            <CardComments postId={postId} onClose={handleCloseComments} />
+          ) : (
+            <p className="text-center dark:text-white">Cargando comentarios...</p>
+          )}
+        </Drawer.Items>
+      </Drawer>
+
+      <main className="flex flex-col lg:px-12 px-5 overflow-x-hidden transition-all duration-500 lg:mb-10 mb-20"
         style={{
           marginLeft: isMobile ? '0px' : '80px',
         }}>
@@ -65,7 +89,7 @@ export function Home({ toggleDarkMode, darkMode }) {
         </div>
 
         <div className="mt-10">
-          <Posts darkMode={darkMode}/>
+          <Posts darkMode={darkMode} setOpenComments={openCardComments}/>
         </div>
       </main>
     </div>
