@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
+import { useUser } from '../../context/UserContext.jsx';
+
 
 export const MapPage = () => {
   
-  const center = [-84.65196258847374, 9.994401308690808]; 
+  const { user } = useUser();
+  const center = [user.longitude, user.latitude]; 
 
   useEffect(() => {
     
