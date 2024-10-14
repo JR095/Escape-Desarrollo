@@ -28,7 +28,7 @@ export function Favorites({ toggleDarkMode }) {
   );
   const [isOpen, setIsOpen] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-  const [idCategory, setIdCategory] = useState(location.state);
+  const [idCategory, setIdCategory] = useState();
   const { data: subCategories, setData: setSubCategories } = useFetchData(
     `http://localhost/escape-desarrollo-backend/public/api/subcategories/${idCategory}`
   );
@@ -69,7 +69,7 @@ export function Favorites({ toggleDarkMode }) {
     }
   };
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
@@ -83,7 +83,7 @@ export function Favorites({ toggleDarkMode }) {
     };
 
     fetchData(); // Llamar la función asíncrona dentro del useEffect
-  }, [idCategory, idCanton, idDistrict, idCategorySub]);
+  }, [idCategory, idCanton, idDistrict, idCategorySub]);*/
 
   const setsubcategories = (id) => () => {
     if (idCategory == id) {
