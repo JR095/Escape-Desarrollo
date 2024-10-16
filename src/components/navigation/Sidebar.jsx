@@ -4,17 +4,36 @@ import { useFetchSidebar } from  "../hooks/useFetchSidebar.js";
 import propTypes from "prop-types";
 import { useUser } from "../../context/UserContext.jsx";
 import { useDarkModeContext,useSidebarContext } from "../../context/AppContext.jsx";
-
+import { useNavigate } from "react-router-dom";
 
 
 
 export function Sidebar() {
 
-    const { user } = useUser();
+    const { user, logout } = useUser();
+    const navigate = useNavigate();
     const { toggleDarkMode } = useDarkModeContext();
     const {selecItem,selectItem}=useSidebarContext();
     const { sidebarWidth } = useFetchSidebar();
     const profileUrl = user && user.user_type_id === 1 ? "/PersonalInformationCompany" : "/PersonalInformation";
+
+    const handleLogout = async () => {
+        const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    
+        if (response.ok) {
+            logout(); 
+            //localStorage.removeItem('token'); 
+            navigate('/landing');
+        } else {
+            console.error('Error al hacer logout');
+        }
+    };
 
     return(
         <div className={`bg-white dark:bg-[#2a2a2a] h-[100vh] pt-5 pb-5 pl-3 pr-4 cursor-pointer fixed top-0 left-0`} style={{ width: sidebarWidth, transition: "width 0.5s ease" }}>
@@ -98,6 +117,19 @@ export function Sidebar() {
                     </span>
                 </div>
             </div>
+
+            <div onClick={handleLogout} className="flex mb-[10px] mt-[10px]">
+                <div className="relative group w-full h-[45px] flex items-center rounded-lg hover:bg-[#E8DEF8] dark:hover:bg-[#484848] transition-colors duration-300 cursor-pointer group">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" className="w-6 h-6 text-gray-800 dark:text-white size-6 min-w-[50px] dark:stroke-white">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"/>
+                    </svg>
+                    <span className={`dark:text-white ml-2 flex transition-all duration-500 whitespace-nowrap ${sidebarWidth === "80px" ? 'hidden' : 'inline'}`}>Favorites</span>
+                    <span className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 p-3 bg-white dark:bg-[#2a2a2a] dark:text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        Logout
+                    </span>
+                </div>
+            </div>
+
         </div>
     );
 }
