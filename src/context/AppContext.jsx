@@ -1,12 +1,9 @@
 import  { createContext, useContext, useState, useEffect } from 'react';
 
-// Crear contextos
 const DarkModeContext = createContext();
 const SidebarContext = createContext();
 
-// Crear el proveedor para ambos contextos
 export const AppProvider = ({ children }) => {
-  // Estado para el dark mode (true o false)
   const [darkMode, setDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('darkMode');
     return savedMode ? JSON.parse(savedMode) : null;
@@ -14,7 +11,7 @@ export const AppProvider = ({ children }) => {
 
   const [selecItem, setSelecItem] = useState(() => {
     const savedItem = localStorage.getItem('navItem');
-    return savedItem ? JSON.parse(savedItem) : 0; // Por defecto 0 si no hay valor en localStorage
+    return savedItem ? JSON.parse(savedItem) : 0;
   });
 
   useEffect(() => {
@@ -24,10 +21,6 @@ export const AppProvider = ({ children }) => {
       document.body.classList.remove('dark');
     }
   }, [darkMode]);
-  
-  // Estado para la otra variable que se puede cambiar
-
-  // Función para alternar dark mode
   const toggleDarkMode = (id) => () =>{
     if (id != null) {
       setDarkMode(!darkMode);
@@ -36,13 +29,10 @@ export const AppProvider = ({ children }) => {
   };
 
   const selectItem = (id) => {
-    setSelecItem(id); // Actualiza el estado con el nuevo ítem seleccionado
-    localStorage.setItem('navItem', JSON.stringify(id)); // Guarda el valor en localStorage
+    setSelecItem(id);
+    localStorage.setItem('navItem', JSON.stringify(id)); 
   };
 
-
-
-  // Proveer ambos contextos
   return (
     <DarkModeContext.Provider value={{ darkMode, toggleDarkMode }}>
       <SidebarContext.Provider value={{ selecItem, selectItem }}>

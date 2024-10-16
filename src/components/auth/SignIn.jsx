@@ -20,12 +20,26 @@ export function SignIn() {
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+
     const validateFields = () => {
-        if (!email || !password) {
-            setErrorMessage('Por favor, completa todos los campos solicitados.');
-            return false;
+        let isValid = true;
+
+        if (!email) {
+            setEmailError(true);
+            isValid = false;
+        } else {
+            setEmailError(false);
         }
-        return true;
+
+        if (!password) {
+            setPasswordError(true);
+        } else {
+            setPasswordError(false);
+        }
+
+        return  isValid;
     }
 
     const handleSubmit = async (e) => {
@@ -75,8 +89,8 @@ export function SignIn() {
             <form className="w-full lg:w-2/4 " onSubmit={handleSubmit}>
                 <img className="w-[15rem] mx-auto mt-8 mb-16 " src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
 
-                <AuthInput name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)}/>
-                <AuthInput name="password" placeholder={t('iPassword')} type="password" className="mb-4 lg:mb-4" onChange={e => setPassword(e.target.value)}/>
+                <AuthInput name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)} className="{emailError ? 'border-red-500' : ''}"/> {emailError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                <AuthInput name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)} className="{passwordError ? 'border-red-500' : ''}"/> {passwordError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                 <div className="text-right">
                     <NavLink className="text-sky-500 font-medium" to="/forgot-password">{t('forgotPassword')}</NavLink>
                 </div>
