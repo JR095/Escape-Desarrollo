@@ -12,7 +12,7 @@ import propTypes from "prop-types";
 
 import { Drawer } from "flowbite-react";
 import { useState } from "react";
-export function PersonalInformation({ toggleDarkMode }) {
+export function PersonalInformation() {
 
     const { isMobile } = useFetchMenubar();
 
@@ -32,7 +32,7 @@ export function PersonalInformation({ toggleDarkMode }) {
         <div className="flex overflow-x-hidden dark:bg-[#2a2a2a]">
 
             <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
-                <Navigation darkMode={toggleDarkMode}/>
+                <Navigation />
             </div>
 
             <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">

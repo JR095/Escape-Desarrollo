@@ -9,7 +9,7 @@ export function CardLocationHome({ image, name, city ,starts,setIsOpen,id,favori
     }
     return (
        
-        <div className="md:w-[303px]  lg:max-w-sm sm:w-full bg-white  rounded-lg shadow-sm dark:bg-[#404040] lg:h-[410px] h-[380px]" onClick={ setIsOpen(id,favorite)}>
+        <div className="md:w-[303px]  lg:max-w-sm sm:w-full bg-white  rounded-lg shadow-sm dark:bg-[#404040] lg:h-[410px] h-[380px] cursor-pointer" onClick={ setIsOpen(id,favorite)} >
                 <img className="px-3 py-2 object-cover rounded-2xl w-full h-[15rem] " src={image} alt={name} />
             
             <div className="p-3">
@@ -36,7 +36,8 @@ CardLocationHome.propTypes = {
     city: propTypes.string,
     starts: propTypes.string,
     setIsOpen: propTypes.func,
-    id: propTypes.number
+    id: propTypes.number,
+    favorite: propTypes.number
 };
     
   

@@ -12,7 +12,7 @@ import { Drawer } from "flowbite-react";
 import { useState } from "react";
 import { Posts } from "../routes/Posts.jsx";
 import { CardComments } from "../cards/CardComments.jsx";
-export function PersonalInformationCompany({ toggleDarkMode, darkMode }) {
+export function PersonalInformationCompany() {
 
     const { isMobile } = useFetchMenubar();
     const { user } = useUser();
@@ -35,7 +35,7 @@ export function PersonalInformationCompany({ toggleDarkMode, darkMode }) {
         <div className="flex overflow-x-hidden dark:bg-[#2a2a2a]">
 
             <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
-                <Navigation darkMode={toggleDarkMode} />
+                <Navigation />
             </div>
 
             <Drawer open={isOpenComments} onClose={handleCloseComments} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a] overflow-hidden">
@@ -115,7 +115,7 @@ export function PersonalInformationCompany({ toggleDarkMode, darkMode }) {
                         Post
                     </h2>
                     <div className="mt-10">
-                        <Posts darkMode={darkMode} setOpenComments={openCardComments}/>
+                        <Posts  setOpenComments={openCardComments}/>
                     </div>
                 </div>
             </main>

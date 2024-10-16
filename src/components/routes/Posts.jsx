@@ -1,13 +1,14 @@
-import React from 'react';
 import { PostCard } from '../cards/PostCard';
 import { usePosts } from '../hooks/usePosts';
+import { useDarkModeContext } from "../../context/AppContext.jsx";
 
-export function Posts({ darkMode, setOpenComments }) {
+export function Posts({  setOpenComments }) {
   const {
     posts,
     error,
     handleDeletePost,
   } = usePosts();
+  const { darkMode } = useDarkModeContext();
 
   const handleDelete = (id) => {
     handleDeletePost(id);

@@ -13,7 +13,7 @@ import useFetchData from "../hooks/useFetchData.js";
 import { CategorieNav } from "../navigation/CategorieNav.jsx";
 import { useLocation } from "react-router-dom";
 
-export function Categories({ toggleDarkMode }) {
+export function Categories() {
   const location = useLocation();
 
   const { isMobile } = useFetchMenubar();
@@ -112,7 +112,7 @@ export function Categories({ toggleDarkMode }) {
   return (
     <div className=" dark:bg-[#2a2a2a]">
       <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
-        <Navigation darkMode={toggleDarkMode} />
+        <Navigation />
       </div>
       <Drawer
         open={isOpen}

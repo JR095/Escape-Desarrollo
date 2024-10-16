@@ -13,15 +13,15 @@ import { useState } from "react";
 import propTypes from "prop-types";
 import { useUser } from '../../context/UserContext.jsx';
 
+
 import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
 
 import { CardComments } from "../cards/CardComments.jsx";
 
-export function Home({ toggleDarkMode, darkMode }) {
+export function Home() {
 
   const { isMobile } = useFetchMenubar();
-
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => {setIsOpen(false);
   }
@@ -80,7 +80,7 @@ export function Home({ toggleDarkMode, darkMode }) {
     <div className="flex dark:bg-[#2a2a2a]">
 
       <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
-        <Navigation darkMode={toggleDarkMode} />
+        <Navigation />
       </div>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
@@ -119,9 +119,12 @@ export function Home({ toggleDarkMode, darkMode }) {
           </h2>
           <CarouselCard setIsOpen={openCard} />
         </div>
+        <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">
+            Publicaciones recientes
+          </h2>
 
         <div className="mt-10">
-          <Posts darkMode={darkMode} setOpenComments={openCardComments}/>
+          <Posts setOpenComments={openCardComments}/>
         </div>
       </main>
     </div>

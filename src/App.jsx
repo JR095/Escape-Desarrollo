@@ -18,53 +18,44 @@ import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
 import { CreatePost } from "./components/routes/CreatePost.jsx";
 import { Categories } from "./components/routes/Categories.jsx";
 import { Favorites } from "./components/routes/Favorites.jsx";
-import { useState, useEffect } from "react";
 import { UpdatePost } from "./components/routes/UpdatePost.jsx";
 import { RouteMap } from "./components/map/RouteMap";
+import { AppProvider  } from "./context/AppContext.jsx";
 
 
 export function App() {
-    const [darkMode, setDarkMode] = useState(false);
 
-    useEffect(() => {
-        if (darkMode) {
-          document.body.classList.add('dark');
-        } else {
-          document.body.classList.remove('dark');
-        }
-      }, [darkMode]);
-      
-        const toggleDarkMode = () => {
-          console.log(darkMode);
-          setDarkMode(!darkMode);
-        };
+ 
 
     return (
+
+        <AppProvider>
         <ComponentProvider >
             <Routes className="dark:bg-[#2a2a2a]">
                 <Route path="/" element={<Landing />} /> 
                 <Route path="/Card" element={<CardLocation image={logo} name="Soda Maria" city="Esparza Centro" starts="4.2"/>} />  
                 <Route path="/signUpCompanies" element={<SignUpCompanies />} /> 
                 <Route path="/signUpUser" element={<SignUpUsers/>} />
-                <Route path="/Categories" element={<Categories toggleDarkMode={toggleDarkMode} darkMode={darkMode}/>} />
+                <Route path="/Categories" element={<Categories />} />
                 <Route path="/signIn" element={<SignIn />} />
                 <Route path="/signInCompanies" element={<SignInCompanies />} />
-                <Route path="/home" element={<Home toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
-                <Route path="/accountSettings" element={<AccountSettings toggleDarkMode={toggleDarkMode}/>} />
-                <Route path="/accountSettingsCompany" element={<AccountSettingsCompany toggleDarkMode={toggleDarkMode}/>} />
-                <Route path="/PersonalInformation" element={<PersonalInformation toggleDarkMode={toggleDarkMode} />} />
-                <Route path="/PersonalInformationCompany" element={<PersonalInformationCompany toggleDarkMode={toggleDarkMode} darkMode={darkMode} />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/accountSettings" element={<AccountSettings />} />
+                <Route path="/accountSettingsCompany" element={<AccountSettingsCompany />} />
+                <Route path="/PersonalInformation" element={<PersonalInformation  />} />
+                <Route path="/PersonalInformationCompany" element={<PersonalInformationCompany  />} />
                 <Route path="/map" element={<MapPage />} /> 
                 <Route path="/mapWithRoute" element={<RouteMap />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
-                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/favorites" element={<Favorites  />} />
 
                 <Route path="/create-post" element={<CreatePost />} />
                 <Route path="/update-post/:id" element={<UpdatePost />} />
                 <Route path="/*" element={<Navigate to="/" />} />
             </Routes>
         </ComponentProvider>
+        </AppProvider>
     )
 }
 

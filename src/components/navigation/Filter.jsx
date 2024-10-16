@@ -44,7 +44,7 @@ export function Filter({
           Filtros
         </h3>
         <Accordion
-          collapseAll
+          alwaysOpen={true}
           className="dark:border-[#4F4F4F] rounded-none mt-0"
         >
           <Accordion.Panel className="dark:border-[#4F4F4F] rounded-none">

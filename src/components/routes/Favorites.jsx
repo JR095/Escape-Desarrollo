@@ -7,15 +7,14 @@ import { CardInformation } from "../cards/CardInformation";
 import { Filter } from "../navigation/Filter.jsx";
 ("use client");
 import { Drawer } from "flowbite-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import propTypes from "prop-types";
 import useFetchData from "../hooks/useFetchData.js";
 import { CategorieNav } from "../navigation/CategorieNav.jsx";
-import { useLocation } from "react-router-dom";
 import { useUser } from '../../context/UserContext.jsx';
 
-export function Favorites({ toggleDarkMode }) {
-  const location = useLocation();
+
+export function Favorites() {
   const { user } = useUser();
 
   const { isMobile } = useFetchMenubar();
@@ -37,7 +36,7 @@ export function Favorites({ toggleDarkMode }) {
   const [idCanton, setIdCanton] = useState(0);
   const [idDistrict, setIdDistrict] = useState(0);
   
-  const { data, loading, setData } = useFetchData(
+  const { data, loading } = useFetchData(
     `http://localhost/escape-desarrollo-backend/public/api/favorites/`+user.id
   );
 
@@ -112,7 +111,7 @@ export function Favorites({ toggleDarkMode }) {
   return (
     <div className=" dark:bg-[#2a2a2a]">
       <div className="flex-shrink-0 fixed top-0 left-0 z-10 h-full">
-        <Navigation darkMode={toggleDarkMode} />
+        <Navigation  />
       </div>
       <Drawer
         open={isOpen}
