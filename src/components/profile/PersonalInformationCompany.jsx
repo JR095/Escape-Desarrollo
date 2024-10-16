@@ -30,6 +30,22 @@ export function PersonalInformationCompany() {
         }
     };
 
+    const categories = [
+        { id: 1, name: "Comida y Bebida" },
+        { id: 2, name: "Compras" },
+        { id: 3, name: "Actividades al Aire Libre" },
+        { id: 4, name: "Cultura" },
+        { id: 5, name: "Entretenimiento" },
+        { id: 6, name: "Bienestar y Relajación" },
+    ];
+
+    const getCategoryName = (categoryId) => {
+        const category = categories.find(category => category.id === categoryId);
+        return category ? category.name : "Categoría desconocida";
+    };
+    
+    
+
     return (
 
         <div className="flex overflow-x-hidden dark:bg-[#2a2a2a]">
@@ -69,7 +85,7 @@ export function PersonalInformationCompany() {
 
                     <div className="grid lg:grid-cols-3 text-center lg:align-center">
                         <div className="hidden lg:block">
-                            <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white">{user.category_id}</h4>
+                            <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white">{getCategoryName(user.category_id)}</h4>
                             <p className="pt-[2rem] dark:text-white">1</p>
                             <h4 className="dark:text-white">Publicaciones</h4>
                         </div>
