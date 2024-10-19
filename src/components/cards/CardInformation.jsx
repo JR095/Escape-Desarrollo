@@ -20,7 +20,7 @@ export function CardInformation({ id , onClose, favorite, hearts, setHearts }) {
 
 const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id;
 
-const { data: placeData, loading, error } = useFetchData(url);
+const { data: placeData, loading, error } = useFetchData(url, ['description']);
 
 const [travelTime, setTravelTime] = useState(null);
 

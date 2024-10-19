@@ -8,7 +8,8 @@ import "swiper/css/navigation";
 
 export function CategoriesCarousel() {
   const { data: categories, loading: loadingCategories } = useFetchData(
-    "http://localhost/escape-desarrollo-backend/public/api/categories"
+    "http://localhost/escape-desarrollo-backend/public/api/categories",
+    ['name']
   );
 
   return (

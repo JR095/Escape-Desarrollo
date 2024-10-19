@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import { useTranslation } from 'react-i18next';
+import { translateText } from './translateText';
 
 export const usePosts = () => {
     const { id } = useParams();
@@ -12,6 +14,7 @@ export const usePosts = () => {
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
     const { user } = useUser();
+    const { i18n } = useTranslation();
 
     const fetchPosts = async () => {
         try {
@@ -37,8 +40,20 @@ export const usePosts = () => {
             });
     
             const data = await response.json();
-            console.log("Datos de publicaciones recibidos:", data);
-            setPosts(data);
+
+            const translatedPosts = await Promise.all(data.map(async (post) => {
+                const translatedPost = { ...post };
+    
+                if (i18n.language !== 'es') { 
+                    translatedPost.description = await translateText(post.description, 'es', i18n.language);
+                    translatedPost.company.category.name = await translateText(post.company.category.name, 'es', i18n.language);
+                }
+    
+                return translatedPost; 
+            }));
+
+
+            setPosts(translatedPosts);
         } catch (err) {
             console.error('Error al obtener las publicaciones:', err);
             setError('Error al obtener las publicaciones. Intente nuevamente más tarde.');

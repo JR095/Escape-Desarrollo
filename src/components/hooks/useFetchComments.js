@@ -1,30 +1,43 @@
 import { useState } from 'react';
 import { useUser } from '../../context/UserContext';
+import { useTranslation } from 'react-i18next';
+import { translateText } from './translateText';
 
 export const useFetchComments = () => {
   const [comments, setComments] = useState([]);
 
   const { user } = useUser();
+  const { i18n } = useTranslation();
 
   const fetchComments = async (postId) => {
     if (!postId) {
       console.error('Invalid postId:', postId);
       return;
     }
-  
+
     try {
       const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/posts/${postId}/comments`);
       if (!response.ok) {
         console.error(`Error: ${response.status} - ${response.statusText}`);
         return;
       }
-  
+
       const data = await response.json();
-      setComments(data);
+
+      const translatedComments = await Promise.all(data.map(async (comment) => {
+        if (i18n.language !== 'es') { 
+          const translatedText = await translateText(comment.comment, 'es', i18n.language);
+          return { ...comment, comment: translatedText };
+        }
+        return comment; 
+      }));
+
+      setComments(translatedComments);
     } catch (error) {
       console.error('Error fetching comments:', error);
     }
   };
+
 
   const submitComment = async (postId, comment) => {
     console.log(user);
@@ -35,10 +48,10 @@ export const useFetchComments = () => {
         body: JSON.stringify({ daily_post_id: postId, comment }),
         credentials: 'include',
       });
-  
+
       if (response.ok) {
         const newComment = await response.json();
-        setComments((prevComments) => [...prevComments, newComment.comment]); 
+        setComments((prevComments) => [...prevComments, newComment.comment]);
       } else {
         console.error('Error submitting comment');
       }
@@ -94,7 +107,7 @@ export const useFetchComments = () => {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log(`Número de comentarios: ${data.comment_count}`);

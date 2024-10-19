@@ -19,7 +19,8 @@ export function Favorites() {
 
   const { isMobile } = useFetchMenubar();
   const { data: categories, loading: loadingCategories } = useFetchData(
-    "http://localhost/escape-desarrollo-backend/public/api/categories"
+    "http://localhost/escape-desarrollo-backend/public/api/categories", 
+    ['name']
   );
   const [district, setDistrict] = useState([]);
   const { data: cantons, loading: loadingCantons } = useFetchData(
@@ -29,7 +30,8 @@ export function Favorites() {
   const [isFilter, setIsFilter] = useState(false);
   const [idCategory, setIdCategory] = useState();
   const { data: subCategories, setData: setSubCategories } = useFetchData(
-    `http://localhost/escape-desarrollo-backend/public/api/subcategories/${idCategory}`
+    `http://localhost/escape-desarrollo-backend/public/api/subcategories/${idCategory}`,
+    ['name']
   );
 
   const [idCategorySub, setIdCategorySub] = useState(0);

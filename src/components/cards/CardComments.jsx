@@ -3,6 +3,7 @@ import { useFetchComments } from "../hooks/useFetchComments";
 import { useEffect, useState } from 'react';
 import { CommentsCrud } from "../dropdown/CommentsCrud";
 import { useUser } from "../../context/UserContext";
+import { useTranslation } from 'react-i18next';
 
 export function CardComments({ postId, onClose }) {
     const { comments, fetchComments, submitComment, updateComment, deleteComment } = useFetchComments();
@@ -11,12 +12,13 @@ export function CardComments({ postId, onClose }) {
     const [editingContent, setEditingContent] = useState('');
 
     const { user } = useUser();
+    const { i18n } = useTranslation();
 
     useEffect(() => {
         if (postId) {
             fetchComments(postId);
         }
-    }, [postId]);
+    }, [postId, i18n.language]);
 
     const handleInputChange = (e) => {
         setNewComment(e.target.value);
