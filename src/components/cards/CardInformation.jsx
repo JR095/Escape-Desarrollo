@@ -15,15 +15,12 @@ import { useUser } from '../../context/UserContext.jsx';
 import propTypes from "prop-types";
 
 export function CardInformation({ id , onClose, favorite, hearts, setHearts }) {
-  const { user } = useUser();
-
-
+  
+const { user } = useUser();
 const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id;
-
 const { data: placeData, loading, error } = useFetchData(url, ['description']);
-
 const [travelTime, setTravelTime] = useState(null);
-
+const [travelMode, setTravelMode] = useState('pedestrian');
 
 console.log(placeData);
 
@@ -33,11 +30,12 @@ useEffect(() => {
   const place = placeData[0];
   
   if (place.longitude && place.latitude && user.longitude && user.latitude) {
-    /*
+
+    /* 
     const origin = [user.longitude, user.latitude];
     const destination = [place.longitude, place.latitude];
 
-    const routeUrl = `https://api.tomtom.com/routing/1/calculateRoute/${origin[1]},${origin[0]}:${destination[1]},${destination[0]}/json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi&traffic=false&travelMode=pedestrian`;
+    const routeUrl = `https://api.tomtom.com/routing/1/calculateRoute/${origin[1]},${origin[0]}:${destination[1]},${destination[0]}/json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi&traffic=true&travelMode=${travelMode}`;
 
     fetch(routeUrl)
       .then(response => response.json())
@@ -48,11 +46,12 @@ useEffect(() => {
         setTravelTime(travelTimeFormatted);
       })
       .catch(error => console.error('Error al calcular la ruta:', error));*/
+
     setTravelTime('Calculando...');
   } else {
     setTravelTime('Calculando...');
   }
-}, [placeData, user]);
+}, [placeData, user, travelMode]);
 
 
   function convertirMinutosAHoras(minutos) {
@@ -79,8 +78,12 @@ useEffect(() => {
   setHearts(false);
   onClose();
  }
- 
 
+ const handleTravelModeChange = (mode) => {
+  console.log(mode);
+  setTravelMode(mode);
+};
+ 
   return (
     <div>
         <div className="relative">
@@ -103,6 +106,28 @@ useEffect(() => {
           {place.canton_id}
         </p>
       </div>
+
+      <div className="flex gap-2 my-4">
+        <button r
+          className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
+          onClick={() => handleTravelModeChange('pedestrian')} // Modo caminar
+        >
+          Caminando
+        </button>
+        <button 
+          className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
+          onClick={() => handleTravelModeChange('bicycle')} // Modo bicicleta
+        >
+          Bicicleta
+        </button>
+        <button 
+          className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
+          onClick={() => handleTravelModeChange('car')} // Modo carro
+        >
+          Auto
+        </button>
+      </div>
+
       <div className="flex items-center justify-between bg-white dark:bg-[#404040] dark:border-gray-600 border border-gray-200 rounded-lg shadow  ">
       <div className="flex items-center gap-4 my-3 mx-8">
         <img src={money} alt="location" />
