@@ -3,6 +3,7 @@ import "../../index.css";
 import { useUser } from '../../context/UserContext.jsx';
 import useFetchData from "../hooks/useFetchData";
 import { MapCard } from "../cards/MapCard.jsx";
+import { Navigation } from "../navigation/Navigation";
 
 export const RouteMap = () => {
 
@@ -105,9 +106,10 @@ export const RouteMap = () => {
         // Formatear la hora de llegada
         const horasLlegada = horaDeLlegada.getHours().toString().padStart(2, '0');
         const minutosLlegada = horaDeLlegada.getMinutes().toString().padStart(2, '0');
-        const segundosLlegada = horaDeLlegada.getSeconds().toString().padStart(2, '0');
+        //const segundosLlegada = horaDeLlegada.getSeconds().toString().padStart(2, '0');
 
-        return `${horasLlegada}:${minutosLlegada}:${segundosLlegada}`;
+        //return `${horasLlegada}:${minutosLlegada}:${segundosLlegada}`;
+        return `${horasLlegada}:${minutosLlegada}`;
     }
 
     return () => {
@@ -138,16 +140,21 @@ export const RouteMap = () => {
 
   return (
     <div>
-      <MapCard
-        inputValue={inputValue}
-        handleDestinationInput={handleDestinationInput}
-        filteredPlaces={filteredPlaces}
-        handlePlaceSelect={handlePlaceSelect}
-        travelTime={travelTime}
-        EstimatedHour={EstimatedHour}
-        handleTravelModeChange={handleTravelModeChange}
-      />
-      <div id="map" className="relative w-full h-screen"></div>
+       <div className="flex-shrink-0 fixed top-0 left-0 z-20 h-full">
+                <Navigation />
+        </div>
+
+          <MapCard
+            inputValue={inputValue}
+            handleDestinationInput={handleDestinationInput}
+            filteredPlaces={filteredPlaces}
+            handlePlaceSelect={handlePlaceSelect}
+            travelTime={travelTime}
+            EstimatedHour={EstimatedHour}
+            handleTravelModeChange={handleTravelModeChange}
+          />
+
+        <div id="map" className="relative w-full h-screen z-8"></div>
     </div>
   );
   
