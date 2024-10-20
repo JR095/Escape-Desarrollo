@@ -6,8 +6,6 @@ import { useUser } from "../../context/UserContext.jsx";
 import { useDarkModeContext,useSidebarContext } from "../../context/AppContext.jsx";
 import { useNavigate } from "react-router-dom";
 
-
-
 export function Sidebar() {
 
     const { user, logout } = useUser();

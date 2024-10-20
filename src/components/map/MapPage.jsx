@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useUser } from '../../context/UserContext.jsx';
-
+import { Navigation } from "../navigation/Navigation";
 
 export const MapPage = () => {
   
@@ -29,6 +29,9 @@ export const MapPage = () => {
 
   return (
     <div>
+      <div className="flex-shrink-0 fixed top-0 left-0 z-20 h-full">
+                <Navigation />
+      </div>
       {/* Contenedor del mapa */}
       <div id="map" style={{ width: '100%', height: '100vh' }}></div>
     </div>

@@ -1,9 +1,18 @@
 // components/MapCard.jsx
 import React from 'react';
+import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
 
 export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, handlePlaceSelect, travelTime, EstimatedHour, handleTravelModeChange  }) => {
+  
+  const { isMobile } = useFetchMenubar();
+
   return (
-    <div className='absolute top-4 left-4 bg-white p-4 rounded shadow-lg z-10'>
+
+    <div className='absolute top-4 bg-white p-4 rounded shadow-lg z-10'
+      style={{
+          marginLeft: isMobile ? '0px' : '100px',
+      }}>
+
       <h1>Buscar Ruta</h1>
     
       <div className="flex gap-2 justify-center m-4">
