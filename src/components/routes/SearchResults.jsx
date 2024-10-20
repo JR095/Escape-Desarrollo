@@ -7,6 +7,7 @@ import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
 import { SearchDropdown } from '../dropdown/SearchDropdown';
 import { useEffect } from "react";
 import { useState } from "react";
+import { useTranslation } from 'react-i18next';
 
 export function SearchResults() {
     const { isMobile } = useFetchMenubar();
@@ -15,6 +16,8 @@ export function SearchResults() {
     const searchTerm = queryParams.get('name');
     const { data, loading } = useFetchSearch(searchTerm);
     const [darkMode, setDarkMode] = useState(true);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (darkMode) {
@@ -62,7 +65,7 @@ export function SearchResults() {
                                     />
                                 ))
                             ) : (
-                                <p className="text-lg font-semibold mt-5">No results found</p>
+                                <p className="text-lg font-semibold mt-5 text-center dark:text-white">{t('noResults')}</p>
                             )}
                         </div>
                     )}

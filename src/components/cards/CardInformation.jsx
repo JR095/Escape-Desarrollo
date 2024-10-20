@@ -11,11 +11,13 @@ import fav from "../../assets/imgs/favorite.svg";
 import back from "../../assets/imgs/back.svg";
 import useFetchData from "../hooks/useFetchData";
 import { useUser } from '../../context/UserContext.jsx';
+import { useTranslation } from 'react-i18next';
 
 import propTypes from "prop-types";
 
 export function CardInformation({ id , onClose, favorite, hearts, setHearts }) {
   const { user } = useUser();
+  const { t } = useTranslation();
 
 
 const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id;
@@ -48,9 +50,9 @@ useEffect(() => {
         setTravelTime(travelTimeFormatted);
       })
       .catch(error => console.error('Error al calcular la ruta:', error));*/
-    setTravelTime('Calculando...');
+    setTravelTime(t('Calculating'));
   } else {
-    setTravelTime('Calculando...');
+    setTravelTime(t('Calculating'));
   }
 }, [placeData, user]);
 
@@ -109,7 +111,7 @@ useEffect(() => {
         <p className="text-black font-semibold text-xl md:text-2xl dark:text-[#BCBCBC] grid">
         ₡2500 
           <span className="text-[#9A9797] font-semibold text-base dark:text-[#BCBCBC]">
-            /persona
+            {t('pPerson')}
           </span>
         </p>
       </div>
@@ -122,7 +124,7 @@ useEffect(() => {
       </div>
       <p className="mt-4 dark:text-white">{place.description}</p>
       <div className="flex align-bottom ">
-      <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg mt-4 text-lg">Ir</button>
+      <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg mt-4 text-lg">{t('Go')}</button>
 
       </div>
     </div>

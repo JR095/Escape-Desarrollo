@@ -12,7 +12,7 @@ export function CardComments({ postId, onClose }) {
     const [editingContent, setEditingContent] = useState('');
 
     const { user } = useUser();
-    const { i18n } = useTranslation();
+    const { i18n, t } = useTranslation();
 
     useEffect(() => {
         if (postId) {
@@ -58,7 +58,7 @@ export function CardComments({ postId, onClose }) {
                             </svg>
                         </div>
 
-                        <h2 className="font-bold dark:text-white text-lg text-center flex-grow">Comentarios</h2>
+                        <h2 className="font-bold dark:text-white text-lg text-center flex-grow">{t('Comments')}</h2>
                     </div>
                 </section>
                 <br />
@@ -106,7 +106,7 @@ export function CardComments({ postId, onClose }) {
                                         </div>
 
                                         <button className="mt-2 dark:text-white font-medium text-sm dark:hover:text-sky-500 hover:text-sky-500" onClick={() => setEditingCommentId(null)}>
-                                            Cancelar
+                                            {t('Cancel')}
                                         </button>
                                     </div>
                                 ) : (
@@ -115,7 +115,7 @@ export function CardComments({ postId, onClose }) {
                             </div>
                         ))
                     ) : (
-                        <p className="text-center dark:text-white font-medium">Sé la primera persona en comentar</p>
+                        <p className="text-center dark:text-white font-medium">{t('noComments')}</p>
                     )}
                 </div>
 
@@ -127,7 +127,7 @@ export function CardComments({ postId, onClose }) {
                         <textarea
                             value={newComment}
                             onChange={handleInputChange}
-                            placeholder="Comentar..."
+                            placeholder={t('Comment')}
                             className="w-full p-3 bg-gray-100 dark:bg-[#404040] dark:text-white rounded-lg border-none focus:outline-none focus:ring-0 dark:placeholder:text-white"
                             rows="1"
                         />

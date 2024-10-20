@@ -12,10 +12,12 @@ import propTypes from "prop-types";
 import useFetchData from "../hooks/useFetchData.js";
 import { CategorieNav } from "../navigation/CategorieNav.jsx";
 import { useUser } from '../../context/UserContext.jsx';
+import { useTranslation } from "react-i18next";
 
 
 export function Favorites() {
   const { user } = useUser();
+  const { t } = useTranslation();
 
   const { isMobile } = useFetchMenubar();
   const { data: categories, loading: loadingCategories } = useFetchData(
@@ -140,7 +142,7 @@ export function Favorites() {
             </h1>
           )}
           <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white mt-16 md:mt-10">
-            Mis favoritos
+            {t("myFavorites")}
           </h2>
 
           {!loading ? (

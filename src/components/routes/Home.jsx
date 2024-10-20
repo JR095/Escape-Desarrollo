@@ -18,6 +18,7 @@ import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
 
 import { CardComments } from "../cards/CardComments.jsx";
+import { useTranslation } from "react-i18next";
 
 export function Home() {
 
@@ -27,14 +28,13 @@ export function Home() {
   }
   const [hearts, setHearts] = useState(false);
 
-    
-
   const [id, setId] = useState(0);
 
   const { user } = useUser();
   const [isOpenComments, setOpenComments] = useState(false);
   const handleCloseComments = () => setOpenComments(false);
   const [postId, setPostId] = useState(null);
+  const { t } = useTranslation();
 
   const openCardComments = (postId) => () => {
     if (postId) { 
@@ -109,18 +109,18 @@ export function Home() {
 
         <MapThumbnail />
         <div className="mt-10">
-          <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">Categorías</h2>
+          <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">{t('SCategories')}</h2>
           <CategoriesCarousel />
         </div>
 
         <div className="mt-10">
           <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">
-            Recomendaciones
+            {t('recommendations')}
           </h2>
           <CarouselCard setIsOpen={openCard} />
         </div>
-        <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">
-            Publicaciones recientes
+        <h2 className="font-bold md:text-2xl text-xl mt-8 dark:text-white">
+          {t('RecentPosts')}
           </h2>
 
         <div className="mt-10">

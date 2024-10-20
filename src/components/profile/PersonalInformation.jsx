@@ -12,6 +12,7 @@ import propTypes from "prop-types";
 
 import { Drawer } from "flowbite-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 export function PersonalInformation() {
 
     const { isMobile } = useFetchMenubar();
@@ -26,6 +27,8 @@ export function PersonalInformation() {
         console.log(id);
         setId(id);
     };
+
+    const { t } = useTranslation();
 
     return (
 
@@ -67,20 +70,20 @@ export function PersonalInformation() {
                         </div>
 
                         <div className="hidden lg:block">
-                        <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500"><NavLink to="/accountSettings">Editar</NavLink></button>
+                        <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500"><NavLink to="/accountSettings">{t('Edit')}</NavLink></button>
                             <p className="pt-[2rem] dark:text-white">1</p>
                             <h4 className="dark:text-white">Seguidores</h4>
                         </div>
 
                         <div className="hidden lg:block">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500">Compartir</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500">{t('Share')}</button>
                             <p className="pt-[2rem] dark:text-white">1</p>
                             <h4 className="dark:text-white">Siguiendo</h4>
                         </div>
 
                         <div className="grid grid-cols-2 gap-3 lg:hidden">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">Editar</button>
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">Compartir</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Edit')}</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Share')}</button>
                         </div>
 
                         <div className="grid grid-cols-3 gap-3 lg:hidden">

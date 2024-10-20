@@ -12,9 +12,11 @@ import propTypes from "prop-types";
 import useFetchData from "../hooks/useFetchData.js";
 import { CategorieNav } from "../navigation/CategorieNav.jsx";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function Categories() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   const { isMobile } = useFetchMenubar();
   const { data: categories, loading: loadingCategories } = useFetchData(
@@ -141,7 +143,7 @@ export function Categories() {
             </h1>
           )}
           <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white mt-16 md:mt-10">
-            Categorias
+            {t('SCategories')}
           </h2>
 
           {!loading ? (

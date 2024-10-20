@@ -9,6 +9,7 @@ import { PostDropdown } from "../dropdown/PostDropdown";
 import { useUser } from "../../context/UserContext.jsx";
 import { useFetchComments } from "../hooks/useFetchComments.js";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export function PostCard({
   id,
@@ -25,6 +26,7 @@ export function PostCard({
   const { user } = useUser();
   const { getCommentCount } = useFetchComments();
   const [commentCount, setCommentCount] = useState(0);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchCommentCount = async () => {
@@ -127,11 +129,11 @@ export function PostCard({
           />
         </svg>{" "}
       </div>
-      <p className="mt-2 px-4 dark:text-white">{likes} Me gusta</p>
+      <p className="mt-2 px-4 dark:text-white">{likes} {t('likes')}</p>
 
       {commentCount > 0 && (
         <p onClick={setOpenComments(id)} className="text-[#7F7B7B] px-4 dark:text-[#BCBCBC] cursor-pointer">
-          Ver los {commentCount} comentarios
+          {commentCount} {t("Comments")}
         </p>
       )}
     </div>

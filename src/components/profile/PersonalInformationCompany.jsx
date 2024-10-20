@@ -21,7 +21,7 @@ export function PersonalInformationCompany() {
     const { isMobile } = useFetchMenubar();
     const { user } = useUser();
 
-    const { i18n } = useTranslation();
+    const { i18n, t } = useTranslation();
 
     const [isOpenComments, setOpenComments] = useState(false);
     const handleCloseComments = () => setOpenComments(false);
@@ -110,40 +110,40 @@ export function PersonalInformationCompany() {
                         <div className="hidden lg:block">
                             <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white">{translatedCategory}</h4>
                             <p className="pt-[2rem] dark:text-white">1</p>
-                            <h4 className="dark:text-white">Publicaciones</h4>
+                            <h4 className="dark:text-white">{t('Posts')}</h4>
                         </div>
 
                         <div className="hidden lg:block">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]"><NavLink to="/accountSettingsCompany">Editar</NavLink></button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]"><NavLink to="/accountSettingsCompany">{t('Edit')}</NavLink></button>
                             <p className="pt-[2rem] dark:text-white">1</p>
-                            <h4 className="dark:text-white">Seguidores</h4>
+                            <h4 className="dark:text-white">{t('Followers')}</h4>
                         </div>
 
                         <div className="hidden lg:block">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]">Compartir</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]">{t('Share')}</button>
                             <p className="pt-[2rem] dark:text-white">1</p>
-                            <h4 className="dark:text-white">Siguiendo</h4>
+                            <h4 className="dark:text-white">{t('Following')}</h4>
                         </div>
 
                         <div className="grid grid-cols-2 gap-3 lg:hidden">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">Editar</button>
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">Compartir</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Edit')}</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Share')}</button>
                         </div>
 
                         <div className="grid grid-cols-3 gap-3 lg:hidden">
                             <div>
                                 <p className="pt-[2rem] dark:text-white">1</p>
-                                <h4 className="dark:text-white">Publicaciones</h4>
+                                <h4 className="dark:text-white">{t('Posts')}</h4>
                             </div>
 
                             <div>
                                 <p className="pt-[2rem] dark:text-white">1</p>
-                                <h4 className="dark:text-white">Seguidores</h4>
+                                <h4 className="dark:text-white">{t('Followers')}</h4>
                             </div>
 
                             <div>
                                 <p className="pt-[2rem] dark:text-white">1</p>
-                                <h4 className="dark:text-white">Siguiendo</h4>
+                                <h4 className="dark:text-white">{t('Following')}</h4>
                             </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@ export function PersonalInformationCompany() {
 
                 <div className="mt-10 pb-[5rem]">
                     <h2 className="font-bold lg:text-2xl text-xl mb-8 dark:text-white">
-                        Post
+                        {t('Posts')}
                     </h2>
                     <div className="mt-10">
                         <Posts  setOpenComments={openCardComments}/>
