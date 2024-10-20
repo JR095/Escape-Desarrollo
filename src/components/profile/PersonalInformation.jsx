@@ -12,7 +12,6 @@ import propTypes from "prop-types";
 
 import { Drawer } from "flowbite-react";
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 export function PersonalInformation() {
 
     const { isMobile } = useFetchMenubar();
@@ -27,8 +26,6 @@ export function PersonalInformation() {
         console.log(id);
         setId(id);
     };
-
-    const { t } = useTranslation();
 
     return (
 
@@ -62,28 +59,18 @@ export function PersonalInformation() {
                         </div>
                     </div>
 
-                    <div className="grid lg:grid-cols-3 text-center lg:align-center">
+                    <div className="grid lg:grid-cols-2 text-center">
                         <div className="hidden lg:block">
-                            <h4 className=" text-[#606060] font-semibold lg:py-[0.5rem] pt-[2rem] dark:text-white"></h4>
-                            <p className="pt-[2rem] dark:text-white mt-[1.6rem]">1</p>
-                            <h4 className="dark:text-white">Publicaciones</h4>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500"><NavLink to="/accountSettings">Editar</NavLink></button>
                         </div>
 
                         <div className="hidden lg:block">
-                        <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500"><NavLink to="/accountSettings">{t('Edit')}</NavLink></button>
-                            <p className="pt-[2rem] dark:text-white">1</p>
-                            <h4 className="dark:text-white">Seguidores</h4>
-                        </div>
-
-                        <div className="hidden lg:block">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500">{t('Share')}</button>
-                            <p className="pt-[2rem] dark:text-white">1</p>
-                            <h4 className="dark:text-white">Siguiendo</h4>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500">Compartir</button>
                         </div>
 
                         <div className="grid grid-cols-2 gap-3 lg:hidden">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Edit')}</button>
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Share')}</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">Editar</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">Compartir</button>
                         </div>
 
                         <div className="grid grid-cols-3 gap-3 lg:hidden">
@@ -107,9 +94,9 @@ export function PersonalInformation() {
 
                 <div className="mt-10 pb-[5rem]">
                     <h2 className="font-bold lg:text-2xl text-xl mb-8 dark:text-white">
-                        Post
+                        Companies
                     </h2>
-                    
+
                     <CarouselCard setIsOpen={openCard} />
                 </div>
             </main>
@@ -119,4 +106,4 @@ export function PersonalInformation() {
 
 PersonalInformation.propTypes = {
     toggleDarkMode: propTypes.func
-  };
+};

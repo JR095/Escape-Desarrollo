@@ -1,7 +1,7 @@
 import "../../index.css";
 import location from "../../assets/imgs/location.svg";
 
-export function CardResult({ image, name, city, followers, description }) {
+export function CardResult({ image, name, city, followers, description, phone_number, email, category_id, sub_category_id }) {
     return (
         <div className="lg:max-w-[800px] sm:max-w-[400px] w-full mx-auto grid lg:grid-cols-[1fr_2fr_1fr] gap-8 p-6 bg-white rounded-lg shadow dark:bg-[#404040]">
             <div className="flex justify-center">
@@ -23,11 +23,19 @@ export function CardResult({ image, name, city, followers, description }) {
                     <p className="text-[#9A9797] font-semibold text-lg dark:text-[#BCBCBC]">{city}</p>
                 </div>
                 <p className="text-lg tracking-tight dark:text-white my-3">{description}</p>
+                <div className="grid lg:grid-cols-2">
+                    <p className="text-lg tracking-tight dark:text-white my-3">{phone_number}</p>
+                    <p className="text-lg tracking-tight dark:text-white my-3">{email}</p>
+                </div>
+                <p className="text-lg tracking-tight dark:text-white my-3">{category_id} - {sub_category_id}</p>
+
             </div>
 
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center lg:pb-[16rem]">
                 <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg text-lg">Seguir</button>
             </div>
+
+
         </div>
     );
 }
