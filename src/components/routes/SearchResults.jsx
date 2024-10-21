@@ -59,6 +59,10 @@ export function SearchResults() {
                                         city={result.district_name}
                                         followers={result.followers_count}
                                         description={result.description}
+                                        phone_number={result.phone_number}
+                                        email={result.email}
+                                        category_id={result.category_id}
+                                        sub_category_id={result.sub_category_id}
                                     />
                                 ))
                             ) : (

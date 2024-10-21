@@ -9,20 +9,17 @@ import heart from "../../assets/imgs/heart.svg";
 import fav from "../../assets/imgs/favorite.svg";
 
 import back from "../../assets/imgs/back.svg";
-import useFetchData from "../hooks/useFetchData";
 import { useUser } from '../../context/UserContext.jsx';
+import { useTranslation } from 'react-i18next';
 
 import propTypes from "prop-types";
 
-export function CardInformation({ id , onClose, favorite, hearts, setHearts }) {
+export function CardInformation({  onClose, favorite, hearts, setHearts,placeData }) {
   
 const { user } = useUser();
-const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id;
-const { data: placeData, loading, error } = useFetchData(url, ['description']);
+const { t } = useTranslation();
 const [travelTime, setTravelTime] = useState(null);
 const [travelMode, setTravelMode] = useState('pedestrian');
-
-console.log(placeData);
 
 useEffect(() => {
   if (!placeData || !placeData[0] || !user) return;
@@ -47,9 +44,9 @@ useEffect(() => {
       })
       .catch(error => console.error('Error al calcular la ruta:', error));*/
 
-    setTravelTime('Calculando...');
+    setTravelTime(t('Calculating'));
   } else {
-    setTravelTime('Calculando...');
+    setTravelTime(t('Calculating'));
   }
 }, [placeData, user, travelMode]);
 
@@ -60,13 +57,7 @@ useEffect(() => {
     return horas >= 1 ? `${horas}h ${mins}min` : `${mins}min`;
   }
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error fetching data: {error.message}</p>;
-  }
+  
 
   if (!placeData || !placeData[0]) {
     return <p>No data found</p>;
@@ -134,7 +125,7 @@ useEffect(() => {
         <p className="text-black font-semibold text-xl md:text-2xl dark:text-[#BCBCBC] grid">
         ₡2500 
           <span className="text-[#9A9797] font-semibold text-base dark:text-[#BCBCBC]">
-            /persona
+            {t('pPerson')}
           </span>
         </p>
       </div>
@@ -147,7 +138,7 @@ useEffect(() => {
       </div>
       <p className="mt-4 dark:text-white">{place.description}</p>
       <div className="flex align-bottom ">
-      <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg mt-4 text-lg">Ir</button>
+      <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg mt-4 text-lg">{t('Go')}</button>
 
       </div>
     </div>
@@ -157,5 +148,8 @@ useEffect(() => {
 CardInformation.propTypes = {
   id: propTypes.number,
   onClose: propTypes.func,
-  favorite: propTypes.func
+  favorite: propTypes.func,
+  placeData: propTypes.array,
+  hearts: propTypes.bool,
+  setHearts: propTypes.func
 };

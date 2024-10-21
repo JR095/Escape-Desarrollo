@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import "../../index.css";
 import map from "../../assets/imgs/locateMap.jpg";
 import { useUser } from '../../context/UserContext.jsx';
+import { useTranslation } from 'react-i18next';
 
 export const MapThumbnail = () => {
+  const { t } = useTranslation();
 
   const [isTooltipVisible, setTooltipVisible] = useState(false);
   const { user, updateUserLocation } = useUser();
@@ -50,7 +52,7 @@ export const MapThumbnail = () => {
       </Link>
       
       <section className="justify-center content-center">
-        <h3 className="text-lg text-sky-500 font-bold">Tu ubicación</h3>
+        <h3 className="text-lg text-sky-500 font-bold">{t('YourLocation')}</h3>
         <p className="text-gray-500 dark:text-white font-semibold">
           {user?.latitude && user?.longitude ? 'Esparza centro' : 'Ubicación no disponible'}
         </p>

@@ -48,7 +48,7 @@ export function HeaderLanding() {
                                         className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsLoginMenuVisible(false)} 
                                     >
-                                        {t('Iniciar sesión como usuario')}
+                                        {t('Iniciar sesión como Escapista')}
                                     </NavLink>
                                     <NavLink
                                         to="/signInCompanies"
@@ -79,7 +79,7 @@ export function HeaderLanding() {
                                         className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsRegisterMenuVisible(false)} 
                                     >
-                                        {t('Registrarse como usuario')}
+                                        {t('Registrarse como Escapista')}
                                     </NavLink>
                                     <NavLink
                                         to="/signUpCompanies"

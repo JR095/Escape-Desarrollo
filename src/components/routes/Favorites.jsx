@@ -7,15 +7,17 @@ import { CardInformation } from "../cards/CardInformation";
 import { Filter } from "../navigation/Filter.jsx";
 ("use client");
 import { Drawer } from "flowbite-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import propTypes from "prop-types";
 import useFetchData from "../hooks/useFetchData.js";
 import { CategorieNav } from "../navigation/CategorieNav.jsx";
 import { useUser } from '../../context/UserContext.jsx';
+import { useTranslation } from "react-i18next";
 
 
 export function Favorites() {
   const { user } = useUser();
+  const { t } = useTranslation();
 
   const { isMobile } = useFetchMenubar();
   const { data: categories, loading: loadingCategories } = useFetchData(
@@ -38,7 +40,7 @@ export function Favorites() {
   const [idCanton, setIdCanton] = useState(0);
   const [idDistrict, setIdDistrict] = useState(0);
   
-  const { data, loading } = useFetchData(
+  const { data, loading, setData } = useFetchData(
     `http://localhost/escape-desarrollo-backend/public/api/favorites/`+user.id
   );
 
@@ -46,12 +48,40 @@ export function Favorites() {
   const handleClosFilter = () => setIsFilter(false);
 
   const [id, setId] = useState(0);
+  const [informationCard, setInformationCard] = useState(null);
+  const [hearts, setHearts] = useState(false);
 
-  const openCard = (id) => () => {
+
+  const openCard = async (id) =>  {
+    const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id);
+    const result = await response.json();
+    if(result[0].favorite != null){
+      setHearts(true);
+      result[0].favorite=null;
+
+    }else{
+      setHearts(false);
+    }
+    setInformationCard(result);
     setIsOpen(true);
-    console.log(id);
     setId(id);
   };
+  const favorite  = () => {
+    console.log("La id de la card es "+id +" y el id del user es "+user.id);
+    fetch("http://localhost/escape-desarrollo-backend/public/api/favorite", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        company_id: id,
+        user_id: user.id,
+      }),
+    });
+    setHearts(!hearts);
+  
+  };
+
 
   const openFilter = (open) => {
     setIsFilter(open);
@@ -70,11 +100,11 @@ export function Favorites() {
     }
   };
 
-  /*useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost/escape-desarrollo-backend/public/api/items/${idCategory}/${idCategorySub}/${idCanton}/${idDistrict}`
+          `http://localhost/escape-desarrollo-backend/public/api/favorite/${idCategory}/${idCategorySub}/${idCanton}/${idDistrict}/${user.id}`
         );
         const result = await response.json();
         setData(result);
@@ -84,7 +114,7 @@ export function Favorites() {
     };
 
     fetchData(); // Llamar la función asíncrona dentro del useEffect
-  }, [idCategory, idCanton, idDistrict, idCategorySub]);*/
+  }, [idCategory, idCanton, idDistrict, idCategorySub]);
 
   const setsubcategories = (id) => () => {
     if (idCategory == id) {
@@ -122,7 +152,7 @@ export function Favorites() {
         className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]"
       >
         <Drawer.Items>
-          <CardInformation id={id} onClose={handleClose} />
+        <CardInformation  placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} />
         </Drawer.Items>
       </Drawer>
       <div className="grid lg:justify-between ">
@@ -140,7 +170,7 @@ export function Favorites() {
             </h1>
           )}
           <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white mt-16 md:mt-10">
-            Mis favoritos
+            {t("myFavorites")}
           </h2>
 
           {!loading ? (

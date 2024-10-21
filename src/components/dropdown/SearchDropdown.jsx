@@ -4,8 +4,10 @@ import { useSearchDropdown } from '../hooks/useSearchDropdown';
 import { useNavigate } from "react-router-dom";
 import { useStoreSearch } from '../hooks/useStoreSearch';
 import { useFetchSearchHistory } from '../hooks/useFetchSearchHistory';
+import { useTranslation } from 'react-i18next';
 
 export function SearchDropdown() {
+  const { t } = useTranslation();
   const [search_term, setSearchTerm] = useState('');
   const navigate = useNavigate();
   const { storeSearchTerm } = useStoreSearch();
@@ -92,7 +94,7 @@ export function SearchDropdown() {
               <p className="text-center">Cargando...</p>
             ) : backendRecentSearches.length > 0 ? (
               <>
-                <h2 className="px-4 py-2 font-bold text-lg">Recientes</h2>
+                <h2 className="px-4 py-2 font-bold text-lg">{t('Recents')}</h2>
                 {backendRecentSearches.map((search) => (
                   <li
                     key={search.id}
@@ -114,7 +116,7 @@ export function SearchDropdown() {
                 ))}
               </>
             ) : (
-              <li className="px-4 py-2 text-gray-500 text-center dark:text-white">No hay búsquedas recientes</li>
+              <li className="px-4 py-2 text-gray-500 text-center dark:text-white">{t('noRecentSearches')}</li>
             )}
           </ul>
         )}

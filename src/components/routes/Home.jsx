@@ -17,6 +17,7 @@ import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
 
 import { CardComments } from "../cards/CardComments.jsx";
+import { useTranslation } from "react-i18next";
 
 export function Home() {
 
@@ -26,14 +27,13 @@ export function Home() {
   }
   const [hearts, setHearts] = useState(false);
 
-    
-
   const [id, setId] = useState(0);
 
   const { user } = useUser();
   const [isOpenComments, setOpenComments] = useState(false);
   const handleCloseComments = () => setOpenComments(false);
   const [postId, setPostId] = useState(null);
+  const { t } = useTranslation();
 
   const openCardComments = (postId) => () => {
     if (postId) { 
@@ -43,21 +43,23 @@ export function Home() {
       console.error('Invalid postId:', postId);
     }
   };
+  const [informationCard, setInformationCard] = useState(null);
 
 
-  const openCard = (id,favorite) => () => {
-    setIsOpen(true);
-    console.log(id);
-    if (favorite==0){
-      setHearts(false);
-    }else{
+  const openCard = async (id) =>  {
+    const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id);
+    const result = await response.json();
+    if(result[0].favorite != null){
       setHearts(true);
+      result[0].favorite=null;
+
+    }else{
+      setHearts(false);
     }
+    setInformationCard(result);
+    setIsOpen(true);
     setId(id);
- 
-
   };
-
   const favorite  = () => {
     console.log("La id de la card es "+id +" y el id del user es "+user.id);
     fetch("http://localhost/escape-desarrollo-backend/public/api/favorite", {
@@ -83,7 +85,7 @@ export function Home() {
       </div>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
-          <CardInformation id={id} onClose={handleClose} favorite={favorite} hearts={hearts} setHearts={setHearts}  />
+        <CardInformation  placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} />
         </Drawer.Items>
       </Drawer>
 
@@ -108,18 +110,18 @@ export function Home() {
 
         <MapThumbnail />
         <div className="mt-10">
-          <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">Categorías</h2>
+          <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">{t('SCategories')}</h2>
           <CategoriesCarousel />
         </div>
 
         <div className="mt-10">
           <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">
-            Recomendaciones
+            {t('recommendations')}
           </h2>
           <CarouselCard setIsOpen={openCard} />
         </div>
-        <h2 className="font-bold md:text-2xl text-xl mb-8 dark:text-white">
-            Publicaciones recientes
+        <h2 className="font-bold md:text-2xl text-xl mt-8 dark:text-white">
+          {t('RecentPosts')}
           </h2>
 
         <div className="mt-10">

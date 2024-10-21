@@ -1,7 +1,9 @@
 import "../../index.css";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { useTranslation } from 'react-i18next';
 
 export function CommentsCrud({ commentId, onEdit, onDelete }) {
+    const { t } = useTranslation();
 
     return (
         <Menu as="div" className="relative inline-block text-left">
@@ -20,12 +22,12 @@ export function CommentsCrud({ commentId, onEdit, onDelete }) {
                 <div className="py-1">
                     <MenuItem onClick={() => onEdit(commentId)}>
                         <span className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-200 hover:dark:bg-[#5a5a5a]">
-                            Editar
+                            {t('Edit')}
                         </span>
                     </MenuItem>
                     <MenuItem onClick={() => onDelete(commentId)}>
                         <span className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-200 hover:dark:bg-[#5a5a5a]">
-                            Eliminar
+                            {t('Delete')}
                         </span>
                     </MenuItem>
 
