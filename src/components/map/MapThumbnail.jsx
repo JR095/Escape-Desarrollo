@@ -37,8 +37,6 @@ export const MapThumbnail = () => {
     }
   }, [user]);
 
-  console.log(user.latitude);
-
   return (
     <div className="mt-6 bg-white dark:bg-[#404040] p-3 rounded-lg shadow-md grid grid-cols-[30%_70%] gap-4 lg:w-1/3 w-full relative">
       <Link to="/map">
