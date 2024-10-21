@@ -13,7 +13,6 @@ import { useState } from "react";
 import propTypes from "prop-types";
 import { useUser } from '../../context/UserContext.jsx';
 
-
 import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
 

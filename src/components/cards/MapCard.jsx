@@ -8,12 +8,9 @@ export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, ha
 
   return (
 
-    <div className='absolute top-4 bg-white p-4 rounded shadow-lg z-10'
-      style={{
-          marginLeft: isMobile ? '0px' : '100px',
-      }}>
+    <div className='absolute right-0 bg-white p-4 rounded shadow-lg z-10 dark:bg-[#2a2a2a] md:w-[25vw] w-full h-[100vh]'>
 
-      <h1>Buscar Ruta</h1>
+      <h1 className='dark:text-white'>Buscar Ruta</h1>
     
       <div className="flex gap-2 justify-center m-4">
         <button 
@@ -37,7 +34,7 @@ export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, ha
       </div>
 
       <div>
-        <label htmlFor="destination">Destino: </label>
+        <label htmlFor="destination" className='dark:text-white'>Destino: </label>
         <input
           type="text"
           id="destination"
@@ -61,8 +58,8 @@ export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, ha
         )}
       </div>
 
-      <p>Duración estimada: {travelTime}</p>
-      <p>Hora de llegada estimada: {EstimatedHour}</p>
+      <p className='dark:text-white'>Duración estimada: {travelTime}</p>
+      <p className='dark:text-white'>Hora de llegada estimada: {EstimatedHour}</p>
     </div>
   );
 };
