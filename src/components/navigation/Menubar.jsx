@@ -1,14 +1,21 @@
 import "../../index.css";
 import { useUser } from "../../context/UserContext.jsx";
 import { useTranslation } from "react-i18next";
+import { DrawerMenu } from "./DrawerMenu.jsx";
+import { useLocation } from "react-router-dom";
 
 export function Menubar(){
     const { user } = useUser();
     const profileUrl = user && user.user_type_id === 1 ? "/PersonalInformationCompany" : "/PersonalInformation";
 
     const { t } = useTranslation();
+    const location = useLocation();
+
+    const isDrawerHidden = location.pathname === "/favorites" || location.pathname === "/Categories";
 
     return(
+        <>
+        {!isDrawerHidden && <DrawerMenu position="fixed" positionX="right-16" positionY="top-8" />}
         <div className="bg-white dark:bg-[#2a2a2a] w-full h-[70px] fixed bottom-0">
             <nav>
                 <ul className="flex justify-between ml-4 mr-4">
@@ -66,5 +73,7 @@ export function Menubar(){
                 </ul>
             </nav>
         </div>
+        </>
+        
     );
 }
