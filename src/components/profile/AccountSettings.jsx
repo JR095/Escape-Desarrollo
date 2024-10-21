@@ -28,10 +28,62 @@ export function AccountSettings({ toggleDarkMode }) {
         distrito: user ? user.district_id : '',
     });
 
+    const cantons = [
+        { id: 1, name: "Puntarenas" },
+        { id: 2, name: "Esparza"},
+        { id: 3, name: "Buenos Aires"},
+        { id: 4, name: "Montes de Oro"},
+        { id: 5, name: "Osa"},
+        { id: 6, name: "Aguirre"},
+        { id: 7, name: "Golfito"},
+        { id: 8, name: "Coto Brus"},
+        { id: 9, name: "Parrita"},
+        { id: 10, name: "Corredores"},
+        { id: 11, name: "Garabito"},
+    ];
+
+    const districts = [
+        { id: 1, name: "Puntarenas" },
+        { id: 2, name: "Pitahaya" },
+        { id: 3, name: "Chomes" },
+        { id: 4, name: "Lepanto" },
+        { id: 5, name: "Paquera" },
+        { id: 6, name: "Manzanillo" },
+        { id: 7, name: "Guacimal" },
+        { id: 8, name: "Barranca" },
+        { id: 9, name: "Monteverde" },
+        { id: 10, name: "Isla del Coco" },
+        { id: 11, name: "Cóbano" },
+        { id: 12, name: "Chacarita" },
+        { id: 13, name: "Chira" },
+        { id: 14, name: "Acapulco" },
+        { id: 15, name: "El Roble" },
+        { id: 16, name: "Esparza centro" },
+        { id: 17, name: "San Juan" },
+        { id: 18, name: "San Rafael" },
+        { id: 19, name: "San Jerónimo" },
+        { id: 20, name: "Macacona" },
+        { id: 21, name: "Espiritu Santo" },
+    ];
+
+    const getCantonName = (cantonId) => {
+        console.log("Canton ID recibido:", cantonId); // Muestra el ID que estás pasando
+        const canton = cantons.find(canton => canton.id.toString() === cantonId.toString());
+        console.log("Canton encontrado:", canton); // Muestra el cantón encontrado
+        return canton ? canton.name : "Canton desconocido";
+    };
+    
+
+    const getDistrictName = (districtId) => {
+        const district = districts.find(district => district.id.toString() === districtId.toString());
+        return district ? district.name : "Distrito desconocido";
+    };
+
     useEffect(() => {
         const fetchCantones = async () => {
             const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/cantons');
             const data = await response.json();
+            console.log("Cantones cargados:", data);
             setCantones(data);
         };
 
@@ -118,6 +170,7 @@ export function AccountSettings({ toggleDarkMode }) {
                                 label="Cantón"
                                 options={cantones}
                                 value={formData.canton}
+                                placeholder={getCantonName(user.canton_id)}
                                 onChange={handleChange}
                             />
 
@@ -127,6 +180,7 @@ export function AccountSettings({ toggleDarkMode }) {
                                 label="Distrito"
                                 options={distritos}
                                 value={formData.distrito}
+                                placeholder={getDistrictName(user.district_id)}
                                 onChange={handleChange}
                             />
 
