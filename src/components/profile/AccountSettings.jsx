@@ -67,9 +67,9 @@ export function AccountSettings({ toggleDarkMode }) {
     ];
 
     const getCantonName = (cantonId) => {
-        console.log("Canton ID recibido:", cantonId); // Muestra el ID que estás pasando
+        console.log("Canton ID recibido:", cantonId); 
         const canton = cantons.find(canton => canton.id.toString() === cantonId.toString());
-        console.log("Canton encontrado:", canton); // Muestra el cantón encontrado
+        console.log("Canton encontrado:", canton); 
         return canton ? canton.name : "Canton desconocido";
     };
     

@@ -77,7 +77,7 @@ export function SignInCompanies() {
                 <AuthInput name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)}/>
                 <AuthInput name="password" placeholder={t('iPassword')} type="password" className="mb-4 lg:mb-4" onChange={e => setPassword(e.target.value)}/>
                 <div className="text-right">
-                    <NavLink className="text-sky-500 font-medium" to="/forgot-password">{t('forgotPassword')}</NavLink>
+                    <NavLink className="text-sky-500 font-medium" to="/forgot-password-company">{t('forgotPassword')}</NavLink>
                 </div>
 
                 <input

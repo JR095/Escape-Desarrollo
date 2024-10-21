@@ -14,6 +14,7 @@ import {PersonalInformation} from "./components/profile/PersonalInformation"
 import {PersonalInformationCompany} from "./components/profile/PersonalInformationCompany"
 import { SearchResults } from "./components/routes/SearchResults";
 import { ForgotPassword } from './components/password/ForgotPassword.jsx';
+import { ForgotPasswordCompany } from './components/password/ForgotPasswordCompany.jsx';
 import { ComponentProvider } from './components/hooks/useComponentContext.jsx';
 import { CreatePost } from "./components/routes/CreatePost.jsx";
 import { Categories } from "./components/routes/Categories.jsx";
@@ -48,6 +49,7 @@ export function App() {
                 <Route path="/mapWithRoute" element={<RouteMap />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/forgot-password-company" element={<ForgotPasswordCompany />} />
                 <Route path="/favorites" element={<Favorites  />} />
 
                 <Route path="/create-post" element={<CreatePost />} />
