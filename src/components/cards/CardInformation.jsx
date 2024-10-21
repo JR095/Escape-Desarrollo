@@ -7,74 +7,41 @@ import money from "../../assets/imgs/money.svg";
 import guide from "../../assets/imgs/guide.svg";
 import heart from "../../assets/imgs/heart.svg";
 import fav from "../../assets/imgs/favorite.svg";
-
+import { useFetchTravelTime } from "../hooks/useFetchTravelTime.js";
 import back from "../../assets/imgs/back.svg";
-import { useUser } from '../../context/UserContext.jsx';
 import { useTranslation } from 'react-i18next';
 
 import propTypes from "prop-types";
 
-export function CardInformation({  onClose, favorite, hearts, setHearts,placeData }) {
-  
-const { user } = useUser();
-const { t } = useTranslation();
-const [travelTime, setTravelTime] = useState(null);
-const [travelMode, setTravelMode] = useState('pedestrian');
+export function CardInformation({  onClose, favorite, hearts, setHearts, placeData }) {
 
-useEffect(() => {
-  if (!placeData || !placeData[0] || !user) return;
+  const { t } = useTranslation();
+  const [travelMode, setTravelMode] = useState('pedestrian');
+  const [placeLocation, setPlaceLocation] = useState([]);
+  const [place, setPlace] = useState(null);
 
-  const place = placeData[0];
-  
-  if (place.longitude && place.latitude && user.longitude && user.latitude) {
+  useEffect(() => {
+    if (placeData && placeData.length > 0) {
+      const data = placeData[0];
+      setPlace(data);
+      setPlaceLocation([data.latitude, data.longitude]);
+    }
+  }, [placeData]);
 
-    /* 
-    const origin = [user.longitude, user.latitude];
-    const destination = [place.longitude, place.latitude];
+  const { travelTime } = useFetchTravelTime(placeLocation, travelMode);
 
-    const routeUrl = `https://api.tomtom.com/routing/1/calculateRoute/${origin[1]},${origin[0]}:${destination[1]},${destination[0]}/json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi&traffic=true&travelMode=${travelMode}`;
+  const close = () => {
+    setHearts(false);
+    onClose();
+  };
 
-    fetch(routeUrl)
-      .then(response => response.json())
-      .then(data => {
-        const travelTimeInSeconds = data.routes[0].summary.travelTimeInSeconds;
-        const travelTimeInMinutes = Math.round(travelTimeInSeconds / 60);
-        const travelTimeFormatted = convertirMinutosAHoras(travelTimeInMinutes);
-        setTravelTime(travelTimeFormatted);
-      })
-      .catch(error => console.error('Error al calcular la ruta:', error));*/
-
-    setTravelTime(t('Calculating'));
-  } else {
-    setTravelTime(t('Calculating'));
-  }
-}, [placeData, user, travelMode]);
-
-
-  function convertirMinutosAHoras(minutos) {
-    const horas = Math.floor(minutos / 60);
-    const mins = minutos % 60;
-    return horas >= 1 ? `${horas}h ${mins}min` : `${mins}min`;
-  }
-
-  
-
-  if (!placeData || !placeData[0]) {
-    return <p>No data found</p>;
-  }
-
-  const place = placeData[0];
-
- const close = () => {
-  setHearts(false);
-  onClose();
- }
-
- const handleTravelModeChange = (mode) => {
-  console.log(mode);
-  setTravelMode(mode);
-};
+  const handleTravelModeChange = (mode) => {
+    console.log(mode);
+    setTravelMode(mode);
+  };
  
+  if (!place) return <div>Loading...</div>; 
+
   return (
     <div>
         <div className="relative">
@@ -99,7 +66,7 @@ useEffect(() => {
       </div>
 
       <div className="flex gap-2 my-4">
-        <button r
+        <button
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
           onClick={() => handleTravelModeChange('pedestrian')} // Modo caminar
         >

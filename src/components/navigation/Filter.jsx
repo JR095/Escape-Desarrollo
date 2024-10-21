@@ -41,7 +41,7 @@ export function Filter({
 
   return (
 
-      <div className="flex flex-col h-[100vh] right-0 w-full  md:w-[25vw] bg-white dark:bg-[#404040] dark:hover:bg-[#404040] md:fixed ">
+      <div className="flex flex-col h-[100vh] right-0 w-full md:w-[25vw] bg-white dark:bg-[#404040] dark:hover:bg-[#404040] md:fixed ">
             
         <h3 className="font-semibold text-center text-xl my-3 dark:text-white">
           {t("Filters")}
