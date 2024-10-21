@@ -14,11 +14,12 @@ import { CategorieNav } from "../navigation/CategorieNav.jsx";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useUser } from '../../context/UserContext.jsx';
+import { translateText } from "../hooks/translateText.js";
 
 
 export function Categories() {
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user } = useUser();
 
   const [hearts, setHearts] = useState(false);
@@ -58,18 +59,28 @@ export function Categories() {
 
 
   const openCard = async (id) =>  {
-    const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id);
-    const result = await response.json();
-    if(result[0].favorite != null){
-      setHearts(true);
-      result[0].favorite=null;
+    try {
+      const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/` + user.id);
+      const result = await response.json();
+      if (result[0].favorite != null) {
+        setHearts(true);
+        result[0].favorite = null;
 
-    }else{
-      setHearts(false);
+      } else {
+        setHearts(false);
+      }
+
+      if (i18n.language !== 'es') {
+        result[0].description = await translateText(result[0].description, 'es', i18n.language);
+      }
+
+      setInformationCard(result);
+      setIsOpen(true);
+      setId(id)
     }
-    setInformationCard(result);
-    setIsOpen(true);
-    setId(id);
+    catch (err) {
+      console.error('Error al abrir la tarjeta:', err);
+    }
   };
   const favorite  = () => {
     console.log("La id de la card es "+id +" y el id del user es "+user.id);
