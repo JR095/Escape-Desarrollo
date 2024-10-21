@@ -1,10 +1,12 @@
 // components/MapCard.jsx
 import React from 'react';
 import { useFetchMenubar } from "../hooks/useFetchMenubar.js";
+import { useTranslation } from "react-i18next";
 
 export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, handlePlaceSelect, travelTime, EstimatedHour, handleTravelModeChange  }) => {
   
   const { isMobile } = useFetchMenubar();
+  const { t } = useTranslation();
 
   return (
 
@@ -13,20 +15,20 @@ export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, ha
           marginLeft: isMobile ? '0px' : '100px',
       }}>
 
-      <h1>Buscar Ruta</h1>
+      <h1>{t('searchDestination')}</h1>
     
       <div className="flex gap-2 justify-center m-4">
         <button 
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
           onClick={() => handleTravelModeChange('pedestrian')} // Modo caminar
         >
-          Caminando
+          {t('Walking')}
         </button>
         <button 
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
           onClick={() => handleTravelModeChange('bicycle')} // Modo bicicleta
         >
-          Bicicleta
+          {t('bicycle')}
         </button>
         <button 
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
@@ -37,12 +39,12 @@ export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, ha
       </div>
 
       <div>
-        <label htmlFor="destination">Destino: </label>
+        <label htmlFor="destination">{t('Destination')} </label>
         <input
           type="text"
           id="destination"
           value={inputValue}
-          placeholder="Escribe el nombre del lugar"
+          placeholder={t('typePlaceName')}
           onChange={handleDestinationInput}
           className="border p-2 rounded w-full"
         />
@@ -61,8 +63,8 @@ export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, ha
         )}
       </div>
 
-      <p>Duración estimada: {travelTime}</p>
-      <p>Hora de llegada estimada: {EstimatedHour}</p>
+      <p>{t('Duration')} {travelTime}</p>
+      <p>{t('arrivalTime')} {EstimatedHour}</p>
     </div>
   );
 };
