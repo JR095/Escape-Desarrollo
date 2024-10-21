@@ -31,7 +31,7 @@ export function Favorites() {
   );
   const [isOpen, setIsOpen] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-  const [idCategory, setIdCategory] = useState();
+  const [idCategory, setIdCategory] = useState(0);
   const { data: subCategories, setData: setSubCategories } = useFetchData(
     `http://localhost/escape-desarrollo-backend/public/api/subcategories/${idCategory}`,
     ['name']
@@ -118,6 +118,7 @@ export function Favorites() {
           `http://localhost/escape-desarrollo-backend/public/api/favorite/${idCategory}/${idCategorySub}/${idCanton}/${idDistrict}/${user.id}`
         );
         const result = await response.json();
+        console.log(result);
         setData(result);
       } catch (error) {
         console.error("Error fetching data:", error);

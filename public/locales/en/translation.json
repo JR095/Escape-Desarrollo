@@ -92,5 +92,7 @@
     "Destination": "Destination:",
     "Duration": "Estimated duration:",
     "arrivalTime": "Estimated arrival time:",
-    "typePlaceName": "Type the name of the place"
+    "typePlaceName": "Type the name of the place",
+    "search": "Search..."
+
   }

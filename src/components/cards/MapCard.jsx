@@ -44,12 +44,12 @@ export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, ha
       </div>
 
       <div>
-        <label htmlFor="destination" className='dark:text-white'>Destino: </label>
+        <label htmlFor="destination" className='dark:text-white'>{t('Destination')} </label>
         <input
           type="text"
           id="destination"
           value={inputValue}
-          placeholder="Buscar..."
+          placeholder={t('search')}
           onChange={handleDestinationInput}
           className="border p-2 rounded w-full"
         />
@@ -89,11 +89,11 @@ export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, ha
       )}
 
       <p className='dark:text-white mt-2'>
-        Descripción: {placeInformation.description}
+        {t('Description')} {placeInformation.description}
       </p>
 
-      <p className='dark:text-white'>Duración estimada: {travelTime}</p>
-      <p className='dark:text-white'>Hora de llegada estimada: {EstimatedHour}</p>
+      <p className='dark:text-white'>{t('Duration')} {travelTime}</p>
+      <p className='dark:text-white'>{t('arrivalTime')} {EstimatedHour}</p>
     </div>
   );
 };

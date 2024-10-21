@@ -92,6 +92,7 @@
     "Destination": "Destino:",
     "Duration": "Duración estimada:",
     "arrivalTime": "Hora de llegada estimada:",
-    "typePlaceName": "Escribe el nombre del lugar"
+    "typePlaceName": "Escribe el nombre del lugar",
+    "search": "Buscar..."
  
   }

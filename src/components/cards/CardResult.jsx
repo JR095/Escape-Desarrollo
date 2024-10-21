@@ -50,31 +50,9 @@ export function CardResult({ image, name, city, followers, description, phone_nu
                     <p className="text-[#9A9797] font-semibold text-lg dark:text-[#BCBCBC]">{city}</p>
                 </div>
 
-                <div className="flex gap-2 my-4">
-                    <button
-                        className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
-                        onClick={() => handleTravelModeChange('pedestrian')} // Modo caminar
-                    >
-                        Caminando
-                    </button>
-                    <button
-                        className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
-                        onClick={() => handleTravelModeChange('bicycle')} // Modo bicicleta
-                    >
-                        Bicicleta
-                    </button>
-                    <button
-                        className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
-                        onClick={() => handleTravelModeChange('car')} // Modo carro
-                    >
-                        Auto
-                    </button>
-                </div>
+                
 
-                <p className="text-black font-semibold text-xl md:text-2xl dark:text-[#BCBCBC]">
-                    {'Calculando...'}
-                </p>
-
+                
                 <p className="text-lg tracking-tight dark:text-white my-3">{description}</p>
                 <div className="grid">
                     <p className="text-lg tracking-tight dark:text-white my-3">{phone_number}</p>
@@ -84,7 +62,7 @@ export function CardResult({ image, name, city, followers, description, phone_nu
 
             </div>
 
-            <div className="flex justify-center items-center lg:pb-[24rem]">
+            <div className="flex justify-center items-center lg:pb-[18rem]">
                 <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg text-lg">Seguir</button>
             </div>
 
