@@ -22,10 +22,10 @@ export function ForgotPassword() {
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-blue-100">
-            <form className="bg-blue-600 rounded-lg shadow-md p-8 mx-10 lg:mx-16 w-[30vh] lg:w-[37vh]" onSubmit={handleSubmit}>
-                <h2 className="text-2xl font-bold text-center mb-8 text-white">Reset Password</h2>
+            <form className="bg-white rounded-lg shadow-md p-8 mx-10 lg:mx-16 w-[30vh] lg:w-[37vh]" onSubmit={handleSubmit}>
+                <h2 className="text-2xl font-bold text-center mb-8 text-sky-500">Reset Password</h2>
                 <div className="mb-4">
-                    <label htmlFor="email" className="block text-sm font-medium text-white">Email</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-[#132443]">Email</label>
                     <input
                         id="email"
                         className="w-full px-3 py-2 mt-1 text-gray-700 border rounded-md focus:outline-none focus:border-blue-500"
@@ -38,7 +38,7 @@ export function ForgotPassword() {
                     />
                 </div>
                 <button
-                    className="w-full py-2 px-4 mt-4 bg-orange-500 text-white font-semibold rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-white hover:text-orange-500"
+                    className="w-full py-2 px-4 mt-4 bg-sky-500 text-white font-semibold rounded-md cursor-pointer transition delay-150 duration-300 ease-in-out hover:bg-blue-800 hover:text-white"
                     type="submit"
                 >
                     Send Reset Link

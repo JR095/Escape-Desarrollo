@@ -9,22 +9,17 @@ import heart from "../../assets/imgs/heart.svg";
 import fav from "../../assets/imgs/favorite.svg";
 
 import back from "../../assets/imgs/back.svg";
-import useFetchData from "../hooks/useFetchData";
 import { useUser } from '../../context/UserContext.jsx';
 import { useTranslation } from 'react-i18next';
 
 import propTypes from "prop-types";
 
-export function CardInformation({ id , onClose, favorite, hearts, setHearts }) {
+export function CardInformation({  onClose, favorite, hearts, setHearts,placeData }) {
   
 const { user } = useUser();
-  const { t } = useTranslation();
-const url = `http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id;
-const { data: placeData, loading, error } = useFetchData(url, ['description']);
+const { t } = useTranslation();
 const [travelTime, setTravelTime] = useState(null);
 const [travelMode, setTravelMode] = useState('pedestrian');
-
-console.log(placeData);
 
 useEffect(() => {
   if (!placeData || !placeData[0] || !user) return;
@@ -62,13 +57,7 @@ useEffect(() => {
     return horas >= 1 ? `${horas}h ${mins}min` : `${mins}min`;
   }
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error fetching data: {error.message}</p>;
-  }
+  
 
   if (!placeData || !placeData[0]) {
     return <p>No data found</p>;
@@ -159,5 +148,8 @@ useEffect(() => {
 CardInformation.propTypes = {
   id: propTypes.number,
   onClose: propTypes.func,
-  favorite: propTypes.func
+  favorite: propTypes.func,
+  placeData: propTypes.array,
+  hearts: propTypes.bool,
+  setHearts: propTypes.func
 };
