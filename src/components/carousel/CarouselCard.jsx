@@ -66,7 +66,6 @@ export function CarouselCard({setIsOpen}) {
               city={company.canton_id}
               starts="4.2"
               setIsOpen={setIsOpen}
-              favorite={company.favorite}
               id={company.id}
             />
           </SwiperSlide>
