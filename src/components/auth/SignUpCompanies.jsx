@@ -5,6 +5,8 @@ import { Selected } from "../selected/Selected";
 import { AuthCarousel } from "./AuthCaruosel";
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from "react";
+import useFetchData from "../hooks/useFetchData.js";
+
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 
@@ -31,9 +33,7 @@ export function SignUpCompanies() {
     const navigate = useNavigate();
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
-    const [errorMessage, setErrormessage] = useState('');
     const [districts, setDistricts] = useState([]);
-
     const [nameError, setNameError] = useState(false);
     const [phone_numberError, setPhone_numberError] = useState(false);
     const [emailError, setEmailError] = useState(false);
@@ -59,28 +59,7 @@ export function SignUpCompanies() {
         { id: "10", name: "Garabito" },
     ];
 
-    const district_id = [
-        { id: "1", name: "Puntarenas" },
-        { id: "2", name: "Pitahaya" },
-        { id: "3", name: "Chomes" },
-        { id: "4", name: "Lepanto" },
-        { id: "5", name: "Paquera" },
-        { id: "6", name: "Manzanillo" },
-        { id: "7", name: "Guacimal" },
-        { id: "8", name: "Barranca" },
-        { id: "9", name: "Monteverde" },
-        { id: "10", name: "Isla del Coco" },
-        { id: "11", name: "Cóbano" },
-        { id: "12", name: "Chacarita" },
-        { id: "13", name: "Chira" },
-        { id: "14", name: "Acapulco" },
-        { id: "15", name: "El Roble" },
-        { id: "16", name: "Esparza centro" },
-        { id: "17", name: "Espíritu Santo" },
-        { id: "18", name: "San Juan" },
-        { id: "19", name: "San Rafael" },
-        { id: "20", name: "San Jerónimo" },
-    ];
+   
 
     const sub_categories_id = [
         { id: "1", name: "Restaurantes" },
@@ -107,14 +86,11 @@ export function SignUpCompanies() {
         { id: "22", name: "Spas" },
     ];
 
-    const category_id = [
-        { id: "1", name: "Comida y Bebida" },
-        { id: "2", name: "Compras" },
-        { id: "3", name: "Actividades al Aire Libre" },
-        { id: "4", name: "Entretenimiento" },
-        { id: "5", name: "Cultura" },
-        { id: "6", name: "Bienestar y Relajación" },
-    ];
+ 
+    const { data: category_id, loading: loadingCategories } = useFetchData(
+        "http://localhost/escape-desarrollo-backend/public/api/categories",
+        ["name"]
+      );
 
     useEffect(() => {
         if (selectedCanton) {
@@ -151,7 +127,12 @@ export function SignUpCompanies() {
             setPhone_numberError(true);
             isValid = false;
         } else {
-            setPhone_numberError(false);
+            if (phone_number.length !=8) {
+                setPhone_numberError(true);
+                isValid = false;
+            }else{
+                setPhone_numberError(false);
+            }
         }
 
         if (!description) {
@@ -306,8 +287,8 @@ export function SignUpCompanies() {
                         email,
                         description,
                         //image
-                        latitude: latitude,
-                        longitude: longitude,
+                        latitude: null,
+                        longitude: null,
                         canton_id: selectedCanton,
                         district_id: selectedDistrict,
                         address,
@@ -346,20 +327,23 @@ export function SignUpCompanies() {
                     <div className="grid lg:grid-cols-2 gap-4">
                         <div>
                             <AuthInput label={t('iCompanyName')} name="name" placeholder={t('iCompanyName')} type="text" onChange={e => setName(e.target.value)} className="{nameError ? 'border-red-500' : ''}"/> {nameError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
-                            <AuthInput label={t('iPhone')} name="phone_number" placeholder={t('iPhone')} type="text" onChange={e => setPhone_number(e.target.value)} className="{phone_numberError ? 'border-red-500' : ''}"/> {phone_numberError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
+                            <AuthInput label={t('iPhone')} name="phone_number" placeholder={t('iPhone')} type="tel" onChange={e => setPhone_number(e.target.value)} className="{phone_numberError ? 'border-red-500' : ''}"/> {phone_numberError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio y tiene que tener 8 digitos</p>}
                             <AuthInput label={t('iEmail')} name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)} className="{emailError ? 'border-red-500' : ''}"/> {emailError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                             <AuthInput label={t('Description')} name="description" placeholder={t('Description')} type="text" onChange={e => setDescription(e.target.value)} className="{descriptionError ? 'border-red-500' : ''}"/> {descriptionError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                             <AuthInput label={t('iPassword')} name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)} className="{passwordError ? 'border-red-500' : ''}"/> {passwordError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                             <AuthInput label={t('iConfirmPassword')} name="passwordConfirm" placeholder={t('iConfirmPassword')} type="password" onChange={e => setPassword_confirmation(e.target.value)} className="{passwordConfirmationError ? 'border-red-500' : ''}"/> {passwordConfirmationError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                         </div>
                         <div>
-                            <Selected
-                                label={t('Category')}
-                                options={category_id}
-                                placeholder={t('Category')}
-                                onChange={e => setSelectedCategory(e.target.value)}
-                                className={categoryError ? 'border-red-500' : ''}
-                            />
+                            {loadingCategories ? <p>Cargando categorías...</p> : (
+                                 <Selected
+                                 label={t('Category')}
+                                 options={category_id.map(district => ({ id: district.id, name: district.name }))}
+                                 placeholder={t('Category')}
+                                 onChange={e => setSelectedCategory(e.target.value)}
+                                 className={categoryError ? 'border-red-500' : ''}
+                             />
+                            )}
+                           
                             {categoryError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una categoria</p>}
 
                             <Selected

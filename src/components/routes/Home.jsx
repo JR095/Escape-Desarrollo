@@ -73,7 +73,6 @@ export function Home() {
     }
   };
   const favorite = () => {
-    console.log("La id de la card es " + id + " y el id del user es " + user.id);
     fetch("http://localhost/escape-desarrollo-backend/public/api/favorite", {
       method: "POST",
       headers: {
