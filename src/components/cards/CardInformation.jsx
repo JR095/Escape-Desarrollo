@@ -103,13 +103,13 @@ useEffect(() => {
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
           onClick={() => handleTravelModeChange('pedestrian')} // Modo caminar
         >
-          Caminando
+          {t('Walking')}
         </button>
         <button 
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
           onClick={() => handleTravelModeChange('bicycle')} // Modo bicicleta
         >
-          Bicicleta
+          {t('bicycle')}
         </button>
         <button 
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"

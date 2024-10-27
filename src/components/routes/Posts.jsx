@@ -7,6 +7,7 @@ export function Posts({  setOpenComments }) {
     posts,
     error,
     handleDeletePost,
+    handleLikePost
   } = usePosts();
   const { darkMode } = useDarkModeContext();
 
@@ -31,10 +32,12 @@ export function Posts({  setOpenComments }) {
               url: `http://localhost/escape-desarrollo-backend/public/storage/${file.file_path}`,
               type: file.file_type === 'image' ? 'image' : 'video',
             })) : []}
-            likes="10"
+            likesCount={post.likes_count}
             darkMode={darkMode}
             setOpenComments={setOpenComments}
             handleDeletePost={handleDelete}
+            handleLike={handleLikePost}
+            liked={post.liked}
           />
         ))
       ) : (

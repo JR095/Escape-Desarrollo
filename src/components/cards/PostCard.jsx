@@ -18,15 +18,31 @@ export function PostCard({
   city,
   info,
   category,
-  likes,
+  likesCount,
   darkMode,
   setOpenComments,
-  handleDeletePost
+  handleDeletePost,
+  handleLike,
+  liked,
 }) {
   const { user } = useUser();
   const { getCommentCount } = useFetchComments();
   const [commentCount, setCommentCount] = useState(0);
   const { t } = useTranslation();
+  const [isLiked, setIsLiked] = useState(liked);
+
+  useEffect(() => {
+    setIsLiked(liked);
+  }, [liked]);
+
+  const toggleLike = async () => {
+    try {
+      await handleLike(id);
+      setIsLiked((prev) => !prev);
+    } catch (error) {
+      console.error("Error al dar like:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchCommentCount = async () => {
@@ -89,18 +105,19 @@ export function PostCard({
 
       <div className="flex items-center justify-between px-4 pt-4">
         <div className="flex items-center gap-4">
-          <svg
-            width="29"
-            height="26"
-            viewBox="0 0 29 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.5928 0.0155411C6.12964 0.207237 4.9387 0.631296 3.86685 1.35161C2.19386 2.46113 0.997242 4.05861 0.40177 5.96396C-0.670078 9.39709 0.390428 12.9348 3.73074 17.0592C4.37158 17.855 6.50394 20.0566 7.42266 20.8699C9.0276 22.3047 10.7913 23.6756 12.6118 24.9188C14.2678 26.0457 14.4492 26.127 14.9369 25.8947C15.3056 25.7204 17.5117 24.1926 18.6402 23.3213C20.6875 21.747 22.145 20.4516 23.7272 18.7961C26.7443 15.6418 28.3776 12.8709 28.8937 10.0593C29.0354 9.2809 29.0354 7.78218 28.8937 7.03863C28.2188 3.51837 25.7065 0.904318 22.2584 0.143339C21.4928 -0.0251217 19.9049 -0.0367413 19.1336 0.120102C17.574 0.433788 16.213 1.12506 15.0107 2.21135L14.5116 2.65864L13.9899 2.18811C13.7006 1.93251 13.2866 1.6014 13.0711 1.45037C12.1638 0.828802 10.9445 0.31761 9.87827 0.125912C9.38488 0.0329685 7.97844 -0.0309315 7.5928 0.0155411ZM9.20908 1.90347C10.9785 2.15326 12.4246 3.00718 13.6156 4.49428C13.9728 4.94158 14.194 5.09261 14.5116 5.09261C14.8292 5.09261 15.056 4.94158 15.3963 4.5059C16.1052 3.59389 16.8425 2.98394 17.8122 2.5076C21.0902 0.89851 24.9862 2.31591 26.5628 5.68513C28.0373 8.83942 27.0052 12.319 23.3643 16.5015C21.4418 18.7089 18.1752 21.5089 15.0107 23.6524L14.5116 23.9893L13.7063 23.4316C8.44347 19.8184 4.39427 15.6999 2.77231 12.3248C1.58704 9.856 1.50197 7.69505 2.51711 5.58638C2.89708 4.79635 3.24302 4.32001 3.92923 3.65779C5.34135 2.29848 7.33192 1.63625 9.20908 1.90347Z"
-              fill={darkMode ? "white" : "black"}
-            />
-          </svg>{" "}
+          <button onClick={toggleLike} className="cursor-pointer">
+            {isLiked ? (
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-9 dark:text-white">
+                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+              </svg>
+
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.25" stroke="currentColor" className="size-9 dark:text-white">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+              </svg>
+            )}
+          </button>
+
           <svg
             width="30"
             height="26"
@@ -129,7 +146,10 @@ export function PostCard({
           />
         </svg>{" "}
       </div>
-      <p className="mt-2 px-4 dark:text-white">{likes} {t('likes')}</p>
+      {likesCount > 0 && (
+        <p className="mt-2 px-4 dark:text-white">{likesCount} {t('likes')}</p>
+      )}
+
 
       {commentCount > 0 && (
         <p onClick={setOpenComments(id)} className="text-[#7F7B7B] px-4 dark:text-[#BCBCBC] cursor-pointer">

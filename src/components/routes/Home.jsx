@@ -13,18 +13,19 @@ import { useState } from "react";
 import propTypes from "prop-types";
 import { useUser } from '../../context/UserContext.jsx';
 
-
 import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
 
 import { CardComments } from "../cards/CardComments.jsx";
 import { useTranslation } from "react-i18next";
+import { translateText } from "../hooks/translateText.js";
 
 export function Home() {
 
   const { isMobile } = useFetchMenubar();
   const [isOpen, setIsOpen] = useState(false);
-  const handleClose = () => {setIsOpen(false);
+  const handleClose = () => {
+    setIsOpen(false);
   }
   const [hearts, setHearts] = useState(false);
 
@@ -34,10 +35,10 @@ export function Home() {
   const [isOpenComments, setOpenComments] = useState(false);
   const handleCloseComments = () => setOpenComments(false);
   const [postId, setPostId] = useState(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const openCardComments = (postId) => () => {
-    if (postId) { 
+    if (postId) {
       setOpenComments(true);
       setPostId(postId);
     } else {
@@ -47,22 +48,32 @@ export function Home() {
   const [informationCard, setInformationCard] = useState(null);
 
 
-  const openCard = async (id) =>  {
-    const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id);
-    const result = await response.json();
-    if(result[0].favorite != null){
-      setHearts(true);
-      result[0].favorite=null;
+  const openCard = async (id) => {
+    try {
+      const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/` + user.id);
+      const result = await response.json();
+      if (result[0].favorite != null) {
+        setHearts(true);
+        result[0].favorite = null;
 
-    }else{
-      setHearts(false);
+      } else {
+        setHearts(false);
+      }
+
+      if (i18n.language !== 'es') {
+        result[0].description = await translateText(result[0].description, 'es', i18n.language);
+      }
+
+      setInformationCard(result);
+      setIsOpen(true);
+      setId(id)
     }
-    setInformationCard(result);
-    setIsOpen(true);
-    setId(id);
+    catch (err) {
+      console.error('Error al abrir la tarjeta:', err);
+    }
   };
-  const favorite  = () => {
-    console.log("La id de la card es "+id +" y el id del user es "+user.id);
+  const favorite = () => {
+    console.log("La id de la card es " + id + " y el id del user es " + user.id);
     fetch("http://localhost/escape-desarrollo-backend/public/api/favorite", {
       method: "POST",
       headers: {
@@ -74,7 +85,7 @@ export function Home() {
       }),
     });
     setHearts(!hearts);
-  
+
   };
 
   return (
@@ -86,7 +97,7 @@ export function Home() {
       </div>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
-        <CardInformation  placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} />
+          <CardInformation placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} />
         </Drawer.Items>
       </Drawer>
 
@@ -123,10 +134,10 @@ export function Home() {
         </div>
         <h2 className="font-bold md:text-2xl text-xl mt-8 dark:text-white">
           {t('RecentPosts')}
-          </h2>
+        </h2>
 
         <div className="mt-10">
-          <Posts setOpenComments={openCardComments}/>
+          <Posts setOpenComments={openCardComments} />
         </div>
       </main>
     </div>

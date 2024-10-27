@@ -85,5 +85,14 @@
     "Recents": "Recents",
     "noResults": "No results found",
     "Cancel": "Cancel",
-    "likes": "Likes"
+    "likes": "Likes",
+    "bicycle": "Bicycle",
+    "Walking": "Walking",
+    "searchDestination": "Search destination",
+    "Destination": "Destination:",
+    "Duration": "Estimated duration:",
+    "arrivalTime": "Estimated arrival time:",
+    "typePlaceName": "Type the name of the place",
+    "search": "Search..."
+
   }

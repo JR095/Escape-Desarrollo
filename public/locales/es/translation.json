@@ -85,6 +85,14 @@
     "Recents": "Recientes",
     "noResults": "No se han encontrado resultados",
     "Cancel": "Cancelar",
-    "likes": "Me gusta"
+    "likes": "Me gusta",
+    "bicycle": "Bicicleta",
+    "Walking": "Caminando",
+    "searchDestination": "Buscar destino",
+    "Destination": "Destino:",
+    "Duration": "Duración estimada:",
+    "arrivalTime": "Hora de llegada estimada:",
+    "typePlaceName": "Escribe el nombre del lugar",
+    "search": "Buscar..."
  
   }

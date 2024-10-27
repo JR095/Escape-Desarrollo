@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { sendResetLink } from '../hooks/authService.js';
+import { sendResetLink } from '../hooks/authServiceCompany.js';
 
-export function ForgotPassword() {
+export function ForgotPasswordCompany() {
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');

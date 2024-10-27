@@ -13,11 +13,12 @@ import useFetchData from "../hooks/useFetchData.js";
 import { CategorieNav } from "../navigation/CategorieNav.jsx";
 import { useUser } from '../../context/UserContext.jsx';
 import { useTranslation } from "react-i18next";
+import { translateText } from "../hooks/translateText.js";
 
 
 export function Favorites() {
   const { user } = useUser();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const { isMobile } = useFetchMenubar();
   const { data: categories, loading: loadingCategories } = useFetchData(
@@ -30,7 +31,7 @@ export function Favorites() {
   );
   const [isOpen, setIsOpen] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-  const [idCategory, setIdCategory] = useState();
+  const [idCategory, setIdCategory] = useState(0);
   const { data: subCategories, setData: setSubCategories } = useFetchData(
     `http://localhost/escape-desarrollo-backend/public/api/subcategories/${idCategory}`,
     ['name']
@@ -53,18 +54,28 @@ export function Favorites() {
 
 
   const openCard = async (id) =>  {
-    const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/`+user.id);
-    const result = await response.json();
-    if(result[0].favorite != null){
-      setHearts(true);
-      result[0].favorite=null;
+    try {
+      const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/` + user.id);
+      const result = await response.json();
+      if (result[0].favorite != null) {
+        setHearts(true);
+        result[0].favorite = null;
 
-    }else{
-      setHearts(false);
+      } else {
+        setHearts(false);
+      }
+
+      if (i18n.language !== 'es') {
+        result[0].description = await translateText(result[0].description, 'es', i18n.language);
+      }
+
+      setInformationCard(result);
+      setIsOpen(true);
+      setId(id)
     }
-    setInformationCard(result);
-    setIsOpen(true);
-    setId(id);
+    catch (err) {
+      console.error('Error al abrir la tarjeta:', err);
+    }
   };
   const favorite  = () => {
     console.log("La id de la card es "+id +" y el id del user es "+user.id);
@@ -107,6 +118,7 @@ export function Favorites() {
           `http://localhost/escape-desarrollo-backend/public/api/favorite/${idCategory}/${idCategorySub}/${idCanton}/${idDistrict}/${user.id}`
         );
         const result = await response.json();
+        console.log(result);
         setData(result);
       } catch (error) {
         console.error("Error fetching data:", error);

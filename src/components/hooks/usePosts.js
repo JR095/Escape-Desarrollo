@@ -19,18 +19,18 @@ export const usePosts = () => {
     const fetchPosts = async () => {
         try {
             const userType = user ? user.user_type_id : null;
-    
-            const url = userType === 2 
+
+            const url = userType === 2
                 ? 'http://localhost/escape-desarrollo-backend/public/api/posts'
                 : userType === 1
                     ? 'http://localhost/escape-desarrollo-backend/public/api/company-posts'
                     : null;
-    
+
             if (!url) {
-                setError('Tipo de usuario no reconocido.'); 
+                setError('Tipo de usuario no reconocido.');
                 return;
             }
-    
+
             const response = await fetch(url, {
                 method: 'GET',
                 credentials: 'include',
@@ -38,18 +38,20 @@ export const usePosts = () => {
                     'Content-Type': 'application/json',
                 },
             });
-    
+
             const data = await response.json();
 
             const translatedPosts = await Promise.all(data.map(async (post) => {
-                const translatedPost = { ...post };
-    
-                if (i18n.language !== 'es') { 
+                const translatedPost = { ...post, likes_count: post.likes_count };
+
+                translatedPost.liked = post.liked || false;
+
+                if (i18n.language !== 'es') {
                     translatedPost.description = await translateText(post.description, 'es', i18n.language);
                     translatedPost.company.category.name = await translateText(post.company.category.name, 'es', i18n.language);
                 }
-    
-                return translatedPost; 
+
+                return translatedPost;
             }));
 
 
@@ -59,8 +61,36 @@ export const usePosts = () => {
             setError('Error al obtener las publicaciones. Intente nuevamente más tarde.');
         }
     };
-    
-    
+
+    const handleLikePost = async (postId) => {
+        try {
+            const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/posts/${postId}/like`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error('Error al gestionar el like');
+            }
+
+
+            const result = await response.json();
+
+        setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+                post.id === postId 
+                    ? { ...post, liked: !post.liked, likes_count: result.likes_count } 
+                    : post
+            )
+
+            );
+
+        } catch (error) {
+            setError(error.message);
+        }
+    };
 
     const handleFileChange = (e) => {
         const selectedFiles = e.target.files;
@@ -135,7 +165,7 @@ export const usePosts = () => {
         if (!id) {
             return;
         }
-    
+
         const fetchPostData = async () => {
             try {
                 const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/posts/${id}`);
@@ -143,25 +173,25 @@ export const usePosts = () => {
                     throw new Error('Error al obtener la publicación');
                 }
                 const data = await response.json();
-    
+
                 setDescription(data.description);
-    
+
                 if (data.files) {
                     const filePreviews = data.files.map(file => {
                         const filePath = `http://localhost/escape-desarrollo-backend/public/storage/${file.file_path}`;
-    
+
                         const fileType = file.file_path.split('.').pop().toLowerCase();
                         const type = ['jpg', 'jpeg', 'png', 'gif'].includes(fileType) ? 'image' :
-                                    ['mp4', 'mov', 'avi'].includes(fileType) ? 'video' : null;
-    
+                            ['mp4', 'mov', 'avi'].includes(fileType) ? 'video' : null;
+
                         if (!type) return null;
-    
+
                         return {
                             url: filePath,
                             type: type,
                         };
                     }).filter(Boolean);
-    
+
                     setPreviewFiles(filePreviews);
                     setExistingFiles(data.files);
                 }
@@ -172,7 +202,7 @@ export const usePosts = () => {
         };
         fetchPostData();
     }, [id]);
-    
+
 
     // Actualizar publicación
     const handleUpdatePost = async () => {
@@ -254,7 +284,7 @@ export const usePosts = () => {
                 credentials: 'include',
             });
 
-            
+
             if (!response.ok) {
                 if (response.status === 403) {
                     alert('No tiene permisos para eliminar esta publicación.');
@@ -268,7 +298,7 @@ export const usePosts = () => {
             console.log('Publicación eliminada:', data);
 
             setPosts(prevPosts => prevPosts.filter(post => post.id !== id));
-            
+
         } catch (error) {
             console.error('Error al eliminar la publicación:', error);
             setError('Error al eliminar la publicación. Intente nuevamente más tarde.');
@@ -298,5 +328,6 @@ export const usePosts = () => {
         setFiles,
         existingFiles,
         setExistingFiles,
+        handleLikePost,
     };
 };
