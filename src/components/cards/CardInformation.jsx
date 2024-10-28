@@ -98,10 +98,16 @@ useEffect(() => {
         </div>
       </div>
       <div className="flex items-center gap-2 my-3">
+        <a href={`/InformationCompany/${place.id}`}>
+        <img href={`/InformationCompany/${place.id}`} src={place.image} alt="profile" className="w-10 h-10 rounded-full" /></a>
+       
+        <div className="flex items-center gap-2" >
         <img src={location} alt="location" />
         <p className="text-[#9A9797] font-semibold text-xl dark:text-[#BCBCBC]">
-          {place.canton_id}
+          {place.canton_id}, {place.district_id}
         </p>
+        </div>
+        
       </div>
 
       <div className="flex gap-2 my-4">
@@ -151,7 +157,6 @@ useEffect(() => {
     </svg>
 </a>
         <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg mt-4 text-lg">{t('Go')}</button>
-      <a href={`/InformationCompany/${place.id}`} className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg mt-4 text-lg text-center">Profile</a>
       </div>
       
     </div>
