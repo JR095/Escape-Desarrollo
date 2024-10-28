@@ -20,6 +20,7 @@ export function AccountSettings({ toggleDarkMode }) {
     const { user, setUser } = useUser();
     const [cantones, setCantones] = useState([]);
     const [distritos, setDistritos] = useState([]);
+    const [imagedata, setImagedata] = useState(null);
 
     const [formData, setFormData] = useState({
         name: user ? user.name : '',
@@ -108,21 +109,37 @@ export function AccountSettings({ toggleDarkMode }) {
             [e.target.id]: e.target.value  
         });
     };
-    
+
+    const handleImageChange = (file) => {
+        setImagedata(file[0]);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const fData = new FormData();
+
+        fData.append("name", formData.name);
+        fData.append("email", formData.email);
+        fData.append("canton", formData.canton);
+        fData.append("distrito", formData.distrito);
+
+        if (imagedata) {
+            fData.append("image", imagedata); // Adjuntar la imagen si existe
+        }
+
         try {
             const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/update-user', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                //headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify(formData),  
+                body: fData,  
             });
 
             const data = await response.json();
             if (response.ok) {
                 setUser(data.user);
                 console.log("Datos actualizados con éxito", data.user);
+                console.log(user.image);
                 navigate('/home');
             } else {
                 console.error("Error al actualizar los datos:", data.message);
@@ -131,6 +148,7 @@ export function AccountSettings({ toggleDarkMode }) {
             console.error("Error en la solicitud:", error);
         }
     };
+    
 
     const body = (
         <div className="bg-white w-[90%] md:w-[40%] lg:w-[25%] rounded-3xl p-4 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -155,8 +173,28 @@ export function AccountSettings({ toggleDarkMode }) {
                 <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen gap-8 lg:gap-28">
                     
                     <div className="flex flex-col justify-center items-center gap-4">
-                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile_Img" className="rounded-full h-[7rem] w-[7rem] mt-[2rem]" />
-                        <p className="text-sky-400 font-medium">+ Cambiar imagen</p>
+                        {console.log("user:", user)}
+                        {console.log("user.image:", user?.image)}
+                        <img
+                            src={user && user.image ? `http://localhost/escape-desarrollo-backend/public/storage/images/${user.image}` : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
+                            alt="Profile_Img" 
+                            className="rounded-full h-[7rem] w-[7rem] mt-[2rem]"
+                        />
+                        <input 
+                            name="image" 
+                            id="image" 
+                            type="file" 
+                            className="hidden" 
+                            onChange={e => handleImageChange(e.target.files)} 
+                        />
+
+                        <label 
+                            htmlFor="image" 
+                            className="text-sky-400 cursor-pointer hover:text-sky-700"
+                        >
+                            + Cambiar imagen
+                        </label>
+                        
                     </div>
 
                     <div className="flex flex-col gap-6 w-full lg:w-auto">
@@ -164,7 +202,6 @@ export function AccountSettings({ toggleDarkMode }) {
                             <InputProfile placeholder={user.name} type="text" id="name" label="Name" defaultValue={user.name} value={formData.name} onChange={handleChange}/>
                             <InputProfile placeholder={user.email} type="text" id="email" label="Correo electronico" defaultValue={user.email} value={formData.email} onChange={handleChange}/>
 
-                            {/* Selección de Cantón */}
                             <Selected
                                 id="canton"
                                 label="Cantón"
@@ -174,7 +211,6 @@ export function AccountSettings({ toggleDarkMode }) {
                                 onChange={handleChange}
                             />
 
-                            {/* Selección de Distrito */}
                             <Selected
                                 id="distrito"
                                 label="Distrito"
@@ -186,7 +222,7 @@ export function AccountSettings({ toggleDarkMode }) {
 
                             <div className='grid '>
                                 <InputProfile placeholder="********" type="password" id="password" label="Password" defaultValue="********" readOnly />
-                                <a className=' text-blue-700 items-end cursor-pointer dark:text-sky-400' onClick={openModal}>Change</a>
+                                <a className=' text-sky-400 items-end cursor-pointer dark:text-sky-400' onClick={openModal}>Change</a>
                             </div>
                             <Modal open={modal} onClose={openModal}>
                                 {body}

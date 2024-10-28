@@ -17,6 +17,7 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
     const navigate = useNavigate();
     const { isMobile } = useFetchMenubar();
     const { user, setUser } = useUser();
+    const [imagedata, setImagedata] = useState(null);
     const [formData, setFormData] = useState({
         name: user?.name || '',
         email: user?.email || '',
@@ -29,21 +30,37 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
             [e.target.id]: e.target.value  
         });
     };
-    
+
+    const handleImageChange = (file) => {
+        setImagedata(file[0]);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const fData = new FormData();
+
+        fData.append("name", formData.name);
+        fData.append("email", formData.email);
+        fData.append("canton", formData.canton);
+        fData.append("distrito", formData.distrito);
+
+        if (imagedata) {
+            fData.append("image", imagedata);
+        }
+
         try {
             const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/update-company', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                //headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify(formData),  
+                body: fData,  
             });
 
             const data = await response.json();
             if (response.ok) {
-                setUser(data.company); 
+                setUser(data.company);
                 console.log("Datos actualizados con éxito", data.company);
+                console.log(user.image);
                 navigate('/home');
             } else {
                 console.error("Error al actualizar los datos:", data.message);
@@ -82,9 +99,29 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
                 
                 <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen gap-8 lg:gap-28">
                     
-                    <div className="flex flex-col justify-center items-center gap-4">
-                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile_Img" className="rounded-full h-[7rem] w-[7rem] mt-[2rem]" />
-                        <p className="text-sky-400 font-medium">+ Cambiar imagen</p>
+                <div className="flex flex-col justify-center items-center gap-4">
+                        {console.log("user:", user)}
+                        {console.log("user.image:", user?.image)}
+                        <img
+                            src={user && user.image ? `http://localhost/escape-desarrollo-backend/public/storage/images/${user.image}` : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
+                            alt="Profile_Img" 
+                            className="rounded-full h-[7rem] w-[7rem] mt-[2rem]"
+                        />
+                        <input 
+                            name="image" 
+                            id="image" 
+                            type="file" 
+                            className="hidden" 
+                            onChange={e => handleImageChange(e.target.files)} 
+                        />
+
+                        <label 
+                            htmlFor="image" 
+                            className="text-sky-400 cursor-pointer hover:text-sky-700"
+                        >
+                            + Cambiar imagen
+                        </label>
+                        
                     </div>
 
                     <div className="flex flex-col gap-6 w-full lg:w-auto">
@@ -93,7 +130,7 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
                             <InputProfile placeholder={user.email} type="text" id="email" label="Correo electronico" defaultValue={user.email} value={formData.email} onChange={handleChange}/>
                             <div className='grid '>
                                 <InputProfile placeholder="********" type="password" id="password" label="Password" defaultValue="********" readOnly />
-                                <a className=' text-blue-700 items-end cursor-pointer dark:text-sky-400' onClick={openModal}>Change</a>
+                                <a className=' text-sky-400 items-end cursor-pointer dark:text-sky-400' onClick={openModal}>Change</a>
                             </div>
                             <Modal open={modal} onClose={openModal}>
                                 {body}
