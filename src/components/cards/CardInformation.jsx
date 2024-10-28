@@ -21,6 +21,10 @@ const { t } = useTranslation();
 const [travelTime, setTravelTime] = useState(null);
 const [travelMode, setTravelMode] = useState('pedestrian');
 
+const url = `http://localhost/escape-desarrollo-backend/public/api/companies/`+user.id;
+  
+
+
 useEffect(() => {
   if (!placeData || !placeData[0] || !user) return;
 
@@ -69,6 +73,8 @@ useEffect(() => {
   setHearts(false);
   onClose();
  }
+
+ 
 
  const handleTravelModeChange = (mode) => {
   console.log(mode);
@@ -145,8 +151,9 @@ useEffect(() => {
     </svg>
 </a>
         <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg mt-4 text-lg">{t('Go')}</button>
-
+      <a href={`/InformationCompany/${place.id}`} className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg mt-4 text-lg text-center">Profile</a>
       </div>
+      
     </div>
   );
 }

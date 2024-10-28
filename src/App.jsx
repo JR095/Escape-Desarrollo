@@ -12,6 +12,7 @@ import { AccountSettingsCompany } from "./components/profile/AccountSettingsComp
 import { MapPage } from './components/map/MapPage';
 import {PersonalInformation} from "./components/profile/PersonalInformation"
 import {PersonalInformationCompany} from "./components/profile/PersonalInformationCompany"
+import { InformationCompany } from "./components/profile/InformationCompany.jsx";
 import { SearchResults } from "./components/routes/SearchResults";
 import { ForgotPassword } from './components/password/ForgotPassword.jsx';
 import { ForgotPasswordCompany } from './components/password/ForgotPasswordCompany.jsx';
@@ -45,6 +46,7 @@ export function App() {
                 <Route path="/accountSettingsCompany" element={<AccountSettingsCompany />} />
                 <Route path="/PersonalInformation" element={<PersonalInformation  />} />
                 <Route path="/PersonalInformationCompany" element={<PersonalInformationCompany  />} />
+                <Route path="/InformationCompany" element={<InformationCompany  />} />
                 <Route path="/map" element={<MapPage />} /> 
                 <Route path="/mapWithRoute" element={<RouteMap />} /> 
                 <Route path="/search-results" element={<SearchResults />} />
