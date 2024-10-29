@@ -124,7 +124,7 @@ export function AccountSettings({ toggleDarkMode }) {
         fData.append("distrito", formData.distrito);
 
         if (imagedata) {
-            fData.append("image", imagedata); // Adjuntar la imagen si existe
+            fData.append("image", imagedata);
         }
 
         try {
