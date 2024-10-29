@@ -11,6 +11,7 @@ import { ChangePasswordCompany } from './ChangePasswordCompany.jsx';
 import { useProfile } from '../hooks/useProfile.js';
 import { NavLink, useNavigate } from "react-router-dom";
 import { Selected } from "../selected/Selected";
+import { Description } from "@headlessui/react";
 
 export function AccountSettingsCompany({ toggleDarkMode }) {
 
@@ -27,6 +28,8 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
         //image: null, 
         canton: user ? user.canton_id : '',
         distrito: user ? user.district_id : '',
+        description: user ? user.description : '',
+        phone_number: user ? user.phone_number : '',
     });
 
     const cantons = [
@@ -121,6 +124,8 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
         fData.append("email", formData.email);
         fData.append("canton", formData.canton);
         fData.append("distrito", formData.distrito);
+        fData.append("description", formData.description);
+        fData.append("phone_number", formData.phone_number);
 
         if (imagedata) {
             fData.append("image", imagedata);
@@ -206,6 +211,8 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <InputProfile placeholder={user.name} type="text" id="name" label="Name" defaultValue={user.name} value={formData.name} onChange={handleChange}/>
                             <InputProfile placeholder={user.email} type="text" id="email" label="Correo electronico" defaultValue={user.email} value={formData.email} onChange={handleChange}/>
+                            <InputProfile placeholder={user.description} type="text" id="description" label="Descripción" defaultValue={user.description} value={formData.description} onChange={handleChange}/>
+                            <InputProfile placeholder={user.phone_number} type="text" id="phone_number" label="Número de teléfono" defaultValue={user.phone_number} value={formData.phone_number} onChange={handleChange}/>
 
                             <Selected
                                 id="canton"
