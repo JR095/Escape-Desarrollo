@@ -7,6 +7,8 @@ import { useUser } from '../../context/UserContext.jsx';
 import { NavLink } from "react-router-dom";
 ("use client");
 import propTypes from "prop-types";
+import { useLocation } from "react-router-dom";
+
 
 import { Drawer } from "flowbite-react";
 import { useState, useEffect } from "react";
@@ -15,6 +17,7 @@ import { CardComments } from "../cards/CardComments.jsx";
 
 import { useTranslation } from "react-i18next";
 import { translateText } from "../hooks/translateText.js";
+import  useFetchData  from "../hooks/useFetchData.js";
 
 export function InformationCompany() {
 
@@ -35,6 +38,8 @@ export function InformationCompany() {
             console.error('Invalid postId:', postId);
         }
     };
+    const location = useLocation();
+    const [idCompany, setIdCompany] = useState(location.state);
 
     const categories = [
         { id: 1, name: "Comida y Bebida" },
@@ -50,6 +55,12 @@ export function InformationCompany() {
         return category ? category.name : "Categoría desconocida";
     };
 
+     const { data, loading } = useFetchData(
+        `http://localhost/escape-desarrollo-backend/public/api/company/${idCompany}/` + user.id,
+         ["name"]   
+       );
+
+       console.log(`http://localhost/escape-desarrollo-backend/public/api/company/${idCompany}/` + user.id);
     const [translatedDescription, setTranslatedDescription] = useState(user.description);
     const [translatedCategory, setTranslatedCategory] = useState(getCategoryName(user.category_id));
     
@@ -99,7 +110,7 @@ export function InformationCompany() {
                 <div className="grid grid-cols-1 items-center lg:grid-cols-2 dark:bg-[#2a2a2a]">
                     <div>
                         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile_Img" className="rounded-full h-[7rem] w-[7rem] mt-[2rem]" />
-                        <h3 className="font-bold lg:text-2xl text-xl mt-[2rem] dark:text-white">{user.name}</h3>
+                        <h3 className="font-bold lg:text-2xl text-xl mt-[2rem] dark:text-white">{data.name}</h3>
                         <h4 className=" text-[#606060] font-semibold  pt-[1rem] lg:hidden">{translatedCategory}</h4>
                         <div className="col-span-3 text-left lg:pt-[2rem] pt-[1rem] dark:text-white">
                             <p>{translatedDescription}</p>
