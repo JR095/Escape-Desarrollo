@@ -24,6 +24,7 @@ export function PostCard({
   handleDeletePost,
   handleLike,
   liked,
+  companyId
 }) {
   const { user } = useUser();
   const { getCommentCount } = useFetchComments();
@@ -70,11 +71,12 @@ export function PostCard({
             {category} - {city}
           </span>
         </div>
-        {user && user.user_type_id === 1 && (
+        {user && user.user_type_id === 1 && companyId === user.id && (
           <div className="ml-auto">
             <PostDropdown postId={id} onDelete={() => { handleDeletePost(id) }} />
           </div>
         )}
+
       </div>
       <p className="px-4 dark:text-white">{info}</p>
 

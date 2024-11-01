@@ -4,7 +4,7 @@ import { useUser } from '../../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import { translateText } from './translateText';
 
-export const usePosts = () => {
+export const usePosts = (userTypeFilter = null) => {
     const { id } = useParams();
     const [description, setDescription] = useState('');
     const [files, setFiles] = useState([]);
@@ -13,23 +13,13 @@ export const usePosts = () => {
     const [error, setError] = useState(null);
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
-    const { user } = useUser();
     const { i18n } = useTranslation();
 
     const fetchPosts = async () => {
         try {
-            const userType = user ? user.user_type_id : null;
-
-            const url = userType === 2
-                ? 'http://localhost/escape-desarrollo-backend/public/api/posts'
-                : userType === 1
-                    ? 'http://localhost/escape-desarrollo-backend/public/api/company-posts'
-                    : null;
-
-            if (!url) {
-                setError('Tipo de usuario no reconocido.');
-                return;
-            }
+            const url = userTypeFilter === 1
+                ? 'http://localhost/escape-desarrollo-backend/public/api/company-posts'
+                : 'http://localhost/escape-desarrollo-backend/public/api/posts';
 
             const response = await fetch(url, {
                 method: 'GET',
@@ -38,6 +28,11 @@ export const usePosts = () => {
                     'Content-Type': 'application/json',
                 },
             });
+
+            if (!response.ok) {
+                const errorText = await response.text(); 
+                throw new Error(`HTTP error! status: ${response.status}, response: ${errorText}`);
+            }
 
             const data = await response.json();
 

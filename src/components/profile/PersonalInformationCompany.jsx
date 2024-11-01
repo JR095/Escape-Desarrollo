@@ -154,7 +154,7 @@ export function PersonalInformationCompany() {
                         {t('Posts')}
                     </h2>
                     <div className="mt-10">
-                        <Posts  setOpenComments={openCardComments}/>
+                        <Posts  setOpenComments={openCardComments} userTypeFilter={1}/>
                     </div>
                 </div>
             </main>
