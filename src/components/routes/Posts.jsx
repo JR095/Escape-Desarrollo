@@ -39,6 +39,7 @@ export function Posts({  setOpenComments, userTypeFilter }) {
             handleLike={handleLikePost}
             liked={post.liked}
             companyId={post.company.id}
+            profilePicture={post.company.image ? `http://localhost/escape-desarrollo-backend/public/imgs/${post.company.image}` : null}
           />
         ))
       ) : (
