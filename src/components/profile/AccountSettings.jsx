@@ -176,7 +176,7 @@ export function AccountSettings({ toggleDarkMode }) {
                         {console.log("user:", user)}
                         {console.log("user.image:", user?.image)}
                         <img
-                            src={user && user.image ? `http://localhost/escape-desarrollo-backend/public/storage/images/${user.image}` : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
+                            src={user && user.image ? `http://localhost/escape-desarrollo-backend/public/imgs/${user.image}` : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
                             alt="Profile_Img" 
                             className="rounded-full h-[7rem] w-[7rem] mt-[2rem]"
                         />
