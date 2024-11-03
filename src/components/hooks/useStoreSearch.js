@@ -12,6 +12,7 @@ export const useStoreSearch = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ search_term }),
+                credentials: 'include',
             });
             const responseData = await response.json();
             console.log(responseData);

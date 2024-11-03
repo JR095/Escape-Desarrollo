@@ -7,7 +7,13 @@ export const useFetchSearchHistory = () => {
   const fetchSearchHistory = async () => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/searches/recent');
+      const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/searches/recent',{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      });
       const data = await response.json();
       setRecentSearches(data);
     } catch (error) {

@@ -30,7 +30,7 @@ export const usePosts = (userTypeFilter = null) => {
             });
 
             if (!response.ok) {
-                const errorText = await response.text(); 
+                const errorText = await response.text();
                 throw new Error(`HTTP error! status: ${response.status}, response: ${errorText}`);
             }
 
@@ -73,12 +73,12 @@ export const usePosts = (userTypeFilter = null) => {
 
             const result = await response.json();
 
-        setPosts((prevPosts) =>
-            prevPosts.map((post) =>
-                post.id === postId 
-                    ? { ...post, liked: !post.liked, likes_count: result.likes_count } 
-                    : post
-            )
+            setPosts((prevPosts) =>
+                prevPosts.map((post) =>
+                    post.id === postId
+                        ? { ...post, liked: !post.liked, likes_count: result.likes_count }
+                        : post
+                )
 
             );
 
@@ -137,7 +137,8 @@ export const usePosts = (userTypeFilter = null) => {
             });
 
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                const errorData = await response.json();
+                throw new Error(JSON.stringify(errorData));
             }
 
             const data = await response.json();
@@ -151,7 +152,9 @@ export const usePosts = (userTypeFilter = null) => {
             fetchPosts();
             navigate(`/home`);
         } catch (error) {
-            console.error('Error creando la publicación:', error);
+            const errorMessages = JSON.parse(error.message);
+            console.error('Error creando la publicación:', errorMessages);
+            alert('Error creando la publicación:\n' + Object.values(errorMessages).flat().join('\n'));
         }
     };
 
@@ -249,8 +252,13 @@ export const usePosts = (userTypeFilter = null) => {
                     alert('No tiene permisos para actualizar esta publicación.');
                     return;
                 } else {
-                    console.error('Error en la respuesta:', data);
-                    throw new Error('Error al actualizar la publicación');
+                    if (data.error) {
+                        alert('Error en la validación:\n' + Object.values(data.error).flat().join('\n'));
+                        return;
+                    } else {
+                        console.error('Error en la respuesta:', data);
+                        throw new Error('Error al actualizar la publicación');
+                    }
                 }
             }
 
