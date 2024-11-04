@@ -11,6 +11,8 @@ import { useFetchComments } from "../hooks/useFetchComments.js";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useNavigate } from "react-router-dom";
+
 export function PostCard({
   id,
   media = [],
@@ -32,6 +34,8 @@ export function PostCard({
   const [commentCount, setCommentCount] = useState(0);
   const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(liked);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLiked(liked);
