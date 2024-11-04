@@ -23,8 +23,10 @@ import { Favorites } from "./components/routes/Favorites.jsx";
 import { UpdatePost } from "./components/routes/UpdatePost.jsx";
 import { RouteMap } from "./components/map/RouteMap";
 import { AppProvider  } from "./context/AppContext.jsx";
-
-
+import { CompanyDetails } from "./components/cards/CompanyDetails.jsx";
+import { About } from "./components/ui/landing/About.jsx";
+import { Contact } from "./components/ui/landing/Contact.jsx";
+import { TermsAndConditions } from "./components/ui/landing/TermsAndConditions.jsx";
 export function App() {
 
  
@@ -53,7 +55,10 @@ export function App() {
                 <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route path="/forgot-password-company" element={<ForgotPasswordCompany />} />
                 <Route path="/favorites" element={<Favorites  />} />
-
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/company-details" element={<CompanyDetails />} />
+                <Route path="/terms" element={<TermsAndConditions />} />
                 <Route path="/create-post" element={<CreatePost />} />
                 <Route path="/update-post/:id" element={<UpdatePost />} />
                 <Route path="/*" element={<Navigate to="/" />} />
