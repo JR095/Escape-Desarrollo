@@ -110,7 +110,7 @@ export function InformationCompany() {
                 <div className="grid grid-cols-1 items-center lg:grid-cols-2 dark:bg-[#2a2a2a]">
                     <div>
                         <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile_Img" className="rounded-full h-[7rem] w-[7rem] mt-[2rem]" />
-                        <h3 className="font-bold lg:text-2xl text-xl mt-[2rem] dark:text-white">{data.name}</h3>
+                        <h3 className="font-bold lg:text-2xl text-xl mt-[2rem] dark:text-white">{user.name}</h3>
                         <h4 className=" text-[#606060] font-semibold  pt-[1rem] lg:hidden">{translatedCategory}</h4>
                         <div className="col-span-3 text-left lg:pt-[2rem] pt-[1rem] dark:text-white">
                             <p>{translatedDescription}</p>

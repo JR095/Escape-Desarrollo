@@ -115,13 +115,13 @@ export function PersonalInformationCompany() {
 
                         <div className="hidden lg:block">
                             <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]"><NavLink to="/accountSettingsCompany">{t('Edit')}</NavLink></button>
-                            <p className="pt-[2rem] dark:text-white">1</p>
+                            <p className="pt-[2rem] dark:text-white">{user.followers_count}</p>
                             <h4 className="dark:text-white">{t('Followers')}</h4>
                         </div>
 
                         <div className="hidden lg:block">
                             <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[4rem] py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040]">{t('Share')}</button>
-                            <p className="pt-[2rem] dark:text-white">1</p>
+                            <p className="pt-[2rem] dark:text-white">{user.following_count}</p>
                             <h4 className="dark:text-white">{t('Following')}</h4>
                         </div>
 
