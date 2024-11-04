@@ -355,6 +355,7 @@ export function SignUpUsers() {
 
                 <form className="w-full lg:w-2/4" onSubmit={handleSubmit}>
                     <img className="w-[15rem] mx-auto mt-8 mb-16" src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
+                    <h2 className="text-3xl font-bold text-center mb-8 text-sky-500">Sing Up</h2>
                     <div className="grid lg:grid-cols-2 gap-4">
                         <div>
                             <AuthInput label={t('iName')} name="name" placeholder={t('iName')} type="text" onChange={e => setName(e.target.value)} className="{nameError ? 'border-red-500' : ''}"/> {nameError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}

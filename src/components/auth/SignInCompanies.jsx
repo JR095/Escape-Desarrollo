@@ -73,7 +73,7 @@ export function SignInCompanies() {
         <div className="flex justify-center items-center">
             <form className="w-full lg:w-2/4 " onSubmit={handleSubmit}>
                 <img className="w-[15rem] mx-auto mt-8 mb-16 " src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
-
+                <h2 className="text-3xl font-bold text-center mb-8 text-sky-500">Sing In</h2>
                 <AuthInput name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)}/>
                 <AuthInput name="password" placeholder={t('iPassword')} type="password" className="mb-4 lg:mb-4" onChange={e => setPassword(e.target.value)}/>
                 <div className="text-right">
