@@ -126,7 +126,7 @@ export function PersonalInformationCompany() {
                         </div>
 
                         <div className="grid grid-cols-2 gap-3 lg:hidden">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Edit')}</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4"><NavLink to="/accountSettingsCompany">{t('Edit')}</NavLink></button>
                             <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Share')}</button>
                         </div>
 

@@ -70,26 +70,11 @@ export function PersonalInformation() {
                         </div>
 
                         <div className="grid grid-cols-2 gap-3 lg:hidden">
-                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Edit')}</button>
+                            <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4"><NavLink to="/accountSettings">{t('Edit')}</NavLink></button>
                             <button className="bg-[#E0E1E3] font-semibold rounded-xl px-[2rem] py-[0.5rem] mt-4">{t('Share')}</button>
                         </div>
 
-                        <div className="grid grid-cols-3 gap-3 lg:hidden">
-                            <div>
-                                <p className="pt-[2rem] dark:text-white">1</p>
-                                <h4 className="dark:text-white">Publicaciones</h4>
-                            </div>
-
-                            <div>
-                                <p className="pt-[2rem] dark:text-white">1</p>
-                                <h4 className="dark:text-white">Seguidores</h4>
-                            </div>
-
-                            <div>
-                                <p className="pt-[2rem] dark:text-white">1</p>
-                                <h4 className="dark:text-white">Siguiendo</h4>
-                            </div>
-                        </div>
+                    
                     </div>
                 </div>
 

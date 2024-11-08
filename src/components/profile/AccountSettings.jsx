@@ -21,6 +21,7 @@ export function AccountSettings({ toggleDarkMode }) {
     const [cantones, setCantones] = useState([]);
     const [distritos, setDistritos] = useState([]);
     const [imagedata, setImagedata] = useState(null);
+    const [previewURL, setPreviewURL] = useState(null);
 
     const [formData, setFormData] = useState({
         name: user ? user.name : '',
@@ -110,8 +111,12 @@ export function AccountSettings({ toggleDarkMode }) {
         });
     };
 
-    const handleImageChange = (file) => {
-        setImagedata(file[0]);
+    const handleImageChange = (files) => {
+        const file = files[0];
+        if (file) {
+            setImagedata(file);
+            setPreviewURL(URL.createObjectURL(file));
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -146,7 +151,13 @@ export function AccountSettings({ toggleDarkMode }) {
             }
         } catch (error) {
             console.error("Error en la solicitud:", error);
+        } finally {
+            if (previewURL) {
+                URL.revokeObjectURL(previewURL);
+                setPreviewURL(null);
+            }
         }
+
     };
     
 
@@ -176,7 +187,7 @@ export function AccountSettings({ toggleDarkMode }) {
                         {console.log("user:", user)}
                         {console.log("user.image:", user?.image)}
                         <img
-                            src={user && user.image ? `http://localhost/escape-desarrollo-backend/public/imgs/${user.image}` : "https://cdn-icons-png.flaticon.com/512/149/149071.png"} 
+                            src={previewURL || (user && user.image ? `http://localhost/escape-desarrollo-backend/public/imgs/${user.image}` : "https://cdn-icons-png.flaticon.com/512/149/149071.png")}
                             alt="Profile_Img" 
                             className="rounded-full h-[7rem] w-[7rem] mt-[2rem]"
                         />
@@ -184,6 +195,7 @@ export function AccountSettings({ toggleDarkMode }) {
                             name="image" 
                             id="image" 
                             type="file" 
+                            accept="image/*"
                             className="hidden" 
                             onChange={e => handleImageChange(e.target.files)} 
                         />
@@ -230,7 +242,7 @@ export function AccountSettings({ toggleDarkMode }) {
                         
 
                         </div>
-                        <div className="w-full flex justify-center mt-6 lg:mt-12 relative z-20">
+                        <div className="w-full flex justify-center mt-6 lg:mt-12 mb-4">
                             <Buttons />
                         </div>
                     </div>
