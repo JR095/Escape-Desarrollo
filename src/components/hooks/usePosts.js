@@ -14,12 +14,20 @@ export const usePosts = (userTypeFilter = null) => {
     const [posts, setPosts] = useState([]);
     const navigate = useNavigate();
     const { i18n } = useTranslation();
+    const { user } = useUser();
 
     const fetchPosts = async () => {
         try {
-            const url = userTypeFilter === 1
+            const baseUrl = userTypeFilter === 1
                 ? 'http://localhost/escape-desarrollo-backend/public/api/company-posts'
                 : 'http://localhost/escape-desarrollo-backend/public/api/posts';
+
+            const url = new URL(baseUrl);
+            if (user.user_type_id === 1) {
+                url.searchParams.append('company_id', user.id);
+            } else {
+                url.searchParams.append('user_id', user.id);
+            }
 
             const response = await fetch(url, {
                 method: 'GET',
@@ -59,12 +67,20 @@ export const usePosts = (userTypeFilter = null) => {
 
     const handleLikePost = async (postId) => {
         try {
+            const body = {};
+            if (user.user_type_id === 1) {
+                body.company_id = user.id;
+            } else if (user.user_type_id === 2) {
+                body.user_id = user.id;
+            }
+
             const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/posts/${postId}/like`, {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify(body),
             });
             if (!response.ok) {
                 throw new Error('Error al gestionar el like');
@@ -79,7 +95,6 @@ export const usePosts = (userTypeFilter = null) => {
                         ? { ...post, liked: !post.liked, likes_count: result.likes_count }
                         : post
                 )
-
             );
 
         } catch (error) {
@@ -122,6 +137,7 @@ export const usePosts = (userTypeFilter = null) => {
 
         const formData = new FormData();
         formData.append('description', description);
+        formData.append('company_id', user.id);
 
         if (files.length > 0) {
             for (let i = 0; i < files.length; i++) {
@@ -207,6 +223,7 @@ export const usePosts = (userTypeFilter = null) => {
         try {
             const formData = new FormData();
             formData.append('description', description);
+            formData.append('company_id', user.id);
 
             let filesChanged = false;
 
@@ -284,6 +301,8 @@ export const usePosts = (userTypeFilter = null) => {
         try {
             const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/delete/post/${id}`, {
                 method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ company_id: user.id }),
                 credentials: 'include',
             });
 

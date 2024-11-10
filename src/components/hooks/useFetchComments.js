@@ -42,13 +42,23 @@ export const useFetchComments = () => {
   const submitComment = async (postId, comment) => {
     console.log(user);
     try {
+      const body = {
+        daily_post_id: postId,
+        comment,
+      };
+  
+      if (user?.user_type_id === 1) {
+        body.company_id = user.id;
+      } else if (user?.user_type_id === 2) {
+        body.user_id = user.id;
+      }
+  
       const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/create/comment', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ daily_post_id: postId, comment }),
+        body: JSON.stringify(body),
         credentials: 'include',
       });
-
       if (response.ok) {
         const newComment = await response.json();
         setComments((prevComments) => [...prevComments, newComment.comment]);
