@@ -55,17 +55,14 @@ export function InformationCompany() {
             });
     
             if (!response.ok) {
-                // Maneja un error de respuesta (por ejemplo, 400 o 500)
                 const errorData = await response.json();
                 console.error("Error:", errorData.message);
                 return;
             }
     
-            // Si la respuesta es exitosa, procesa el mensaje
             const data = await response.json();
             console.log(data.message);
         } catch (error) {
-            // Maneja errores de red u otros errores
             console.error("Network error:", error);
         }
     };
