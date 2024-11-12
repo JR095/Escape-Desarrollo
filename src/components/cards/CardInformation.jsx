@@ -89,9 +89,9 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
   return (
     <div>
       <div className="relative">
-        <img className="rounded-lg object-cover h-[50vh]  md:w-full" src={place.image} alt="" />
+        <img className="rounded-lg object-cover h-[50vh] w-full" src={place.image} alt="" />
         <img onClick={favorite} className="absolute top-4 right-4 p-2 rounded-lg bg-white dark:bg-[#404040]" src={hearts == false ? heart : fav} alt="" />
-        <img onClick={close} className="absolute top-2 left-2 p-2 rounded-full" src={back} alt="" />
+        <img onClick={close} className="absolute top-2 left-2 rounded-full bg-neutral-300 dark:bg-neutral-700 " src={back} alt="" />
       </div>
       <div className="flex justify-between mt-4">
         <h3 className="text-black font-semibold text-3xl dark:text-white">{place.name}</h3>
