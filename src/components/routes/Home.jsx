@@ -20,36 +20,23 @@ import { CardComments } from "../cards/CardComments.jsx";
 import { useTranslation } from "react-i18next";
 import { translateText } from "../hooks/translateText.js";
 
-//import useFetchData from "../hooks/useFetchData";
-
 export function Home() {
 
   const { isMobile } = useFetchMenubar();
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => {
-    console.log("Se salio");
-    //setInitial(false);
     setIsOpen(false);
   }
   const [hearts, setHearts] = useState(false);
-  //const [initial, setInitial] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [rating, setRating] = useState(0);
   const [undefined, setUndefined] = useState(false);
-  
-  //const urlStars = `http://localhost/escape-desarrollo-backend/public/api/rating`;
-  //const data = useFetchData(urlStars);
-  //const dataStart = data.data;
-
   const [id, setId] = useState(0);
-
   const { user } = useUser();
   const [isOpenComments, setOpenComments] = useState(false);
   const handleCloseComments = () => setOpenComments(false);
   const [postId, setPostId] = useState(null);
   const { t, i18n } = useTranslation();
-  //const iniciarRating = true; 
-
   const openCardComments = (postId) => () => {
     if (postId) {
       setOpenComments(true);
@@ -85,6 +72,8 @@ export function Home() {
         result[0].description = await translateText(result[0].description, 'es', i18n.language);
       }
 
+      //Ranking
+      
       if(starts){
         setUserRating(starts.rating);
         setRating(parseFloat(starts.post_place_average_rating).toFixed(1)); 
@@ -95,7 +84,6 @@ export function Home() {
         setUndefined(true);
       }
 
-      //setInitial(true);     
       setInformationCard(result);
       setIsOpen(true);
       setId(id)

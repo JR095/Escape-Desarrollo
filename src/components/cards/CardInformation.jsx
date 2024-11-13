@@ -26,9 +26,9 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const tooltipRef = useRef(null);
-  const [hoveredStar, setHoveredStar] = useState(0); // Estado para el hover de estrellas
+  const [hoveredStar, setHoveredStar] = useState(0); 
   const [userRating, setUserRating] = useState(0);
-  const [rating, setRating] = useState(0); // Estado para el rating
+  const [rating, setRating] = useState(0); 
   const url = `http://localhost/escape-desarrollo-backend/public/api/companies/` + user.id;
   const urlStars = `http://localhost/escape-desarrollo-backend/public/api/rating`;
   const data = useFetchData(urlStars);
@@ -56,8 +56,7 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
       setInitialValue(false);
     }
     
-    console.log('Ratings inicializados:', initialRating, initialUserRating);
-    
+
     //Calcula el tiempo
     if (place.longitude && place.latitude && user.longitude && user.latitude) {
 
@@ -123,7 +122,7 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
   const goToMapCard = () => {
     navigate('/mapWithRoute', { state: { placeId: place.id } })
   };
-  // Manejador de click en estrellas
+
   const handleStarClick = (value) => {
     setUserRating(value);
     calculateAverageRating(value);
@@ -141,13 +140,11 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
     const ratings = updatedDataStart.filter(r => r.post_place_id === place.id);
 
     if (ratings.length > 0) {
-      // Calcular el promedio
       const average = ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length;
       const result = average.toFixed(1);
   
-      // Actualizar el estado del promedio y enviar los datos
       setRating(result);
-      sendRating(value, result); // Llamar a la función para enviar la calificación y el promedio
+      sendRating(value, result); 
     }
 
   }
@@ -159,11 +156,11 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
       return (
         <img
           key={starValue}
-          src={starValue <= (hoveredStar || userRating) ? start : greyStar} // Cambiar imagen en hover o selección
+          src={starValue <= (hoveredStar || userRating) ? start : greyStar} 
           alt={`star-${starValue}`}
-          onClick={() => handleStarClick(starValue)} // Establecer el valor de la estrella al hacer clic
-          onMouseEnter={() => setHoveredStar(starValue)} // Cambiar a imagen de estrella seleccionada en hover
-          onMouseLeave={() => setHoveredStar(0)} // Restaurar estado al salir del hover
+          onClick={() => handleStarClick(starValue)} 
+          onMouseEnter={() => setHoveredStar(starValue)} 
+          onMouseLeave={() => setHoveredStar(0)} 
           style={{ cursor: "pointer", width: "28px", height: "28px" }}
         />
       );
@@ -186,11 +183,11 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
         }),
       });
   
-      const text = await response.text(); // Leer el contenido de la respuesta
+      const text = await response.text(); 
       console.log('Respuesta del servidor:', text); // Log de depuración
   
       if (response.ok) {
-        const data = JSON.parse(text); // Parsear el JSON manualmente
+        const data = JSON.parse(text); 
         setMessage(data.message);
 
       } else {
