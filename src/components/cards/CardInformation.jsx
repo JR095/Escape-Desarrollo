@@ -1,40 +1,67 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "../../index.css";
 //import a from "../../assets/imgs/Place1.jpg";
 import start from "../../assets/imgs/start.svg";
+import greyStar from "../../assets/imgs/greyStar.svg";
 import location from "../../assets/imgs/location.svg";
 import money from "../../assets/imgs/money.svg";
 import guide from "../../assets/imgs/guide.svg";
 import heart from "../../assets/imgs/heart.svg";
 import fav from "../../assets/imgs/favorite.svg";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import useFetchData from "../hooks/useFetchData";
 import back from "../../assets/imgs/back.svg";
 import { useUser } from '../../context/UserContext.jsx';
 import { useTranslation } from 'react-i18next';
-
 import propTypes from "prop-types";
+import { renderToNodeStream } from "react-dom/server";
+import { useRadioGroup } from "@mui/material";
 
-export function CardInformation({ onClose, favorite, hearts, setHearts, placeData }) {
+export function CardInformation({ onClose, favorite, hearts, setHearts, placeData, initialRating, initialUserRating, undefined }) {
 
   const { user } = useUser();
   const { t } = useTranslation();
   const [travelTime, setTravelTime] = useState(null);
   const [travelMode, setTravelMode] = useState('pedestrian');
   const navigate = useNavigate();
+  const [visible, setVisible] = useState(false);
+  const tooltipRef = useRef(null);
+  const [hoveredStar, setHoveredStar] = useState(0); // Estado para el hover de estrellas
+  const [userRating, setUserRating] = useState(0);
+  const [rating, setRating] = useState(0); // Estado para el rating
   const url = `http://localhost/escape-desarrollo-backend/public/api/companies/` + user.id;
+  const urlStars = `http://localhost/escape-desarrollo-backend/public/api/rating`;
+  const data = useFetchData(urlStars);
+  const dataStart = data.data;
+  const [message, setMessage] = useState('');
+  const [initialValue, setInitialValue] = useState(true);
 
-
-
+  //Hook inicial
   useEffect(() => {
-    if (!placeData || !placeData[0] || !user) return;
 
+    if (!placeData || !placeData[0] || !user) return;
     const place = placeData[0];
 
+    console.log("Quiero saber que pasaa", undefined);
+
+    if(undefined){
+      setRating(0);
+      setUserRating(0);
+      setInitialValue(true);
+    }
+
+    if (initialValue && !undefined) {
+      setRating(initialRating || 0);
+      setUserRating(initialUserRating || 0);
+      setInitialValue(false);
+    }
+    
+    console.log('Ratings inicializados:', initialRating, initialUserRating);
+    
+    //Calcula el tiempo
     if (place.longitude && place.latitude && user.longitude && user.latitude) {
 
-      /* 
-      const origin = [user.longitude, user.latitude];
+      /*const origin = [user.longitude, user.latitude];
       const destination = [place.longitude, place.latitude];
   
       const routeUrl = `https://api.tomtom.com/routing/1/calculateRoute/${origin[1]},${origin[0]}:${destination[1]},${destination[0]}/json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi&traffic=true&travelMode=${travelMode}`;
@@ -53,8 +80,9 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
     } else {
       setTravelTime(t('Calculating'));
     }
-  }, [placeData, user, travelMode]);
+    //Fin de calcular el tiempo
 
+  }, [placeData, user, travelMode,dataStart, rating, userRating]);
 
   function convertirMinutosAHoras(minutos) {
     const horas = Math.floor(minutos / 60);
@@ -62,6 +90,18 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
     return horas >= 1 ? `${horas}h ${mins}min` : `${mins}min`;
   }
 
+  //Hook para el tooltip
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+        setVisible(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
 
   if (!placeData || !placeData[0]) {
@@ -75,8 +115,6 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
     onClose();
   }
 
-
-
   const handleTravelModeChange = (mode) => {
     console.log(mode);
     setTravelMode(mode);
@@ -84,6 +122,84 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
 
   const goToMapCard = () => {
     navigate('/mapWithRoute', { state: { placeId: place.id } })
+  };
+  // Manejador de click en estrellas
+  const handleStarClick = (value) => {
+    setUserRating(value);
+    calculateAverageRating(value);
+  };
+
+  //Calcula el promedio
+  const calculateAverageRating = (value) => {
+
+    const updatedDataStart = dataStart.map((r) => 
+      r.post_place_id === place.id && r.user_id === user.id
+        ? { ...r, rating: value }
+        : r
+    );
+    
+    const ratings = updatedDataStart.filter(r => r.post_place_id === place.id);
+
+    if (ratings.length > 0) {
+      // Calcular el promedio
+      const average = ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length;
+      const result = average.toFixed(1);
+  
+      // Actualizar el estado del promedio y enviar los datos
+      setRating(result);
+      sendRating(value, result); // Llamar a la función para enviar la calificación y el promedio
+    }
+
+  }
+
+  // Renderizar estrellas de rating
+  const renderStars = () => {
+    return Array.from({ length: 5 }, (_, index) => {
+      const starValue = index + 1;
+      return (
+        <img
+          key={starValue}
+          src={starValue <= (hoveredStar || userRating) ? start : greyStar} // Cambiar imagen en hover o selección
+          alt={`star-${starValue}`}
+          onClick={() => handleStarClick(starValue)} // Establecer el valor de la estrella al hacer clic
+          onMouseEnter={() => setHoveredStar(starValue)} // Cambiar a imagen de estrella seleccionada en hover
+          onMouseLeave={() => setHoveredStar(0)} // Restaurar estado al salir del hover
+          style={{ cursor: "pointer", width: "28px", height: "28px" }}
+        />
+      );
+    });
+  };
+
+   // Función para enviar la calificación al backend
+   const sendRating = async (value, result) => {
+    try {
+      const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/save-rating', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          user_id: user.id,
+          post_place_id: place.id, 
+          rating: value,
+          post_place_average_rating: result,
+        }),
+      });
+  
+      const text = await response.text(); // Leer el contenido de la respuesta
+      console.log('Respuesta del servidor:', text); // Log de depuración
+  
+      if (response.ok) {
+        const data = JSON.parse(text); // Parsear el JSON manualmente
+        setMessage(data.message);
+
+      } else {
+        setMessage('Error al enviar el rating');
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      setMessage('Hubo un error en la conexión');
+    }
   };
 
   return (
@@ -95,19 +211,28 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
       </div>
       <div className="flex justify-between mt-4">
         <h3 className="text-black font-semibold text-3xl dark:text-white">{place.name}</h3>
-        <div className="flex items-center gap-1">
-          <img src={start} alt="start" />
-          <p className="text-[#9A9797] font-semibold text-xl dark:text-[#BCBCBC]">
-            2.5
-          </p>
+        <div className="flex items-center gap-1 relative">
+          <img src={rating > 0 ? start : greyStar}
+            alt="start"
+            onClick={() => setVisible(!visible)}
+            style={{ cursor: 'pointer', fontSize: '24px' }} />
+
+          {visible && (
+            <div ref={tooltipRef} className="absolute left-1/2 transform -translate-x-[150px] -top-10 z-10 w-48 bg-white dark:bg-[#404040] shadow-lg p-2 rounded-lg text-sm text-gray-700">
+              <p className="font-semibold dark:text-[#BCBCBC]">Rating</p>
+              <div className="flex gap-1 mt-1">
+                {renderStars()}
+              </div>
+            </div>
+          )}
+          <p className="text-[#9A9797] font-semibold text-xl dark:text-[#BCBCBC]">{rating}</p>
         </div>
       </div>
       <div className="flex items-center gap-2 my-3">
 
         <NavLink to="/InformationCompany" state={place.id} >
-        <img src={place.image} alt="profile" className="w-10 h-10 rounded-full" />
+          <img src={place.image} alt="profile" className="w-10 h-10 rounded-full" />
         </NavLink>
-      
 
         <div className="flex items-center gap-2" >
           <img src={location} alt="location" />
@@ -119,7 +244,7 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
       </div>
 
       <div className="flex gap-2 my-4">
-        <button r
+        <button
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
           onClick={() => handleTravelModeChange('pedestrian')} // Modo caminar
         >

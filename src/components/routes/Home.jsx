@@ -20,14 +20,26 @@ import { CardComments } from "../cards/CardComments.jsx";
 import { useTranslation } from "react-i18next";
 import { translateText } from "../hooks/translateText.js";
 
+//import useFetchData from "../hooks/useFetchData";
+
 export function Home() {
 
   const { isMobile } = useFetchMenubar();
   const [isOpen, setIsOpen] = useState(false);
   const handleClose = () => {
+    console.log("Se salio");
+    //setInitial(false);
     setIsOpen(false);
   }
   const [hearts, setHearts] = useState(false);
+  //const [initial, setInitial] = useState(false);
+  const [userRating, setUserRating] = useState(0);
+  const [rating, setRating] = useState(0);
+  const [undefined, setUndefined] = useState(false);
+  
+  //const urlStars = `http://localhost/escape-desarrollo-backend/public/api/rating`;
+  //const data = useFetchData(urlStars);
+  //const dataStart = data.data;
 
   const [id, setId] = useState(0);
 
@@ -36,6 +48,7 @@ export function Home() {
   const handleCloseComments = () => setOpenComments(false);
   const [postId, setPostId] = useState(null);
   const { t, i18n } = useTranslation();
+  //const iniciarRating = true; 
 
   const openCardComments = (postId) => () => {
     if (postId) {
@@ -49,13 +62,21 @@ export function Home() {
 
 
   const openCard = async (id) => {
+    console.log("Se ingreso");
     try {
       const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/` + user.id);
       const result = await response.json();
+
+      const urlStars = await fetch(`http://localhost/escape-desarrollo-backend/public/api/rating`);
+      const dataStart = await urlStars.json();
+      console.log(dataStart);
+      const starts =  dataStart.find(r => r.post_place_id === result[0].id && r.user_id === user.id);
+      console.log(starts);
+
+      //Likes
       if (result[0].favorite != null) {
         setHearts(true);
         result[0].favorite = null;
-
       } else {
         setHearts(false);
       }
@@ -64,6 +85,17 @@ export function Home() {
         result[0].description = await translateText(result[0].description, 'es', i18n.language);
       }
 
+      if(starts){
+        setUserRating(starts.rating);
+        setRating(parseFloat(starts.post_place_average_rating).toFixed(1)); 
+        setUndefined(false);
+      }else{
+        setUserRating(0);
+        setRating(0);
+        setUndefined(true);
+      }
+
+      //setInitial(true);     
       setInformationCard(result);
       setIsOpen(true);
       setId(id)
@@ -84,7 +116,6 @@ export function Home() {
       }),
     });
     setHearts(!hearts);
-
   };
 
   return (
@@ -96,7 +127,7 @@ export function Home() {
       </div>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
-          <CardInformation placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} />
+          <CardInformation placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} initialRating={rating} initialUserRating={userRating} undefined={undefined}/>
         </Drawer.Items>
       </Drawer>
 

@@ -10,11 +10,12 @@ export const MapPage = () => {
   useEffect(() => {
     
     const map = tt.map({
-      key: 'dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi', 
+      key: 'dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi',
       container: 'map', 
       center: center, 
       zoom: 15
     });
+
 
     //Create a Marker 
     map.on('load', () => {
