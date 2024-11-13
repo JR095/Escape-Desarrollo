@@ -6,8 +6,6 @@ import { useUser } from '../../context/UserContext.jsx';
 ("use client");
 import propTypes from "prop-types";
 import { useLocation } from "react-router-dom";
-
-
 import { Drawer } from "flowbite-react";
 import { useState,useEffect } from "react";
 import { Posts } from "../routes/Posts.jsx";
