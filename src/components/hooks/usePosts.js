@@ -4,7 +4,7 @@ import { useUser } from '../../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import { translateText } from './translateText';
 
-export const usePosts = (userTypeFilter = null) => {
+export const usePosts = (userTypeFilter = null, company_id) => {
     const { id } = useParams();
     const [description, setDescription] = useState('');
     const [files, setFiles] = useState([]);
@@ -18,7 +18,13 @@ export const usePosts = (userTypeFilter = null) => {
 
     const fetchPosts = async () => {
         try {
-            const baseUrl = userTypeFilter === 1
+            if(company_id!==null){
+                var url = new URL(`http://localhost/escape-desarrollo-backend/public/api/company-posts`);
+                url.searchParams.append('company_id', company_id);
+
+
+            }else{
+                const baseUrl = userTypeFilter === 1
                 ? 'http://localhost/escape-desarrollo-backend/public/api/company-posts'
                 : 'http://localhost/escape-desarrollo-backend/public/api/posts';
 
@@ -28,6 +34,8 @@ export const usePosts = (userTypeFilter = null) => {
             } else {
                 url.searchParams.append('user_id', user.id);
             }
+            }
+            
 
             const response = await fetch(url, {
                 method: 'GET',
