@@ -22,7 +22,6 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
   const [travelTime, setTravelTime] = useState(null);
   const [travelMode, setTravelMode] = useState('pedestrian');
   const navigate = useNavigate();
-  const url = `http://localhost/escape-desarrollo-backend/public/api/companies/` + user.id;
 
 
 
