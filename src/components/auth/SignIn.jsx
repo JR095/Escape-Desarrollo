@@ -87,8 +87,8 @@ export function SignIn() {
         <div className="grid justify-center items-center h-[100vh] md:grid-cols-2 gap-4">
         <div className="flex justify-center items-center">
             <form className="w-full lg:w-2/4 " onSubmit={handleSubmit}>
-                <img className="w-[15rem] mx-auto mt-8 mb-16 " src="../src/assets/imgs/logo-celeste.png" alt="Logo" />
-                <h2 className="text-3xl font-bold text-center mb-8 text-sky-500">Sing In</h2>
+                <img className="w-[12rem] mx-auto mt-8 mb-12 " src="../src/assets/imgs/logo-celeste.png" alt="Logo" /> 
+                <h2 className="text-4xl font-bold text-center mb-8 text-sky-500">{t('login')}</h2>
                 <AuthInput name="email" placeholder={t('iEmail')} type="email" onChange={e => setEmail(e.target.value)} className="{emailError ? 'border-red-500' : ''}"/> {emailError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                 <AuthInput name="password" placeholder={t('iPassword')} type="password" onChange={e => setPassword(e.target.value)} className="{passwordError ? 'border-red-500' : ''}"/> {passwordError && <p className="text-red-500 text-sm mb-5">Este campo es obligatorio</p>}
                 <div className="text-right">
@@ -102,7 +102,7 @@ export function SignIn() {
                     value={t('iSignIn')}
                 />
 
-                <p className="text-gray-400 text-center">{t('goSignUp')}
+                <p className="text-gray-400 text-center dark:text-white">{t('goSignUp')}
                     <NavLink className="text-sky-500 ml-2 font-medium" to="/signUpUser">{t('createAccount')}</NavLink>
                 </p>
             </form> 

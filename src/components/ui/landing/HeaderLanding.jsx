@@ -78,14 +78,14 @@ export function HeaderLanding() {
                                         className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsLoginMenuVisible(false)} 
                                     >
-                                        {t('Iniciar sesión como Escapista')}
+                                        {t('escapist')}
                                     </NavLink>
                                     <NavLink
                                         to="/signInCompanies"
                                         className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsLoginMenuVisible(false)}
                                     >
-                                        {t('Iniciar sesión como compañía')}
+                                        {t('company')}
                                     </NavLink>
                                 </div>
                             )}
@@ -105,14 +105,14 @@ export function HeaderLanding() {
                                         className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsRegisterMenuVisible(false)} 
                                     >
-                                        {t('Registrarse como Escapista')}
+                                        {t('rEscapist')}
                                     </NavLink>
                                     <NavLink
                                         to="/signUpCompanies"
                                         className="block px-4 py-2 hover:bg-gray-200 hover:text-[#132443]"
                                         onClick={() => setIsRegisterMenuVisible(false)} 
                                     >
-                                        {t('Registrarse como compañía')}
+                                        {t('rCompany')}
                                     </NavLink>
                                 </div>
                             )}
@@ -142,7 +142,7 @@ export function HeaderLanding() {
                                             setIsMobileMenuVisible(false);
                                         }}
                                     >
-                                        {t('Iniciar sesión como Escapista')}
+                                        {t('escapist')}
                                     </NavLink>
                                     <NavLink
                                         to="/signInCompanies"
@@ -152,7 +152,7 @@ export function HeaderLanding() {
                                             setIsMobileMenuVisible(false);
                                         }}
                                     >
-                                        {t('Iniciar sesión como compañía')}
+                                        {t('company')}
                                     </NavLink>
                                 </div>
                             )}
@@ -175,7 +175,7 @@ export function HeaderLanding() {
                                             setIsMobileMenuVisible(false);
                                         }}
                                     >
-                                        {t('Registrarse como Escapista')}
+                                        {t('rEscapist')}
                                     </NavLink>
                                     <NavLink
                                         to="/signUpCompanies"
@@ -185,7 +185,7 @@ export function HeaderLanding() {
                                             setIsMobileMenuVisible(false);
                                         }}
                                     >
-                                        {t('Registrarse como compañía')}
+                                        {t('rCompany')}
                                     </NavLink>
                                 </div>
                             )}
