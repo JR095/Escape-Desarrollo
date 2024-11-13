@@ -56,7 +56,7 @@ export function ChangePasswordCompany({ close }) {
     <div className="grid justify-center md:m-4">
       <form onSubmit={handleChangePassword}>
         <div className="grid gap-6 mb-6">
-          <h2 className="font-bold text-blue-700 text-3xl text-center mb-4">
+          <h2 className="font-bold text-sky-500 text-3xl text-center mb-4">
             Change Password
           </h2>
           <InputProfile
@@ -89,14 +89,14 @@ export function ChangePasswordCompany({ close }) {
         <div className="grid gap-6 lg:grid-cols-2 grid-cols-1 w-full pb-2 pt-2">
           <button
             type="button"
-            className="text-blue-700 border-2 border-blue-700 p-2 rounded-lg"
+            className="hover:text-white border-2 border-sky-500 hover:bg-sky-500 p-2 rounded-lg"
             onClick={close}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="text-white bg-blue-700 p-2 rounded-lg"
+            className="text-white bg-sky-500 border-sky-500 hover:bg-sky-600 hover:border-sky-600 border-2 p-2 rounded-lg"
           >
             Change
           </button>
