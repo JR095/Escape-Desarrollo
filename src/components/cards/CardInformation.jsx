@@ -17,7 +17,7 @@ import propTypes from "prop-types";
 import { renderToNodeStream } from "react-dom/server";
 import { useRadioGroup } from "@mui/material";
 
-export function CardInformation({ onClose, favorite, hearts, setHearts, placeData, initialRating, initialUserRating, undefined }) {
+export function CardInformation({ onClose, favorite, hearts, setHearts, placeData, initialRating, initialUserRating, undefined, trueRating }) {
 
   const { user } = useUser();
   const { t } = useTranslation();
@@ -41,8 +41,7 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
 
     if (!placeData || !placeData[0] || !user) return;
     const place = placeData[0];
-
-    console.log("Quiero saber que pasaa", undefined);
+    setInitialValue(trueRating);
 
     if(undefined){
       setRating(0);
@@ -55,7 +54,6 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
       setUserRating(initialUserRating || 0);
       setInitialValue(false);
     }
-    
 
     //Calcula el tiempo
     if (place.longitude && place.latitude && user.longitude && user.latitude) {
@@ -139,12 +137,17 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
     
     const ratings = updatedDataStart.filter(r => r.post_place_id === place.id);
 
+    console.log(ratings);
+
     if (ratings.length > 0) {
       const average = ratings.reduce((sum, r) => sum + r.rating, 0) / ratings.length;
       const result = average.toFixed(1);
-  
+
       setRating(result);
       sendRating(value, result); 
+    }else{
+      setRating(value);
+      sendRating(value, value);
     }
 
   }
@@ -169,6 +172,7 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
 
    // Función para enviar la calificación al backend
    const sendRating = async (value, result) => {
+    
     try {
       const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/save-rating', {
         method: 'POST',
@@ -190,6 +194,7 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
         const data = JSON.parse(text); 
         setMessage(data.message);
 
+        
       } else {
         setMessage('Error al enviar el rating');
       }

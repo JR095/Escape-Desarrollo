@@ -24,9 +24,7 @@ export function Home() {
 
   const { isMobile } = useFetchMenubar();
   const [isOpen, setIsOpen] = useState(false);
-  const handleClose = () => {
-    setIsOpen(false);
-  }
+  
   const [hearts, setHearts] = useState(false);
   const [userRating, setUserRating] = useState(0);
   const [rating, setRating] = useState(0);
@@ -46,19 +44,21 @@ export function Home() {
     }
   };
   const [informationCard, setInformationCard] = useState(null);
-
+  const [trueRating, setTrueRating] = useState(true);
+  
+  const handleClose = () => {
+    setIsOpen(false);
+    setTrueRating(true);
+  }
 
   const openCard = async (id) => {
-    console.log("Se ingreso");
     try {
       const response = await fetch(`http://localhost/escape-desarrollo-backend/public/api/company/${id}/` + user.id);
       const result = await response.json();
 
       const urlStars = await fetch(`http://localhost/escape-desarrollo-backend/public/api/rating`);
       const dataStart = await urlStars.json();
-      console.log(dataStart);
       const starts =  dataStart.find(r => r.post_place_id === result[0].id && r.user_id === user.id);
-      console.log(starts);
 
       //Likes
       if (result[0].favorite != null) {
@@ -73,7 +73,7 @@ export function Home() {
       }
 
       //Ranking
-      
+
       if(starts){
         setUserRating(starts.rating);
         setRating(parseFloat(starts.post_place_average_rating).toFixed(1)); 
@@ -115,7 +115,7 @@ export function Home() {
       </div>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
-          <CardInformation placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} initialRating={rating} initialUserRating={userRating} undefined={undefined}/>
+          <CardInformation placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} initialRating={rating} initialUserRating={userRating} undefined={undefined} trueRating={trueRating}/>
         </Drawer.Items>
       </Drawer>
 
