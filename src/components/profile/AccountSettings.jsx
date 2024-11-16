@@ -123,6 +123,7 @@ export function AccountSettings({ toggleDarkMode }) {
         e.preventDefault();
         const fData = new FormData();
 
+        fData.append("id", user.id);
         fData.append("name", formData.name);
         fData.append("email", formData.email);
         fData.append("canton", formData.canton);

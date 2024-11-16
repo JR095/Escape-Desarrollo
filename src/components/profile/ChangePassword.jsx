@@ -20,17 +20,20 @@ export function ChangePassword({ close }) {
     e.preventDefault();
 
     try {
+      const body = {
+        old_password: oldPassword,
+        new_password: newPassword,
+        new_password_confirmation: checkPassword,
+        id: user.id
+      }
+
       const response = await fetch('http://localhost/escape-desarrollo-backend/public/api/change-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({
-          old_password: oldPassword,
-          new_password: newPassword,
-          new_password_confirmation: checkPassword,
-        }),
+        body: JSON.stringify(body),
       });
 
       const data = await response.json();
