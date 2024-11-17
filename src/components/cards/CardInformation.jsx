@@ -118,7 +118,7 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
       </div>
 
       <div className="flex gap-2 my-4">
-        <button r
+        <button
           className="bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-600 transition duration-300"
           onClick={() => handleTravelModeChange('pedestrian')} // Modo caminar
         >

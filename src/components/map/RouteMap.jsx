@@ -143,7 +143,7 @@ export const RouteMap = () => {
       //const segundosLlegada = horaDeLlegada.getSeconds().toString().padStart(2, '0');
 
       //return `${horasLlegada}:${minutosLlegada}:${segundosLlegada}`;
-      return `${horasLlegada}:${minutosLlegada}`;
+      return `${horasLlegada}h ${minutosLlegada}min`;
     }
 
 
