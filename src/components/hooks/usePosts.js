@@ -4,7 +4,7 @@ import { useUser } from '../../context/UserContext';
 import { useTranslation } from 'react-i18next';
 import { translateText } from './translateText';
 
-export const usePosts = (userTypeFilter = null, company_id) => {
+export const usePosts = (userTypeFilter = null, company_id = null) => {
     const { id } = useParams();
     const [description, setDescription] = useState('');
     const [files, setFiles] = useState([]);
@@ -18,24 +18,23 @@ export const usePosts = (userTypeFilter = null, company_id) => {
 
     const fetchPosts = async () => {
         try {
-            if(company_id!==null){
-                var url = new URL(`http://localhost/escape-desarrollo-backend/public/api/company-posts`);
+            let url;
+
+            if (company_id !== null) {
+                url = new URL(`http://localhost/escape-desarrollo-backend/public/api/company-posts`);
                 url.searchParams.append('company_id', company_id);
-
-
-            }else{
-                const baseUrl = userTypeFilter === 1
-                ? 'http://localhost/escape-desarrollo-backend/public/api/company-posts'
-                : 'http://localhost/escape-desarrollo-backend/public/api/posts';
-
-            const url = new URL(baseUrl);
-            if (user.user_type_id === 1) {
-                url.searchParams.append('company_id', user.id);
             } else {
-                url.searchParams.append('user_id', user.id);
+                const baseUrl = userTypeFilter === 1
+                    ? 'http://localhost/escape-desarrollo-backend/public/api/company-posts'
+                    : 'http://localhost/escape-desarrollo-backend/public/api/posts';
+
+                url = new URL(baseUrl);
+                if (user.user_type_id === 1) {
+                    url.searchParams.append('company_id', user.id);
+                } else {
+                    url.searchParams.append('user_id', user.id);
+                }
             }
-            }
-            
 
             const response = await fetch(url, {
                 method: 'GET',
