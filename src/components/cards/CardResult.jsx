@@ -5,8 +5,12 @@ import { useFetchTravelTime } from "../hooks/useFetchTravelTime.js";
 import { useTranslation } from 'react-i18next';
 import useFetchData from "../hooks/useFetchData";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
-export function CardResult({ image, name, city, followers, description, phone_number, email, category_id, sub_category_id }) {
+
+export function CardResult({ image, name, city, followers, description, phone_number, email, category_id, sub_category_id, id }) {
+
+    const { t } = useTranslation();
 
     /*const [travelMode, setTravelMode] = useState('pedestrian');
     const { t } = useTranslation();
@@ -73,8 +77,12 @@ export function CardResult({ image, name, city, followers, description, phone_nu
                     </div>
 
                 <div className="flex justify-center items-center">
-                    <button className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg text-lg">Seguir</button>
+                <NavLink to="/InformationCompany" state={id} className="w-full bg-sky-500 text-white font-bold py-2 rounded-lg text-lg text-center">
+                    {t('categoriesBtn')}
+                </NavLink>
                 </div>
+
+                
             </div>
 
             

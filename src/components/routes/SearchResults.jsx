@@ -51,6 +51,7 @@ export function SearchResults() {
                                         email={result.email}
                                         category_id={result.category_id}
                                         sub_category_id={result.sub_category_id}
+                                        id={result.id}
                                     />
                                 ))
                             ) : (
