@@ -53,6 +53,7 @@
     "Posts": "Publicaciones",
     "Followers": "Seguidores",
     "Following": "Siguiendo",
+    "Follow": "Seguir",
     "CreatePost": "Crear publicación",
     "BtnPost": "Publicar",
     "UpdatePost": "Actualizar publicación",
@@ -134,6 +135,15 @@
     "term6": "6. Cambios en los Términos y Condiciones",
     "term6Des": "Nos reservamos el derecho de actualizar o modificar estos términos en cualquier momento. Te notificaremos sobre cambios importantes y te recomendamos revisar esta página regularmente para mantenerte informado.",
     "lastUpdated": "Última Actualización: ",
-    "date": "4 de Noviembre, 2024"
+    "date": "4 de Noviembre, 2024",
+    "companies": "Compañias",
+    "change": "Cambiar Contraseña",
+    "save": "Guardar",
+    "reset": "Restablecer",
+    "changeImage": "Cambiar Imagen",
+    "oldPassword": "Contraseña Antigua",
+    "newPassword": "Contraseña Nueva",
+    "confirmPassword": "Confirmar Contraseña",
+    "changebtn": "Cambiar"
 
   }

@@ -12,9 +12,11 @@ import { useProfile } from '../hooks/useProfile.js';
 import { NavLink, useNavigate } from "react-router-dom";
 import { Selected } from "../selected/Selected";
 import { Description } from "@headlessui/react";
+import { useTranslation } from "react-i18next";
 
 export function AccountSettingsCompany({ toggleDarkMode }) {
 
+    const { t } = useTranslation();
     const { modal, openModal } = useProfile();
     const navigate = useNavigate();
     const { isMobile } = useFetchMenubar();
@@ -186,7 +188,7 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
                 style={{
                     marginLeft: isMobile ? '0px' : '80px',
                 }}>
-                <div className="flex pt-4 justify-between">
+                <div className="flex pt-4 justify-between lg:mb-6">
                     <h1 className="font-black text-3xl lg:text-4xl mt-2 dark:text-white">ESCAPE</h1>
                     <SearchDropdown />
                 </div>
@@ -214,45 +216,47 @@ export function AccountSettingsCompany({ toggleDarkMode }) {
                             htmlFor="image" 
                             className="text-sky-400 cursor-pointer hover:text-sky-700"
                         >
-                            + Cambiar imagen
+                            + {t('changeImage')}
                         </label>
                         
                     </div>
 
                     <div className="flex flex-col gap-6 w-full lg:w-auto">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <InputProfile placeholder={user.name} type="text" id="name" label="Name" defaultValue={user.name} value={formData.name} onChange={handleChange}/>
-                            <InputProfile placeholder={user.email} type="text" id="email" label="Correo electronico" defaultValue={user.email} value={formData.email} onChange={handleChange}/>
-                            <InputProfile placeholder={user.description} type="text" id="description" label="Descripción" defaultValue={user.description} value={formData.description} onChange={handleChange}/>
-                            <InputProfile placeholder={user.phone_number} type="text" id="phone_number" label="Número de teléfono" defaultValue={user.phone_number} value={formData.phone_number} onChange={handleChange}/>
+                            <InputProfile placeholder={user.name} type="text" id="name" label={t('iName')} defaultValue={user.name} value={formData.name} onChange={handleChange}/>
+                            <InputProfile placeholder={user.email} type="text" id="email" label={t('iEmail')} defaultValue={user.email} value={formData.email} onChange={handleChange}/>
+                            <InputProfile placeholder={user.description} type="text" id="description" label={t('Description')} defaultValue={user.description} value={formData.description} onChange={handleChange}/>
+                            <InputProfile placeholder={user.phone_number} type="text" id="phone_number" label={t('iPhone')} defaultValue={user.phone_number} value={formData.phone_number} onChange={handleChange}/>
 
                             <Selected
                                 id="canton"
-                                label="Cantón"
+                                label={t('Canton')}
                                 options={cantones}
                                 value={formData.canton}
                                 placeholder={getCantonName(user.canton_id)}
                                 onChange={handleChange}
+                                cBorder="border-2 border-sky-400"
                             />
 
                             <Selected
                                 id="distrito"
-                                label="Distrito"
+                                label={t('District')}
                                 options={distritos}
                                 value={formData.distrito}
                                 placeholder={getDistrictName(user.district_id)}
                                 onChange={handleChange}
+                                cBorder="border-2 border-sky-400"
                             />
 
                             <div className='grid '>
-                                <InputProfile placeholder="********" type="password" id="password" label="Password" defaultValue="********" readOnly />
-                                <a className=' text-sky-400 items-end cursor-pointer dark:text-sky-400' onClick={openModal}>Change</a>
+                                <InputProfile placeholder="********" type="password" id="password" label={t('iPassword')} defaultValue="********" readOnly />
+                                <a className=' text-sky-400 items-end cursor-pointer hover:text-sky-700' onClick={openModal}>{t('change')}</a>
                             </div>
                             <Modal open={modal} onClose={openModal}>
                                 {body}
                             </Modal>
                         </div>
-                        <div className="w-full flex justify-center mt-6 mb-4 lg:mt-12 ">
+                        <div className="w-full flex justify-center mt-6 ">
                             <Buttons />
                         </div>
                     </div>

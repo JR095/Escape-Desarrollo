@@ -394,6 +394,7 @@ export function SignUpUsers() {
                                     placeholder={t('preference') + ' 1'}
                                     onChange={e => setSelectedPreferences_1(e.target.value)}
                                     className={preference1Error ? 'border-red-500' : ''}
+                                    cBorder="border-none outline-none"
                                 />
                                 {preference1Error && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una preferencia</p>}
 
@@ -404,6 +405,7 @@ export function SignUpUsers() {
                                     placeholder={t('preference') + ' 2'}
                                     onChange={e => setSelectedPreferences_2(e.target.value)}
                                     className={preference2Error ? 'border-red-500' : ''}
+                                    cBorder="border-none outline-none"
                                 />
                                 {preference2Error && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una preferencia</p>}
 
@@ -413,6 +415,7 @@ export function SignUpUsers() {
                                     placeholder={t('preference') + ' 3'}
                                     onChange={e => setSelectedPreferences_3(e.target.value)}
                                     className={preference3Error ? 'border-red-500' : ''}
+                                    cBorder="border-none outline-none"
                                 />
                                 {preference3Error && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una preferencia</p>}                         
                             </div>
@@ -426,6 +429,7 @@ export function SignUpUsers() {
                                 placeholder={t('Canton')}
                                 onChange={e => setSelectedCanton(e.target.value)}
                                 className={cantonError ? 'border-red-500' : ''}
+                                cBorder="border-none outline-none"
                                 />
                                 {cantonError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona un cantón</p>}
 
@@ -435,6 +439,7 @@ export function SignUpUsers() {
                                     placeholder={t('District')}
                                     onChange={e => setSelectedDistrict(e.target.value)}
                                     className={districtError ? 'border-red-500' : ''}
+                                    cBorder="border-none outline-none"
                                 />
                                 {districtError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona un distrito</p>}
 

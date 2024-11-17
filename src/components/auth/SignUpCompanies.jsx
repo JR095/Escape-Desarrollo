@@ -356,6 +356,7 @@ export function SignUpCompanies() {
                                     placeholder={t('iCategory')}
                                     onChange={e => setSelectedCategory(e.target.value)}
                                     className={categoryError ? 'border-red-500' : ''}
+                                    cBorder="border-none outline-none"
                                 />
                                 )}
                             
@@ -367,6 +368,7 @@ export function SignUpCompanies() {
                                     placeholder={t('SubCategory')}
                                     onChange={e => setSelectedSub_categories(e.target.value)}
                                     className={sub_CategoriesError ? 'border-red-500' : ''}
+                                    cBorder="border-none outline-none"
                                 />
                                 {sub_CategoriesError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona una subcategoria</p>}
 
@@ -381,6 +383,7 @@ export function SignUpCompanies() {
                                     placeholder={t('Canton')}
                                     onChange={e => setSelectedCanton(e.target.value)}
                                     className={cantonError ? 'border-red-500' : ''}
+                                    cBorder="border-none outline-none"
                                 />
                                 {cantonError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona un canton</p>}
 
@@ -390,6 +393,7 @@ export function SignUpCompanies() {
                                     placeholder={t('District')}
                                     onChange={e => setSelectedDistrict(e.target.value)}
                                     className={districtError ? 'border-red-500' : ''}
+                                    cBorder="border-none outline-none"
                                 />
                                 {districtError && <p className="text-red-500 text-sm mb-5">Por favor, selecciona un distrito</p>}
 

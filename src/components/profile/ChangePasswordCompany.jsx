@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { InputProfile } from "../inputs/InputProfile";
 import { useUser } from "../../context/UserContext.jsx";
+import { useTranslation } from "react-i18next";
 
 export function ChangePasswordCompany({ close }) {
   const { user } = useUser();
@@ -9,6 +10,7 @@ export function ChangePasswordCompany({ close }) {
   const [checkPassword, setCheckPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (user) {
@@ -60,29 +62,29 @@ export function ChangePasswordCompany({ close }) {
       <form onSubmit={handleChangePassword}>
         <div className="grid gap-6 mb-6">
           <h2 className="font-bold text-sky-500 text-3xl text-center mb-4">
-            Change Password
+            {t('change')}
           </h2>
           <InputProfile
-            placeholder="Old Password"
+            placeholder={t('oldPassword')}
             type="password"
             id="old-password"
-            label="Old Password"
+            label={t('oldPassword')}
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
           />
           <InputProfile
-            placeholder="New Password"
+            placeholder={t('newPassword')}
             type="password"
             id="new-password"
-            label="New Password"
+            label={t('newPassword')}
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
           />
           <InputProfile
-            placeholder="Write it again"
+            placeholder={t('confirmPassword')}
             type="password"
             id="check-password"
-            label="Write the password again"
+            label={t('confirmPassword')}
             value={checkPassword}
             onChange={(e) => setCheckPassword(e.target.value)}
           />
@@ -95,13 +97,13 @@ export function ChangePasswordCompany({ close }) {
             className="hover:text-white border-2 border-sky-500 hover:bg-sky-500 p-2 rounded-lg"
             onClick={close}
           >
-            Cancel
+            {t('Cancel')}
           </button>
           <button
             type="submit"
             className="text-white bg-sky-500 border-sky-500 hover:bg-sky-600 hover:border-sky-600 border-2 p-2 rounded-lg"
           >
-            Change
+            {t('changebtn')}
           </button>
         </div>
       </form>

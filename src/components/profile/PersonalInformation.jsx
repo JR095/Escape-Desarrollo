@@ -53,7 +53,7 @@ export function PersonalInformation() {
         .then(data => {
             setFollowStatus(prevState => ({
                 ...prevState,
-                [idCompany]: data.isFollowing ? "Siguiendo" : "Seguir",
+                [idCompany]: data.isFollowing ? t('Following') : t('Follow'),
             }));
         })
         .catch(error => console.error('Error al seguir:', error));
@@ -70,7 +70,7 @@ export function PersonalInformation() {
       </div>
 
       <Modal show={openModal} onClose={() => setOpenModal(false)} className="dark:bg-black ">
-        <Modal.Header  className="dark:bg-[#2a2a2a] grid grid-cols-[95%_5%] text-center justify-center">Siguiendo</Modal.Header>
+        <Modal.Header  className="dark:bg-[#2a2a2a] grid grid-cols-[95%_5%] text-center justify-center">{t('Following')}</Modal.Header>
         <Modal.Body  className="dark:bg-[#2a2a2a] ">
             {loading ? (
                 <p className='text-center dark:text-white'>Loading...</p>
@@ -81,7 +81,7 @@ export function PersonalInformation() {
                  <img src={item.image} alt="profile" className="w-14 h-14 rounded-full" />
                  <p className="font-bold text-lg text-center p-0 m-0 dark:text-white">{item.name}</p>
                  </NavLink>
-                 <button onClick={() =>follower(item.id)} className="bg-[#E0E1E3] font-semibold rounded-xl px-8 py-2 dark:text-white dark:bg-[#404040]">  {followStatus[item.id] || "Siguiendo"}</button>
+                 <button onClick={() =>follower(item.id)} className="bg-[#E0E1E3] font-semibold rounded-xl px-8 py-2 dark:text-white dark:bg-[#404040]">  {followStatus[item.id] || t('Following')}</button>
                 </div>
             ))
             )}
@@ -140,14 +140,14 @@ export function PersonalInformation() {
               onClick={() => setOpenModal(true)}
               className="bg-[#E0E1E3] font-semibold rounded-xl px.2 md:px-12  py-[0.5rem] mt-[1rem] lg:mt-[0rem] dark:text-white dark:bg-[#404040] dark:hover:text-sky-500 hover:text-sky-500"
             >
-              Siguiendo
+              {t("Following")}
             </button>
           </div>
         </div>
 
         <div className="mt-10 pb-[5rem]">
           <h2 className="font-bold lg:text-2xl text-xl mb-8 dark:text-white">
-            Companies
+            {t("companies")}
           </h2>
 
           <CarouselCard setIsOpen={openCard} />

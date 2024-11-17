@@ -53,6 +53,7 @@
     "Posts": "Posts",
     "Followers": "Followers",
     "Following": "Following",
+    "Follow": "Follow",
     "CreatePost": "Create Post",
     "BtnPost": "Post",
     "UpdatePost": "Update Post",
@@ -134,5 +135,14 @@
     "term6": "6. Changes to Terms and Conditions",
     "term6Des": "We reserve the right to update or modify these terms at any time. We will notify you of important changes and encourage you to check this page regularly to stay informed.",
     "lastUpdated": "Last Updated: ",
-    "date": "November 4, 2024"
+    "date": "November 4, 2024",
+    "companies": "Companies",
+    "change": "Change Password",
+    "save": "Save",
+    "reset": "Reset",
+    "changeImage": "Change Image",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "changebtn": "Change"
   }

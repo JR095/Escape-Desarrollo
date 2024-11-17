@@ -37,11 +37,12 @@ export function InformationCompany() {
     const location = useLocation();
     const [idCompany] = useState(location.state);
      const { data, loading } = useFetchData(
-        `http://localhost/escape-desarrollo-backend/public/api/companyinfo/${idCompany}/` + user.id
+        `http://localhost/escape-desarrollo-backend/public/api/companyinfo/${idCompany}/` + user.id,
+        ["description", "sub_category_id"]
      
        );
 
-       const[follow, setFollow] = useState("Seguir");
+       const[follow, setFollow] = useState(t('Follow'));
        const[followers, setFollowers] = useState(null);
 
        
@@ -57,11 +58,11 @@ export function InformationCompany() {
                     user_id: user.id,
                 }),
             });
-            if(follow === "Seguir"){
-                setFollow("Siguiendo");
+            if(follow === t('Follow')){
+                setFollow(t('Following'));
                 setFollowers(followers + 1);
             }else{
-                setFollow("Seguir");
+                setFollow(t('Follow'));
                 setFollowers(followers - 1);
             }
            
@@ -79,9 +80,9 @@ export function InformationCompany() {
     useEffect(() => {
         if (!loading) {
             if (data[0].follow != null) {
-                setFollow("Siguiendo");
+                setFollow(t('Following'));
             } else {
-                setFollow("Seguir");
+                setFollow(t('Follow'));
             }
             setFollowers(data[0].followers_count);
         }
