@@ -81,7 +81,7 @@ export function SignUpUsers() {
         { id: "20", name: "San Jerónimo" },
     ];
 
-    const preferences_1 = [
+    const preferences_1_id = [
         { id: "1", name: "Restaurantes" },
         { id: "2", name: "Sodas" },
         { id: "3", name: "Comida Callejera" },
@@ -106,7 +106,7 @@ export function SignUpUsers() {
         { id: "22", name: "Spas" },
     ];
 
-    const preferences_2 = [
+    const preferences_2_id = [
         { id: "1", name: "Restaurantes" },
         { id: "2", name: "Sodas" },
         { id: "3", name: "Comida Callejera" },
@@ -131,7 +131,7 @@ export function SignUpUsers() {
         { id: "22", name: "Spas" },
     ];
 
-    const preferences_3 = [
+    const preferences_3_id = [
         { id: "1", name: "Restaurantes" },
         { id: "2", name: "Sodas" },
         { id: "3", name: "Comida Callejera" },
@@ -304,9 +304,9 @@ export function SignUpUsers() {
                         longitude: longitude,
                         canton_id: selectedCanton,
                         district_id: selectedDistrict,
-                        preferences_1: selectedPreferences_1,
-                        preferences_2: selectedPreferences_2,
-                        preferences_3: selectedPreferences_3,
+                        preferences_1_id: selectedPreferences_1,
+                        preferences_2_id: selectedPreferences_2,
+                        preferences_3_id: selectedPreferences_3,
 
                     })
                 });
@@ -341,9 +341,9 @@ export function SignUpUsers() {
                         longitude: null,
                         canton_id: selectedCanton,
                         district_id: selectedDistrict,
-                        preferences_1: selectedPreferences_1,
-                        preferences_2: selectedPreferences_2,
-                        preferences_3: selectedPreferences_3,
+                        preferences_1_id: selectedPreferences_1,
+                        preferences_2_id: selectedPreferences_2,
+                        preferences_3_id: selectedPreferences_3,
                     })
                 });
 
@@ -390,7 +390,7 @@ export function SignUpUsers() {
                             <div>
                                 <Selected
                                     label={t('choosePreference')}
-                                    options={preferences_1}
+                                    options={preferences_1_id}
                                     placeholder={t('preference') + ' 1'}
                                     onChange={e => setSelectedPreferences_1(e.target.value)}
                                     className={preference1Error ? 'border-red-500' : ''}
@@ -400,7 +400,7 @@ export function SignUpUsers() {
 
                                 <Selected
                                     label={t('choosePreference')}
-                                    options={preferences_2}
+                                    options={preferences_2_id}
                                     placeholder={t('preference') + ' 2'}
                                     onChange={e => setSelectedPreferences_2(e.target.value)}
                                     className={preference2Error ? 'border-red-500' : ''}
@@ -409,7 +409,7 @@ export function SignUpUsers() {
 
                                 <Selected
                                     label={t('choosePreference')}
-                                    options={preferences_3}
+                                    options={preferences_3_id}
                                     placeholder={t('preference') + ' 3'}
                                     onChange={e => setSelectedPreferences_3(e.target.value)}
                                     className={preference3Error ? 'border-red-500' : ''}
