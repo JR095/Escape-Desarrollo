@@ -12,8 +12,6 @@ import { Drawer } from "flowbite-react";
 import { useState } from "react";
 import propTypes from "prop-types";
 import { useUser } from '../../context/UserContext.jsx';
-
-import { use } from "i18next";
 import { Posts } from "./Posts.jsx";
 
 import { CardComments } from "../cards/CardComments.jsx";
@@ -24,17 +22,19 @@ export function Home() {
 
   const { isMobile } = useFetchMenubar();
   const [isOpen, setIsOpen] = useState(false);
-  
+  const handleClose = () => {
+    setIsOpen(false);
+  }
   const [hearts, setHearts] = useState(false);
-  const [userRating, setUserRating] = useState(0);
-  const [rating, setRating] = useState(0);
-  const [undefined, setUndefined] = useState(false);
+
   const [id, setId] = useState(0);
+
   const { user } = useUser();
   const [isOpenComments, setOpenComments] = useState(false);
   const handleCloseComments = () => setOpenComments(false);
   const [postId, setPostId] = useState(null);
   const { t, i18n } = useTranslation();
+
   const openCardComments = (postId) => () => {
     if (postId) {
       setOpenComments(true);
@@ -44,12 +44,8 @@ export function Home() {
     }
   };
   const [informationCard, setInformationCard] = useState(null);
-  const [trueRating, setTrueRating] = useState(true);
-  
-  const handleClose = () => {
-    setIsOpen(false);
-    setTrueRating(true);
-  }
+  const [starsPlace, setStarsPlace] = useState(null);
+  const [arrayStars, setArrayStars] = useState([]);
 
   const openCard = async (id) => {
     try {
@@ -60,10 +56,10 @@ export function Home() {
       const dataStart = await urlStars.json();
       const starts =  dataStart.find(r => r.post_place_id === result[0].id && r.user_id === user.id);
 
-      //Likes
       if (result[0].favorite != null) {
         setHearts(true);
         result[0].favorite = null;
+
       } else {
         setHearts(false);
       }
@@ -72,16 +68,12 @@ export function Home() {
         result[0].description = await translateText(result[0].description, 'es', i18n.language);
       }
 
-      //Ranking
-
-      if(starts){
-        setUserRating(starts.rating);
-        setRating(parseFloat(starts.post_place_average_rating).toFixed(1)); 
-        setUndefined(false);
+      if (starts) {
+        setStarsPlace(starts);
+        const array = dataStart.filter(r => r.post_place_id === result[0].id);
+        setArrayStars(array);
       }else{
-        setUserRating(0);
-        setRating(0);
-        setUndefined(true);
+        console.log('No se encontraron datos');
       }
 
       setInformationCard(result);
@@ -106,6 +98,21 @@ export function Home() {
     setHearts(!hearts);
   };
 
+  const starts = (placeId, result, value) => {
+    fetch('http://localhost/escape-desarrollo-backend/public/api/save-rating', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        user_id: user.id,
+        post_place_id: placeId, 
+        rating: value,
+        post_place_average_rating: result,
+      }),
+    });
+  }
+
   return (
 
     <div className="flex dark:bg-[#2a2a2a]">
@@ -115,7 +122,7 @@ export function Home() {
       </div>
       <Drawer open={isOpen} onClose={handleClose} position="right" className="w-full md:w-1/2 lg:w-1/3 dark:bg-[#2a2a2a]">
         <Drawer.Items>
-          <CardInformation placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} initialRating={rating} initialUserRating={userRating} undefined={undefined} trueRating={trueRating}/>
+          <CardInformation placeData={informationCard} hearts={hearts} favorite={favorite} setHearts={setHearts} onClose={handleClose} starsData={starsPlace} arrayStartPlace={arrayStars} starts={starts} />
         </Drawer.Items>
       </Drawer>
 
