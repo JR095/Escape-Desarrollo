@@ -74,6 +74,8 @@ export function Home() {
         setArrayStars(array);
       }else{
         console.log('No se encontraron datos');
+        setStarsPlace(null);
+        setArrayStars([]);
       }
 
       setInformationCard(result);

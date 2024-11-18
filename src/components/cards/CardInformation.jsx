@@ -149,6 +149,9 @@ export function CardInformation({ onClose, favorite, hearts, setHearts, placeDat
     if(starsData){
       setUserRating(starsData.rating);
       setRating(parseFloat(starsData.post_place_average_rating).toFixed(1));
+    }else{
+      setUserRating(0);
+      setRating(0);
     }
   
   };
