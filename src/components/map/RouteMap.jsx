@@ -7,6 +7,7 @@ import { Navigation } from "../navigation/Navigation";
 import { useLocation } from 'react-router-dom';
 import { useDarkModeContext } from "../../context/AppContext.jsx";
 import tt from '@tomtom-international/web-sdk-maps';
+import { selectClasses } from '@mui/material';
 
 
 export const RouteMap = () => {
@@ -18,38 +19,26 @@ export const RouteMap = () => {
   const placeId = location.state?.placeId;
   const origin = [user.longitude, user.latitude];
   const [destination, setDestination] = useState([]);
-  const [travelTime, setTravelTime] = useState(null);
+  //const [travelTime, setTravelTime] = useState(null);
   const [EstimatedHour, setEstimatedHour] = useState(null);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const { data } = useFetchData(url);
   const [inputValue, setInputValue] = useState('');
-  const [travelMode, setTravelMode] = useState('pedestrian');
-
+  //const [travelMode, setTravelMode] = useState('pedestrian');
   const { darkMode } = useDarkModeContext(); // Accede al estado del modo oscuro
   const mapContainer = React.useRef(null); // Referencia al contenedor del mapa
   let map;
+  //const [point, setPoint] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState(false); //Para que el destino sea la ubicación central
+
+  const [travelTimeCar, setTravelTimeCar] = useState(null);
+  const [travelTimeBike, setTravelTimeBike] = useState(null);
+  const [travelTimeWalk, setTravelTimeWalk] = useState(null);
+  const [requestMap, setRequestMap] = useState(false);
+  const [routeCoordinates, setRouteCoordinates] = useState([]);
+
 
   console.log(data);
-
-  useEffect(() => {
-    if (placeId != null) {
-
-      url = `http://localhost/escape-desarrollo-backend/public/api/company/${placeId}/${user.id}`;
-
-      console.log(placeId);
-
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          setFilteredPlaces(data);
-          setInputValue(data.name); // Almacena el lugar específico
-          setDestination([data[0].longitude, data[0].latitude]); // Establece el destino
-          calculateRouteWithTraffic(origin, destination);
-        })
-        .catch(error => console.error('Error al cargar el lugar:', error));
-    }
-  }, [placeId]);
 
   useEffect(() => {
     if (mapContainer.current) {
@@ -59,18 +48,28 @@ export const RouteMap = () => {
       style: darkMode
       ? 'https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBASFZaaHBtUFdrS3QyR3E5bzthZjVkMTI5Yy0wNzdhLTQyODktYTIwYy05NGI4MDFkNDZlOGE=/drafts/0.json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi' // Estilo oscuro
       : 'https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBASFZaaHBtUFdrS3QyR3E5bzs3YTdiYzkwNi03ZTFhLTQwOWMtYjM5ZS1lODcxYmY1MzliMDI=/drafts/0.json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi', // Estilo claro
-      center: origin,
+      center: selectedPlace ? destination : origin,
       zoom: 15
-    });
+    }); 
 
     //Create a Marker 
     map.on('load', () => {
 
-      new tt.Marker().setLngLat(origin).addTo(map);
+      if(selectedPlace){      
 
-      if (destination.length > 0) {
         new tt.Marker().setLngLat(destination).addTo(map);
         calculateRouteWithTraffic(origin, destination);
+
+      }else{     
+
+        new tt.Marker().setLngLat(origin).addTo(map);
+
+        if (destination.length > 0) {
+          new tt.Marker().setLngLat(destination).addTo(map);
+          calculateRouteWithTraffic(origin, destination);
+          drawRoute(routeCoordinates)
+        }
+
       }
 
     });
@@ -95,34 +94,65 @@ export const RouteMap = () => {
         }
       });
     }
-
     function calculateRouteWithTraffic(origin, destination) {
 
-      //Link para traer información según el tipo de viaje seleccionado
-      const routeUrl = `https://api.tomtom.com/routing/1/calculateRoute/${origin[1]},${origin[0]}:${destination[1]},${destination[0]}/json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi&traffic=true&travelMode=${travelMode}`;
+      if(selectedPlace && requestMap){
 
-        fetch(routeUrl)
+        const arrayTravelMode = ['pedestrian', 'car', 'bicycle'];
+
+        for (let i = 0; i < arrayTravelMode.length; i++) { 
+          
+          //setTravelMode(arrayTravelMode[i]);
+          const travelMode = arrayTravelMode[i];
+
+          //Link para traer información según el tipo de viaje seleccionado
+          const routeUrl = `https://api.tomtom.com/routing/1/calculateRoute/${origin[1]},${origin[0]}:${destination[1]},${destination[0]}/json?key=dd8qO1N1bSR7yu4ShWlBi4HDup4MKSwi&traffic=true&travelMode=${travelMode}`;
+
+          fetch(routeUrl)
           .then(response => response.json())
           .then(data => {
 
-            const routeCoordinates = data.routes[0].legs[0].points.map(point => [point.longitude, point.latitude]);
+          setRouteCoordinates(data.routes[0].legs[0].points.map(point => [point.longitude, point.latitude]));
 
-            //Tiempo que dura el viaje
-            const travelTimeInSeconds = data.routes[0].summary.travelTimeInSeconds;
-            const travelTimeInMinutes = Math.round(travelTimeInSeconds / 60);
-            const travelTimeFormatted = convertirMinutosAHoras(travelTimeInMinutes);
-            setTravelTime(travelTimeFormatted);
+          //Tiempo que dura el viaje
+          const travelTimeInSeconds = data.routes[0].summary.travelTimeInSeconds;
+          const travelTimeInMinutes = Math.round(travelTimeInSeconds / 60);
+          const travelTimeFormatted = convertirMinutosAHoras(travelTimeInMinutes);
 
-            const horaDeLlegada = estimatedHour(travelTimeInMinutes);
-            setEstimatedHour(horaDeLlegada);
+          //const horaDeLlegada = estimatedHour(travelTimeInMinutes);
+          //setEstimatedHour(horaDeLlegada);
 
-            // Dibujar la ruta en el mapa
-            drawRoute(routeCoordinates);
+          if(travelMode === 'pedestrian'){
 
-          })
-          .catch(error => console.error('Error al calcular la ruta:', error));
+            setTravelTimeWalk(travelTimeFormatted);
 
-    }
+          }
+
+
+          if (travelMode === 'bicycle') {
+
+            setTravelTimeBike(travelTimeFormatted);
+            
+          }
+
+
+          if (travelMode === 'car') {
+
+            setTravelTimeCar(travelTimeFormatted);
+            setRequestMap(false);
+
+          } 
+         
+
+        })
+        .catch(error => console.error('Error al calcular la ruta:', error));
+
+
+        }//Fin del for
+
+      }//Fin del if
+
+    }//Fin de la Función
 
     //Funciones de conversión
     const convertirMinutosAHoras = (minutos) => {
@@ -152,7 +182,7 @@ export const RouteMap = () => {
     };
 
   }
-}, [origin, destination, travelMode, darkMode]);
+}, [origin, destination, darkMode, selectedPlace]);
 
   const handleDestinationInput = (e) => {
     const query = e.target.value.toLowerCase();
@@ -165,7 +195,10 @@ export const RouteMap = () => {
   };
 
   const handlePlaceSelect = (d) => {
+    console.log("Esto es el valor",  d);
     setDestination([d.longitude, d.latitude]);
+    setSelectedPlace(true);
+    setRequestMap(true);
     setInputValue(d.name);
     setFilteredPlaces([]);
   };
@@ -174,6 +207,10 @@ export const RouteMap = () => {
     console.log(mode);
     setTravelMode(mode);
   };
+
+  const handleClickButton = () => {
+    setSelectedPlace(false);
+  }
 
   return (
     <div>
@@ -186,13 +223,16 @@ export const RouteMap = () => {
         handleDestinationInput={handleDestinationInput}
         filteredPlaces={filteredPlaces}
         handlePlaceSelect={handlePlaceSelect}
-        travelTime={travelTime}
+        travelTimeWalk={travelTimeWalk}
+        travelTimeBike={travelTimeBike}
+        travelTimeCar={travelTimeCar}
         EstimatedHour={EstimatedHour}
         handleTravelModeChange={handleTravelModeChange}
+        handleClickButton={handleClickButton}
         placeId={placeId}
       />
 
-    <div ref={mapContainer} className="relative w-full h-screen z-8"></div>
+    <div ref={mapContainer} className="relative w-full h-[100vh] z-8"></div>
     </div>
   );
 
