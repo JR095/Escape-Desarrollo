@@ -5,14 +5,29 @@ import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 //<h1 className='dark:text-white mt-2'>Buscar Ruta</h1>
 //<img className="rounded-lg object-cover h-[50vh]  md:w-full" src={d.image} alt="" />
-export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, handlePlaceSelect, travelTimeWalk, travelTimeBike, travelTimeCar, EstimatedHour, handleTravelModeChange, handleClickButton, placeId }) => {
+export const MapCard = ({ inputValue, handleDestinationInput, filteredPlaces, handlePlaceSelect, travelTimeWalk, travelTimeBike, travelTimeCar, EstimatedHour, handleClickButton, placeId, datos, handleAutomaticInfo}) => {
 
   const { isMobile } = useFetchMenubar();
   const { t } = useTranslation();
 
-  console.log("Walk: ",travelTimeWalk);
-  console.log("Bike: ", travelTimeBike);
-  console.log("Car: ",travelTimeCar);
+  // Efecto para buscar automáticamente el lugar cuando placeId está presente
+  useEffect(() => {
+
+    if (placeId != null) {
+      
+      const findPlace = datos.find(place => place.id === placeId);
+      handleAutomaticInfo(findPlace);
+
+      if (findPlace) {
+        setPlaceInformation({
+          name: findPlace.name,          
+          subCategory: findPlace.sub_category_id,
+          description: findPlace.description || 'Descripción no disponible',
+          image: findPlace.image || ''
+        });
+      }
+    }
+  }, [placeId, datos]); // Actualizar si cambia el placeId o filteredPlaces
 
   const [placeInformation, setPlaceInformation] = useState({
     name: '',

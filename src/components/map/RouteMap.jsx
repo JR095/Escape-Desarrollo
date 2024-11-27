@@ -16,15 +16,14 @@ export const RouteMap = () => {
   const { user } = useUser();
   let url = `http://localhost/escape-desarrollo-backend/public/api/companies/`+user.id;
   const location = useLocation();
-  const placeId = location.state?.placeId;
+  const pId = location.state?.placeId;
+  const [placeId, setPlaceId] = useState(pId);
   const origin = [user.longitude, user.latitude];
   const [destination, setDestination] = useState([]);
-  //const [travelTime, setTravelTime] = useState(null);
   const [EstimatedHour, setEstimatedHour] = useState(null);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const { data } = useFetchData(url);
   const [inputValue, setInputValue] = useState('');
-  //const [travelMode, setTravelMode] = useState('pedestrian');
   const { darkMode } = useDarkModeContext(); // Accede al estado del modo oscuro
   const mapContainer = React.useRef(null); // Referencia al contenedor del mapa
   let map;
@@ -37,8 +36,8 @@ export const RouteMap = () => {
   const [requestMap, setRequestMap] = useState(false);
   const [routeCoordinates, setRouteCoordinates] = useState([]);
 
-
   console.log(data);
+  console.log("Id del lugar seleccinado desde home: ", placeId);
 
   useEffect(() => {
     if (mapContainer.current) {
@@ -60,11 +59,12 @@ export const RouteMap = () => {
         new tt.Marker().setLngLat(destination).addTo(map);
         calculateRouteWithTraffic(origin, destination);
 
-      }else{     
+      }else{             
 
         new tt.Marker().setLngLat(origin).addTo(map);
 
         if (destination.length > 0) {
+         
           new tt.Marker().setLngLat(destination).addTo(map);
           calculateRouteWithTraffic(origin, destination);
           drawRoute(routeCoordinates)
@@ -96,7 +96,7 @@ export const RouteMap = () => {
     }
     function calculateRouteWithTraffic(origin, destination) {
 
-      if(selectedPlace && requestMap){
+      if(selectedPlace && requestMap || placeId && requestMap){
 
         const arrayTravelMode = ['pedestrian', 'car', 'bicycle'];
 
@@ -138,9 +138,10 @@ export const RouteMap = () => {
 
           if (travelMode === 'car') {
 
-            setTravelTimeCar(travelTimeFormatted);
-            setRequestMap(false);
-
+            setTravelTimeCar(travelTimeFormatted);  
+            setRequestMap(false);    
+            
+                    
           } 
          
 
@@ -182,7 +183,7 @@ export const RouteMap = () => {
     };
 
   }
-}, [origin, destination, darkMode, selectedPlace]);
+}, [origin, destination, darkMode, selectedPlace, placeId]);
 
   const handleDestinationInput = (e) => {
     const query = e.target.value.toLowerCase();
@@ -195,7 +196,6 @@ export const RouteMap = () => {
   };
 
   const handlePlaceSelect = (d) => {
-    console.log("Esto es el valor",  d);
     setDestination([d.longitude, d.latitude]);
     setSelectedPlace(true);
     setRequestMap(true);
@@ -203,13 +203,23 @@ export const RouteMap = () => {
     setFilteredPlaces([]);
   };
 
-  const handleTravelModeChange = (mode) => {
-    console.log(mode);
-    setTravelMode(mode);
-  };
+  const handleAutomaticInfo = (d) => {
+
+     setRequestMap(true);        
+
+     if (!data || data.length === 0) {    
+      console.log("Datos no disponibles, esperando página..."); 
+    } 
+    else 
+    { setDestination([d.longitude, d.latitude]); 
+      console.log("Datos disponibles, estableciendo destino...");
+    }
+  }
+
+
 
   const handleClickButton = () => {
-    setSelectedPlace(false);
+    setSelectedPlace(false);    
   }
 
   return (
@@ -226,10 +236,11 @@ export const RouteMap = () => {
         travelTimeWalk={travelTimeWalk}
         travelTimeBike={travelTimeBike}
         travelTimeCar={travelTimeCar}
-        EstimatedHour={EstimatedHour}
-        handleTravelModeChange={handleTravelModeChange}
+        EstimatedHour={EstimatedHour}       
         handleClickButton={handleClickButton}
+        handleAutomaticInfo={handleAutomaticInfo}
         placeId={placeId}
+        datos={data}        
       />
 
     <div ref={mapContainer} className="relative w-full h-[100vh] z-8"></div>
