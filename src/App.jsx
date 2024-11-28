@@ -27,6 +27,9 @@ import { CompanyDetails } from "./components/cards/CompanyDetails.jsx";
 import { About } from "./components/ui/landing/About.jsx";
 import { Contact } from "./components/ui/landing/Contact.jsx";
 import { TermsAndConditions } from "./components/ui/landing/TermsAndConditions.jsx";
+
+import { PostCard } from "./components/cards/PostCard";
+import { PostDetail } from "./components/cards/PostDetail";
 export function App() {
 
  
@@ -62,6 +65,9 @@ export function App() {
                 <Route path="/create-post" element={<CreatePost />} />
                 <Route path="/update-post/:id" element={<UpdatePost />} />
                 <Route path="/*" element={<Navigate to="/" />} />
+
+                <Route path="/post-card" element={<PostCard />} />
+                <Route path="/post/:id" element={<PostDetail />} />
             </Routes>
         </ComponentProvider>
         </AppProvider>
